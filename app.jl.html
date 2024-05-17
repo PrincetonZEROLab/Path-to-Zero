@@ -142,28 +142,28 @@
                     </thead>
                     <tbody>
                         <tr class="active-row">
-                            <th>1</th>
-                            <th>&#8805 {{sp_clean_stage_1[0]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_1[1]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_1[2]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_1[3]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_1[4]}} %</th>
+                            <td>1</td>
+                            <td>&#8805 {{sp_clean_stage_1[0]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[1]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[2]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[3]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[4]}} %</td>
                         </tr>
                         <tr class="active-row">
-                            <th>2</th>
-                            <th>&#8805 {{sp_clean_stage_2[0]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_2[1]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_2[2]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_2[3]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_2[4]}} %</th>
+                            <td>2</td>
+                            <td>&#8805 {{sp_clean_stage_2[0]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[1]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[2]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[3]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[4]}} %</td>
                         </tr>
                         <tr class="active-row">
-                            <th>3</th>
-                            <th>&#8805 {{sp_clean_stage_3[0]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_3[1]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_3[2]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_3[3]}} %</th>
-                            <th>&#8805 {{sp_clean_stage_3[4]}} %</th>
+                            <td>3</td>
+                            <td>&#8805 {{sp_clean_stage_3[0]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[1]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[2]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[3]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[4]}} %</td>
                         </tr>
                     </tbody>
                 </table>
@@ -223,25 +223,6 @@
         <p style="text-align: center;"></p>
     </div>
 
-    <div class="row justify-center" :style="show_game_over">
-        <div class="col-auto">
-            <h1>Game over!</h1>
-            <br>
-            <center>
-                <h4> Final score </h4>
-            </center>
-            <div class="row justify-center">
-                <div class="col-auto">
-                    <q-btn
-                        style="font-size: 45pt; color: white; height: 160px; width: 200px; background-color: rgb(160, 218, 170);"
-                        glossy :label="total_score" />
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br><br>
-    
     <div class="st-col col-12 col-sm st-module" :style="show_pannels">
         <q-tabs v-model="tab" active-color="primary" indicator-color="primary" align="justify" narrow-indicator=""
             class="q-mb-lg">
@@ -1008,21 +989,21 @@
                     <q-list bordered="" separator="">
                         <center>
                             <q-toggle v-model="disaster_resource_1" :label=name_resource_1 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="disaster_resource_2" :label=name_resource_2 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="disaster_resource_3" :label=name_resource_3 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="disaster_resource_4" :label=name_resource_4 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="disaster_resource_5" :label=name_resource_5 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="disaster_resource_6" :label=name_resource_6 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="disaster_resource_7" :label=name_resource_7 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="disaster_resource_8" :label=name_resource_8 style="font-size: large;"
-                                color="red" checked-icon="clear" disable />
+                                color="red" checked-icon="clear" left-label disable />
                         </center>
                     </q-list>
                 </div>
@@ -1034,26 +1015,42 @@
                     <!-- Resources: -->
                     <q-list bordered="" separator="">
                         <center>
-                            <q-toggle v-model="social_backlash_resource_1" :label=name_resource_1 
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                            <q-toggle v-model="social_backlash_resource_1" :label=name_resource_1
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="social_backlash_resource_2" :label=name_resource_2
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="social_backlash_resource_3" :label=name_resource_3
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="social_backlash_resource_4" :label=name_resource_4
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="social_backlash_resource_5" :label=name_resource_5
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="social_backlash_resource_6" :label=name_resource_6
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="social_backlash_resource_7" :label=name_resource_7
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                             <q-toggle v-model="social_backlash_resource_8" :label=name_resource_8
-                                style="font-size: large;" color="red" checked-icon="clear" disable />
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                         </center>
                     </q-list>
                 </div>
             </q-tab-panel>
         </q-tab-panels>
+    </div>
+    <div class="row justify-center" :style="show_game_over">
+        <div class="col-auto">
+            <h1>Game over!</h1>
+            <br>
+            <center>
+                <h4> Final score </h4>
+            </center>
+            <div class="row justify-center">
+                <div class="col-auto">
+                    <q-btn
+                        style="font-size: 45pt; color: white; height: 160px; width: 200px; background-color: rgb(160, 218, 170);"
+                        glossy :label="total_score" />
+                </div>
+            </div>
+        </div>
     </div>
 </body>
