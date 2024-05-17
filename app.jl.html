@@ -1,0 +1,1056 @@
+<body>
+
+    <header id="izaa" class="st-header q-pa-sm">
+        <h1 style="text-align: center; font-weight: bold; color:rgb(16, 16, 129);">Path to Zero</h1>
+        <div class="row">
+            <p style="text-align: center;"></p>
+        </div>
+        <h2 style="text-align: center;color:rgb(16, 16, 129);">The Electricity Decarbonization Game</h2>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-sm">
+                <q-uploader label="Upload Setup File"
+                    v-on:uploaded="function(event) { handle_event(event, 'uploaded') }" no-thumbnails
+                    :url="'/____/upload/' + channel_"
+                    v-on:rejected="function(event) { handle_event(event, 'rejected') }" max-files=1 hide-upload-btn
+                    auto-upload style="max-width: 95%; width: 95%;
+                                    margin: 0 auto;" accept=".yml">
+                </q-uploader>
+            </div>
+            <div class="col-sm">
+                <div class="st-module st-col col">
+                    <q-select v-model="selected_file" :options="upfiles" style="max-width: 95%; width: 95%;
+                            margin: 0 auto;"></q-select>
+                    <!-- <center><q-btn color="primary" label="Start" v-on:click="bt_start_game = true"></q-btn></center> -->
+                    <br>
+                    <div style="height: 16px;"></div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-center">
+        <div class="col-auto">
+            <q-btn style="font-size: large; color: white; height: 120px; width: 120px;" :style="color_year_1" glossy
+                :label="label_year_1" />
+            <q-btn style="font-size: large; color: white; height: 120px; width: 120px;" :style="color_year_2" glossy
+                :label="label_year_2" />
+            <q-btn style="font-size: large; color: white; height: 120px; width: 120px;" :style="color_year_3" glossy
+                :label="label_year_3" />
+        </div>
+    </div>
+
+    <br>
+
+    <div class="col-12">
+        <center>
+            <h6>PEAK / AVERAGE DEMAND (GW)</h6>
+        </center>
+        <div class="row justify-center">
+            <div class="col-auto">
+                <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_1" glossy
+                    label="100 / 50" />
+                <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_2" glossy
+                    label="130 / 57" />
+                <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_3" glossy
+                    label="180 / 73" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <center>
+                <h5> Reliability scores </h5>
+            </center>
+            <div class="row justify-center">
+                <div class="col-auto">
+                    <q-btn
+                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(236, 167, 149);"
+                        glossy :label="reliability_score_stage_1" />
+                    <q-btn
+                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(236, 167, 149);"
+                        glossy :label="reliability_score_stage_2" />
+                    <q-btn
+                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(236, 167, 149);"
+                        glossy :label="reliability_score_stage_3" />
+                </div>
+            </div>
+            <br>
+            <center>
+                <h5> Reliability targets </h5>
+                <p> <strong>Metric:</strong> Percentage of annual demand served </p>
+                <table class="styled-table" style="font-weight: bold; font-size: medium; border: 1px solid black">
+                    <thead>
+                        <tr style="background-color: rgb(236, 167, 149); color: white; border: 1px solid black">
+                            <th>STAGE</th>
+                            <th>5 pts</th>
+                            <th>4 pts</th>
+                            <th>3 pts</th>
+                            <th>2 pts</th>
+                            <th>1 pts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="active-row">
+                            <td>All</td>
+                            <td>&#8805 {{sp_reliability[0]}} %</td>
+                            <td>&#8805 {{sp_reliability[1]}} %</td>
+                            <td>&#8805 {{sp_reliability[2]}} %</td>
+                            <td>&#8805 {{sp_reliability[3]}} %</td>
+                            <td>&#8805 {{sp_reliability[4]}} %</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+
+        <div class="col-4">
+            <center>
+                <h5> Clean scores </h5>
+            </center>
+            <div class="row justify-center">
+                <div class="col-auto">
+                    <q-btn
+                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(171, 191, 227);"
+                        glossy :label="clean_score_stage_1" />
+                    <q-btn
+                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(171, 191, 227);"
+                        glossy :label="clean_score_stage_2" />
+                    <q-btn
+                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(171, 191, 227);"
+                        glossy :label="clean_score_stage_3" />
+                </div>
+            </div>
+            <br>
+            <center>
+                <h5> Clean energy targets </h5>
+                <p> <strong>Metric:</strong> Percentage of generation from non-emitting sources </p>
+                <table class="styled-table" style="font-weight: bold; font-size: medium; border: 1px solid black">
+                    <thead>
+                        <tr style="background-color: rgb(171, 191, 227); color: white; border: 1px solid black">
+                            <th>STAGE</th>
+                            <th>5 pts</th>
+                            <th>4 pts</th>
+                            <th>3 pts</th>
+                            <th>2 pts</th>
+                            <th>1 pts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="active-row">
+                            <td>1</td>
+                            <td>&#8805 {{sp_clean_stage_1[0]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[1]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[2]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[3]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_1[4]}} %</td>
+                        </tr>
+                        <tr class="active-row">
+                            <td>2</td>
+                            <td>&#8805 {{sp_clean_stage_2[0]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[1]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[2]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[3]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_2[4]}} %</td>
+                        </tr>
+                        <tr class="active-row">
+                            <td>3</td>
+                            <td>&#8805 {{sp_clean_stage_3[0]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[1]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[2]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[3]}} %</td>
+                            <td>&#8805 {{sp_clean_stage_3[4]}} %</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+        </div>
+
+        <div class="col-4">
+            <center>
+                <h5> Affordability score </h5>
+            </center>
+            <div class="row justify-center">
+                <div class="col-auto">
+                    <q-btn
+                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(160, 218, 170);"
+                        glossy :label="affordability_score" />
+                </div>
+            </div>
+            <br>
+            <center>
+                <h5> Affordability scores </h5>
+                <p> <strong>Metric:</strong> Budget tokens remaining at end of game </p>
+                <div class="col-12">
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_1" glossy/>
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_2" glossy/>
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_3" glossy/>
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_4" glossy/>
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_5" glossy/>
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <div class="row">
+        <p style="text-align: center;"></p>
+    </div>
+
+    <q-separator horizontal />
+
+    <div class="row" :style="show_pannels">
+        <div class="col-12">
+            <h4 style="text-align:center;padding-top:20px;">Available Tokens</h4>
+            <div class="row">
+                <div class="col-sm st-module">
+                    <st-big-number :number="available_build_tokens" title="Build Tokens"></st-big-number>
+                </div>
+                <div class="col-sm st-module">
+                    <st-big-number :number="available_budget_tokens" title="Budget Tokens"></st-big-number>
+                </div>
+                <div class="col-sm st-module">
+                    <st-big-number :number="available_shaping_tokens" title="Shaping Tokens"></st-big-number>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <p style="text-align: center;"></p>
+    </div>
+
+    <div class="st-col col-12 col-sm st-module" :style="show_pannels">
+        <q-tabs v-model="tab" active-color="primary" indicator-color="primary" align="justify" narrow-indicator=""
+            class="q-mb-lg">
+            <q-tab name="Build" label="BUILD RESOURCES" style="color:rgb(16, 16, 129);"></q-tab>
+            <q-tab name="Simulation Results" label="SIMULATION RESULTS" style="color: rgb(255, 77, 31);"></q-tab>
+            <q-tab name="Shape" label="SHAPE THE FUTURE" style="color:rgb(16, 16, 129);"></q-tab>
+            <q-tab name="Results" label="STAGE RESULTS" style="color: rgb(255, 77, 31);"></q-tab>
+        </q-tabs>
+
+        <q-separator />
+
+        <q-tab-panels v-model="tab" animated="" transition-prev="scale" transition-next="scale" animated
+            class="text-center">
+            <q-tab-panel name="Build">
+
+                <div class="row">
+                    <q-btn color="primary" label="Buy Build Tokens" v-on:click="bt_buy_build_token = true"
+                        :disabled="bt_buy_build_token_is_disabled"></q-btn>
+                </div>
+
+                <q-separator horizontal />
+
+                <div class="row">
+                    <!-- existing_gas -->
+                    <div class=" col" :style="b_color_resource_1" :disabled="is_clean_firm_resource_1">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_1}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_1" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                        {label: 'None', value: 'none'},
+                                        {label: 'Low', value: 'low'},
+                                        {label: 'Moderate', value: 'moderate'},
+                                        {label: 'High', value: 'high'},
+                                    ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_1></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_1}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_1}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1">
+                                        <q-btn label="-" v-on:click="resource_1_build_m = true"
+                                            :style="bt_resource_1_disabled"
+                                            :disabled="social_backlash_resource_1 || is_clean_firm_resource_1"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <q-btn label="+" v-on:click="resource_1_build_p = true"
+                                            :style="bt_resource_1_disabled"
+                                            :disabled="social_backlash_resource_1 || is_clean_firm_resource_1"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_1}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_1_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_1_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_1_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <q-separator vertical />
+
+                    <!-- existing_nuclear -->
+                    <div class="col" :style="b_color_resource_2" :disabled="is_clean_firm_resource_2">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_2}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_2" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                            {label: 'None', value: 'none'},
+                                            {label: 'Low', value: 'low'},
+                                            {label: 'Moderate', value: 'moderate'},
+                                            {label: 'High', value: 'high'},
+                                        ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_2></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_2}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_2}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1"> <q-btn label="-" v-on:click="resource_2_build_m = true"
+                                            :style="bt_resource_2_disabled"
+                                            :disabled="social_backlash_resource_2 || is_clean_firm_resource_2"></q-btn>
+                                    </div>
+                                    <div class="col-1"> <q-btn label="+" v-on:click="resource_2_build_p = true"
+                                            :style="bt_resource_2_disabled"
+                                            :disabled="social_backlash_resource_2 || is_clean_firm_resource_2"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_2}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_2_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_2_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_2_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <q-separator horizontal />
+
+                <div class="row">
+                    <!-- BATTERY ENERGY STORAGE -->
+                    <div class=" col" :style="b_color_resource_3" :disabled="is_clean_firm_resource_3">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_3}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_3" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                        {label: 'None', value: 'none'},
+                                        {label: 'Low', value: 'low'},
+                                        {label: 'Moderate', value: 'moderate'},
+                                        {label: 'High', value: 'high'},
+                                    ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_3></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_3}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_3}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1"> <q-btn label="-" v-on:click="resource_3_build_m = true"
+                                            :style="bt_resource_3_disabled"
+                                            :disabled="social_backlash_resource_3 || is_clean_firm_resource_3"></q-btn>
+                                    </div>
+                                    <div class="col-1"> <q-btn label="+" v-on:click="resource_3_build_p = true"
+                                            :style="bt_resource_3_disabled"
+                                            :disabled="social_backlash_resource_3 || is_clean_firm_resource_3"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_3}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_3_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_3_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_3_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <q-separator vertical />
+
+                    <!-- CLEAN FIRM RESOURCE -->
+                    <div class="col" :style="b_color_resource_4" :disabled="is_clean_firm_resource_4">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_4}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_4" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                            {label: 'None', value: 'none'},
+                                            {label: 'Low', value: 'low'},
+                                            {label: 'Moderate', value: 'moderate'},
+                                            {label: 'High', value: 'high'},
+                                        ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_4></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_4}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_4}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1"> <q-btn label="-" v-on:click="resource_4_build_m = true"
+                                            :style="bt_resource_4_disabled"
+                                            :disabled="social_backlash_resource_4 || is_clean_firm_resource_4"></q-btn>
+                                    </div>
+                                    <div class="col-1"> <q-btn label="+" v-on:click="resource_4_build_p = true"
+                                            :style="bt_resource_4_disabled"
+                                            :disabled="social_backlash_resource_4 || is_clean_firm_resource_4"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_4}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_4_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_4_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_4_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><q-separator horizontal />
+
+                <div class="row">
+                    <!-- ONSHORE WIND POWER -->
+                    <div class=" col" :style="b_color_resource_5" :disabled="is_clean_firm_resource_5">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_5}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_5" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                        {label: 'None', value: 'none'},
+                                        {label: 'Low', value: 'low'},
+                                        {label: 'Moderate', value: 'moderate'},
+                                        {label: 'High', value: 'high'},
+                                    ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_5></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_5}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_5}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1"> <q-btn label="-" v-on:click="resource_5_build_m = true"
+                                            :style="bt_resource_5_disabled"
+                                            :disabled="social_backlash_resource_5 || is_clean_firm_resource_5"></q-btn>
+                                    </div>
+                                    <div class="col-1"> <q-btn label="+" v-on:click="resource_5_build_p = true"
+                                            :style="bt_resource_5_disabled"
+                                            :disabled="social_backlash_resource_5 || is_clean_firm_resource_5"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_5}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_5_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_5_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_5_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <q-separator vertical />
+
+                    <!-- UTILITY-SCALE SOLAR PV -->
+                    <div class="col" :style="b_color_resource_6" :disabled="is_clean_firm_resource_6">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_6}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_6" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                            {label: 'None', value: 'none'},
+                                            {label: 'Low', value: 'low'},
+                                            {label: 'Moderate', value: 'moderate'},
+                                            {label: 'High', value: 'high'},
+                                        ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_6></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_6}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_6}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1"> <q-btn label="-" v-on:click="resource_6_build_m = true"
+                                            :style="bt_resource_6_disabled"
+                                            :disabled="social_backlash_resource_6 || is_clean_firm_resource_6"></q-btn>
+                                    </div>
+                                    <div class="col-1"> <q-btn label="+" v-on:click="resource_6_build_p = true"
+                                            :style="bt_resource_6_disabled"
+                                            :disabled="social_backlash_resource_6 || is_clean_firm_resource_6"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_6}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_6_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_6_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_6_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><q-separator horizontal />
+
+                <div class="row">
+                    <!--OFFSHORE WIND POWER-->
+                    <div class=" col" :style="b_color_resource_7" :disabled="is_clean_firm_resource_7">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_7}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_7" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                        {label: 'None', value: 'none'},
+                                        {label: 'Low', value: 'low'},
+                                        {label: 'Moderate', value: 'moderate'},
+                                        {label: 'High', value: 'high'},
+                                    ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_7></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_7}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_7}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1"> <q-btn label="-" v-on:click="resource_7_build_m = true"
+                                            :style="bt_resource_7_disabled"
+                                            :disabled="social_backlash_resource_7 || is_clean_firm_resource_7"></q-btn>
+                                    </div>
+                                    <div class="col-1"> <q-btn label="+" v-on:click="resource_7_build_p = true"
+                                            :style="bt_resource_7_disabled"
+                                            :disabled="social_backlash_resource_7 || is_clean_firm_resource_7"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_7}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_7_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_7_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_7_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <q-separator vertical />
+
+                    <!-- DISTRIBUTED SOLAR PV -->
+                    <div class="col" :style="b_color_resource_8" :disable="is_clean_firm_resource_8">
+                        <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_8}}</h5>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+
+                        <div class="row justify-center">
+                            <h6>Backlash Risk: </h6>
+                            <q-btn-toggle readonly v-model="sbp_resource_8" toggle-color="deep-orange" glossy
+                                class="q-ml-md" :options="[
+                                            {label: 'None', value: 'none'},
+                                            {label: 'Low', value: 'low'},
+                                            {label: 'Moderate', value: 'moderate'},
+                                            {label: 'High', value: 'high'},
+                                        ]" />
+                        </div>
+
+                        <div class="row">
+                            <p style="text-align: center;"></p>
+                        </div>
+                        <q-separator horizontal />
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="row">
+                                    <div class="col-11">
+                                        <h6>Current Capacity</h6>
+                                        <st-big-number :number=cum_cap_resource_8></st-big-number>
+                                    </div>
+                                    <q-separator vertical />
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>{{bb_name_resource_8}}</h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>{{bc_resource_8}} GW/token</h5>
+                                    </div>
+                                    <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
+                                    <div class="col-1"> <q-btn label="-" v-on:click="resource_8_build_m = true"
+                                            :style="bt_resource_8_disabled"
+                                            :disabled="social_backlash_resource_8 || is_clean_firm_resource_8"></q-btn>
+                                    </div>
+                                    <div class="col-1"> <q-btn label="+" v-on:click="resource_8_build_p = true"
+                                            :style="bt_resource_8_disabled"
+                                            :disabled="social_backlash_resource_8 || is_clean_firm_resource_8"></q-btn>
+                                    </div>
+                                    <div class="col-1">
+                                        <h5><strong>{{bt_resource_8}}</strong></h5>
+                                    </div>
+                                    <!-- <div class="col-1"> <st-big-number :number="bt_resource_1"></st-big-number></div> -->
+                                </div>
+                                <div class="row">
+                                    <st-big-number :number=cap_resource_8_stage_1></st-big-number>
+                                    <st-big-number :number=cap_resource_8_stage_2></st-big-number>
+                                    <st-big-number :number=cap_resource_8_stage_3></st-big-number>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;margin-top : 25px;">
+                    <q-btn
+                        style="display: inline-block; font-size: 25px; background-color:rgb(16, 16, 129); color:white"
+                        :loading="run_simulation" :percentage="run_simulation" glossy v-on:click="run_simulation = true"
+                        label="Run Dispatch Simulator" />
+                </div>
+                <div style="text-align: center;margin-top : 25px;">
+                    <!-- <q-btn style="display: inline-block; padding: 10px; font-size: 25px; background-color:rgb(16, 16, 129); color:white;" glossy
+                        :loading="confirm_portfolio" :percentage="confirm_portfolio" v-on:click="confirm_portfolio = true"
+                        label="Confirm Portfolio"></q-btn> -->
+                    <q-btn style="display: inline-block; width: 305px; padding: 10px; font-size: 25px;"
+                        color="deep-orange" glossy :loading="advance_stage" :percentage="advance_stage"
+                        v-on:click="advance_stage = true" label="Advance Stage"></q-btn>
+                </div>
+                <br>
+            </q-tab-panel>
+            <q-tab-panel name="Simulation Results">
+
+                <h3 style="text-align:center;padding-top:20px;">Scores</h3>
+                <div class="row">
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="ife32" title="Reliability" :number="Reliability"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="ire51" title="Reliability Points"
+                            :number="Reliability_Points"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="i3b6u" title="Clean Share" :number="Clean_Share"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="i4x8f" title="Clean Points" :number="Clean_Points"></st-big-number>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col col-3 col-sm">
+                        <q-toggle label="Full year" v-model="plot_full_year"></q-toggle>
+                    </div>
+                    <div class="col col-9 col-sm">
+                        <q-slider :min=1 v-model="plot_week" :max=52 :step=1></q-slider>
+                        <p>Week {{plot_week}}</p>
+                    </div>
+                </div>
+                <div class="st-col col-12 col-sm " style="padding-left:10px">
+                    <plotly :data="plot_traces" :layout="plot_layout" :displaylogo="false"></plotly>
+                </div>
+
+                <div style="text-align: center;margin-top : 25px;">
+                    <!-- <q-btn style="display: inline-block; padding: 10px; font-size: 25px; background-color:rgb(16, 16, 129); color:white;" glossy
+                        :loading="confirm_portfolio" :percentage="confirm_portfolio" v-on:click="confirm_portfolio = true"
+                        label="Confirm Portfolio"></q-btn> -->
+                    <q-btn style="display: inline-block; width: 305px; padding: 10px; font-size: 25px;"
+                        color="deep-orange" glossy :loading="advance_stage" :percentage="advance_stage"
+                        v-on:click="advance_stage = true" label="Advance Stage"></q-btn>
+                </div>
+                <br>
+            </q-tab-panel>
+            <q-tab-panel name="Shape">
+                <div class="container" style="text-align: center;margin-top : 25px;">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="main_app" class="container" v-cloak v-if="isready">
+                                <div class="row">
+                                    <div class="col-sm-4">'
+                                        <q-btn color="primary" label="Buy Shaping Tokens"
+                                            v-on:click="bt_buy_shaping_token = true"
+                                            :disabled="bt_buy_shaping_token_is_disabled"></q-btn>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <p style="text-align: center;"></p>
+                                </div>
+                                <q-list bordered="" separator="">
+                                    <center>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <q-toggle v-model="bt_resilience" label="Climate Resilience"
+                                                    style="font-size: large;" checked-icon="check" color="blue"
+                                                    unchecked-icon="clear" right-label
+                                                    :disable="bt_resilience_is_disabled" />
+                                                <p style="font-size: medium;"> Reduces by half the probability of
+                                                    generator forced outages when a Climate Disaster is experienced.</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <q-toggle v-model="bt_innovation_experience" checked-icon="check"
+                                                    color="green" label="Accelerated Innovation" unchecked-icon="clear"
+                                                    style="font-size: large;" right-label
+                                                    :disable="bt_innovation_experience_is_disabled" />
+                                                <p style="font-size: medium;">Doubles pace of cost reduction as each
+                                                    technology is deployed.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <q-toggle v-model="bt_innovation_clean_firm" checked-icon="check"
+                                                    color="yellow" label="Innovation Clean Firm" unchecked-icon="clear"
+                                                    style="font-size: large;" right-label
+                                                    :disable="bt_innovation_clean_firm_is_disabled" />
+                                                <p style="font-size: medium;">Unlocks Clean Firm Resource in subsequent
+                                                    Stages</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <q-toggle v-model="bt_social_license" checked-icon="check" color="red"
+                                                    label="Benefits Sharing" unchecked-icon="clear"
+                                                    style="font-size: large;" right-label
+                                                    :disable="bt_social_license_is_disabled" />
+                                                <p style="font-size: medium;">Reduces by half the probability of Social
+                                                    Backlash as each technology is deployed.</p>
+                                            </div>
+                                        </div>
+                                    </center>
+                                </q-list>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;margin-top : 25px;">
+                    <!-- <q-btn style="display: inline-block; padding: 10px; font-size: 25px; background-color:rgb(16, 16, 129); color:white;" glossy
+                        :loading="confirm_portfolio" :percentage="confirm_portfolio" v-on:click="confirm_portfolio = true"
+                        label="Confirm Portfolio"></q-btn> -->
+                    <q-btn style="display: inline-block; width: 305px; padding: 10px; font-size: 25px;"
+                        color="deep-orange" glossy :loading="advance_stage" :percentage="advance_stage"
+                        v-on:click="advance_stage = true" label="Advance Stage"></q-btn>
+                </div>
+                <br>
+            </q-tab-panel>
+
+            <q-tab-panel name="Results">
+                <h3 style="text-align:center;padding-top:20px;">Scores</h3>
+                <div class="row">
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="ife32" title="Reliability" :number="stage_reliability"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="ire51" title="Reliability Points"
+                            :number="stage_reliability_points"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="i3b6u" title="Clean Share" :number="stage_clean_share"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="i4x8f" title="Clean Points" :number="stage_clean_points"></st-big-number>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col col-3 col-sm">
+                        <q-toggle label="Full year" v-model="plot_stage_full_year"></q-toggle>
+                    </div>
+                    <div class="col col-9 col-sm">
+                        <q-slider :min=1 v-model="plot_stage_week" :max=52 :step=1></q-slider>
+                        <p>Week {{plot_stage_week}}</p>
+                    </div>
+                </div>
+                <div class="st-col col-12 col-sm " style="padding-left:10px">
+                    <plotly :data="plot_stage_traces" :layout="plot_stage_layout" :displaylogo="false"></plotly>
+                </div>
+
+                <link rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+                <div class="row">
+                    <p style="text-align: center;"></p>
+                </div>
+                <h4>Climate Disaster (resources unavailable)</h4>
+                <div class="q-pa-md q-gutter-sm">
+                    <q-banner class="text-white" style="background-color: rgb(171, 20, 20);" :style="disaster_occurred">
+                        <div class="row justify-center">
+
+                            <span class="material-symbols-outlined" style="font-size: xx-large;">
+                                flood tsunami tornado volcano earthquake
+                            </span>
+                            <!-- <font size="+2">Disaster occured! Your resources are damaged.</font> -->
+                            <p style="font-size: x-large; padding-top: 10pt; padding-left: 20pt;">Disaster occured! Some
+                                of your resources are damaged</p>
+                        </div>
+                    </q-banner>
+                    <div class="row" :style="disaster_occurred">
+                        <div class="col-sm st-module">
+                            <st-big-number :number="demand_shock_percent" title="Demand Shock Percent"></st-big-number>
+                        </div>
+                        <div class="col-sm st-module">
+                            <st-big-number :number="outage_weeks" title="Outage Weeks"></st-big-number>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="q-pa-sm rounded-borders">
+                    <!-- Resources: -->
+                    <q-list bordered="" separator="">
+                        <center>
+                            <q-toggle v-model="disaster_resource_1" :label=name_resource_1 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="disaster_resource_2" :label=name_resource_2 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="disaster_resource_3" :label=name_resource_3 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="disaster_resource_4" :label=name_resource_4 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="disaster_resource_5" :label=name_resource_5 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="disaster_resource_6" :label=name_resource_6 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="disaster_resource_7" :label=name_resource_7 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="disaster_resource_8" :label=name_resource_8 style="font-size: large;"
+                                color="red" checked-icon="clear" left-label disable />
+                        </center>
+                    </q-list>
+                </div>
+                <div class="row">
+                    <p style="text-align: center;"></p>
+                </div>
+                <h4>Social Backlash</h4>
+                <div class="q-pa-sm rounded-borders">
+                    <!-- Resources: -->
+                    <q-list bordered="" separator="">
+                        <center>
+                            <q-toggle v-model="social_backlash_resource_1" :label=name_resource_1
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="social_backlash_resource_2" :label=name_resource_2
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="social_backlash_resource_3" :label=name_resource_3
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="social_backlash_resource_4" :label=name_resource_4
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="social_backlash_resource_5" :label=name_resource_5
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="social_backlash_resource_6" :label=name_resource_6
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="social_backlash_resource_7" :label=name_resource_7
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                            <q-toggle v-model="social_backlash_resource_8" :label=name_resource_8
+                                style="font-size: large;" color="red" checked-icon="clear" left-label disable />
+                        </center>
+                    </q-list>
+                </div>
+            </q-tab-panel>
+        </q-tab-panels>
+    </div>
+    <div class="row justify-center" :style="show_game_over">
+        <div class="col-auto">
+            <h1>Game over!</h1>
+            <br>
+            <center>
+                <h4> Final score </h4>
+            </center>
+            <div class="row justify-center">
+                <div class="col-auto">
+                    <q-btn
+                        style="font-size: 45pt; color: white; height: 160px; width: 200px; background-color: rgb(160, 218, 170);"
+                        glossy :label="total_score" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

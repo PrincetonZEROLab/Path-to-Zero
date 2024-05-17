@@ -1,0 +1,1 @@
+![png](./public/images/EDG_board.svg)

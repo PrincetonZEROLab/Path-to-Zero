@@ -1,0 +1,17 @@
+name = "ElectricityDecarbonizationGame"
+uuid = "acc6bb93-81f5-457a-83a9-4458d8d6ea4f"
+version = "0.1.0"
+
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+GenieFramework = "a59fdf5c-6bf0-4f5d-949c-a137c9e2f353"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+HiGHS = "87dc4568-4c63-4d18-b0c0-bb2238e4078b"
+JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+PlotlyBase = "a03496cd-edff-5a9b-9e67-9cda94a718b5"
+PrecompileTools = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+YAML = "ddb6d928-2868-570f-bddf-ab3f9cf99eb6"
