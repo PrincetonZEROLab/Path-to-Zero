@@ -1138,7 +1138,7 @@ using ElectricityDecarbonizationGame
     end
 
     @onchange game_over begin
-        show_pannels = "display: none"
+        # show_pannels = "display: none"
         show_game_over = "display: "
     end
 
