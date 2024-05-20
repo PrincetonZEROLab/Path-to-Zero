@@ -21,7 +21,7 @@ using ElectricityDecarbonizationGame
     @in color_default = "background-color: rgb(16, 16, 129);"
     @in color_select = "background-color: rgb(255, 77, 31);"
 
-    @out _stages = [2030, 2040, 2050]
+    @out _stages = [2035, 2050, 2065]
     @out year = 0
 
     @in available_budget_tokens = 5
@@ -48,9 +48,9 @@ using ElectricityDecarbonizationGame
     @out bt_color_4 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
     @out bt_color_5 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
 
-    @in label_year_1 = "NOW-2030"
-    @in label_year_2 = "2031-2040"
-    @in label_year_3 = "2041-2050"
+    @in label_year_1 = "NOW-2035"
+    @in label_year_2 = "2036-2050"
+    @in label_year_3 = "2051-2065"
 
     @in shaping_tokens = Dict(
         "Resilience" => [0, false],

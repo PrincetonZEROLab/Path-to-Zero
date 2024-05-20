@@ -572,14 +572,14 @@ function advance_stage(
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
-    if planning_year == "2030"
-    elseif planning_year == "2040"
+    if planning_year == "2035"
+    elseif planning_year == "2050"
         # Update resource parameters
         resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] / 2
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.5
 
-    elseif planning_year == "2050"
+    elseif planning_year == "2065"
         # Update resource parameters
         resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
         # Update uncertainty parameters

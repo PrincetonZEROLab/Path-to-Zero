@@ -108,8 +108,8 @@ using PrecompileTools: @compile_workload
             moderate=0.17,
             high=0.25
         )
-        run_simulation(1, 2030, resource_params, _scoring_parameters)
-        advance_stage(1, 2030, resource_params, _shaping_tokens, _uncertainty_parameters, _scoring_parameters, _experience_rate, _backlash_risk, _backlash_rates)
+        run_simulation(1, 2035, resource_params, _scoring_parameters)
+        advance_stage(1, 2035, resource_params, _shaping_tokens, _uncertainty_parameters, _scoring_parameters, _experience_rate, _backlash_risk, _backlash_rates)
 end
 
 end # module ElectricityDecarbonizationGame
