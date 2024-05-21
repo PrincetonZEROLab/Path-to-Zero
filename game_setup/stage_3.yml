@@ -9,12 +9,13 @@
 # 5. Scoring parameters
 
 # game parameters
+current_stage: 3
 available_budget_tokens: 5
 available_shaping_tokens: 2
 available_build_tokens:
   - 10
-  - 11
-  - 12
+  - 20
+  - 40
 
 stages:
   - 2035
@@ -26,67 +27,91 @@ resource_blocks:
 
   block_1:
     name: "ONSHORE WIND POWER"
-    start_capacity: 0
-    build_cost: 10
+    start_capacity: 42
+    build_cost: 13
     backlash_risk: "high"
     EDG_data_name: "onshore_wind"
     new_resource: true
+    social_backlash: true
+    cap_built_stage_1: 20
+    cap_built_stage_2: 22
 
   block_2:
     name: "UTILITY-SCALE SOLAR PV"
-    start_capacity: 0
-    build_cost: 15
+    start_capacity: 30
+    build_cost: 19
     backlash_risk: "moderate"
     EDG_data_name: "solar_pv"
     new_resource: true
+    social_backlash: false
+    cap_built_stage_1: 30
+    cap_built_stage_2: 0
 
   block_3:
     name: "LARGE-SCALE FIRM HYDRO"
-    start_capacity: 0
-    build_cost: 10
+    start_capacity: 20
+    build_cost: 14
     backlash_risk: "high"
     EDG_data_name: "offshore_wind"
     new_resource: true
+    social_backlash: false
+    cap_built_stage_1: 20
+    cap_built_stage_2: 0
 
   block_4:
     name: "DISTRIBUTED SOLAR PV"
-    start_capacity: 0
-    build_cost: 8
+    start_capacity: 26
+    build_cost: 10
     backlash_risk: "none"
     EDG_data_name: "distributed_solar"
     new_resource: true
+    social_backlash: false
+    cap_built_stage_1: 8
+    cap_built_stage_2: 18
 
   block_5:
     name: "BATTERY/PUMPED HYDRO"
-    start_capacity: 0
-    build_cost: 20
+    start_capacity: 66
+    build_cost: 30
     backlash_risk: "none"
     EDG_data_name: "battery"
     new_resource: true
+    social_backlash: false
+    cap_built_stage_1: 20
+    cap_built_stage_2: 46
 
   block_6:
     name: "CLEAN FIRM RESOURCE"
-    start_capacity: 0
-    build_cost: 5
+    start_capacity: 10
+    build_cost: 6
     backlash_risk: "low"
     EDG_data_name: "clean_firm"
     new_resource: true
+    social_backlash: false
+    cap_built_stage_1: 0
+    cap_built_stage_2: 10
 
   block_7:
     name: "DOMESTIC FOSSIL"
-    start_capacity: 60
+    start_capacity: 20
     build_cost: 20
     backlash_risk: "low"
     EDG_data_name: "existing_gas"
     new_resource: false
+    social_backlash: false
+    cap_built_stage_1: 20
+    cap_built_stage_2: 20
 
   block_8:
     name: "CONVENTIONAL NUCLEAR"
     start_capacity: 10
-    build_cost: 10
+    build_cost: 5
     backlash_risk: "moderate"
     EDG_data_name: "existing_nuclear"
     new_resource: false
+    social_backlash: false
+    cap_built_stage_1: 10
+    cap_built_stage_2: 10
 
 # Uncertainty parameters
 uncertainty_parameters: 
@@ -133,3 +158,18 @@ scoring_parameters:
     - 90.0
     - 80.0
 
+shaping_tokens:
+  resilience: false
+  innovation_experience: true
+  innovation_clean_firm: true
+  social_license: false
+
+reliability_scores:
+  1: 4
+  2: 0
+  3: 0
+
+clean_scores:
+  1: 5
+  2: 5
+  3: 0

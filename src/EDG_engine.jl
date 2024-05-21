@@ -512,7 +512,7 @@ function run_stage(
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
     end
-    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] || tryparse(Int,planning_year) < 2050
         resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
