@@ -10,7 +10,12 @@
 
     <div class="container">
         <div class="row justify-content-md-center">
-            <div class="col-sm">
+            <div class="col-4">
+                <q-input filled v-model="team_name" label="Team name (single word)" stack-label lable-color="rgb(28, 31, 47)" :dense="dense" />
+                <q-btn color="secondary" label="Confirm team" :loading="transcribing" v-on:click="team_name_confirmed = !team_name_confirmed"></q-btn>
+                <h5 style="color: rgba(255, 0, 0, 0.649);">{{team_name_error}}</h5>
+            </div>
+            <div class="col-4">
                 <q-uploader label="Upload Setup File"
                     v-on:uploaded="function(event) { handle_event(event, 'uploaded') }" no-thumbnails
                     :url="'/____/upload/' + channel_"
@@ -19,14 +24,11 @@
                                     margin: 0 auto;" accept=".yml">
                 </q-uploader>
             </div>
-            <div class="col-sm">
+            <div class="col-4">
                 <div class="st-module st-col col">
+                    <h5 style="color: rgb(16, 16, 129); padding-left: 10px; padding-top: 20px;" :style="team_error_msg_style">Please select team name.</h5>
                     <q-select v-model="selected_file" :options="upfiles" style="max-width: 95%; width: 95%;
-                            margin: 0 auto;"></q-select>
-                    <!-- <center><q-btn color="primary" label="Start" v-on:click="bt_start_game = true"></q-btn></center> -->
-                    <br>
-                    <div style="height: 16px;"></div>
-                    <br>
+                            margin: 0 auto;" :disable="team_name_not_set"></q-select>
                 </div>
             </div>
         </div>
