@@ -280,6 +280,15 @@ using ElectricityDecarbonizationGame
     @out is_clean_firm_resource_7 = false
     @out is_clean_firm_resource_8 = false
 
+    @out is_firm_hydro_resource_1 = false
+    @out is_firm_hydro_resource_2 = false
+    @out is_firm_hydro_resource_3 = false
+    @out is_firm_hydro_resource_4 = false
+    @out is_firm_hydro_resource_5 = false
+    @out is_firm_hydro_resource_6 = false
+    @out is_firm_hydro_resource_7 = false
+    @out is_firm_hydro_resource_8 = false
+
     @in bt_buy_build_token = false
     @out bt_buy_build_token_is_disabled = false
 
@@ -426,6 +435,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_1 = is_new_resource_1 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_1 *= backend_data_name_1 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_1 = backend_data_name_1 == "clean_firm" ? true : false
+        is_firm_hydro_resource_1 = backend_data_name_1 == "firm_hydro" ? true : false
 
         block_2 = resource_blocks["block_2"]
         name_resource_2 = block_2["name"]
@@ -440,6 +450,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_2 = is_new_resource_2 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_2 *= backend_data_name_2 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_2 = backend_data_name_2 == "clean_firm" ? true : false
+        is_firm_hydro_resource_2 = backend_data_name_2 == "firm_hydro" ? true : false
 
         block_3 = resource_blocks["block_3"]
         name_resource_3 = block_3["name"]
@@ -454,6 +465,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_3 = is_new_resource_3 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_3 *= backend_data_name_3 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_3 = backend_data_name_3 == "clean_firm" ? true : false
+        is_firm_hydro_resource_3 = backend_data_name_3 == "firm_hydro" ? true : false
 
         block_4 = resource_blocks["block_4"]
         name_resource_4 = block_4["name"]
@@ -468,6 +480,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_4 = is_new_resource_4 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_4 *= backend_data_name_4 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_4 = backend_data_name_4 == "clean_firm" ? true : false
+        is_firm_hydro_resource_4 = backend_data_name_4 == "firm_hydro" ? true : false
 
         block_5 = resource_blocks["block_5"]
         name_resource_5 = block_5["name"]
@@ -482,6 +495,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_5 = is_new_resource_5 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_5 *= backend_data_name_5 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_5 = backend_data_name_5 == "clean_firm" ? true : false
+        is_firm_hydro_resource_5 = backend_data_name_5 == "firm_hydro" ? true : false
 
         block_6 = resource_blocks["block_6"]
         name_resource_6 = block_6["name"]
@@ -496,6 +510,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_6 = is_new_resource_6 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_6 *= backend_data_name_6 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_6 = backend_data_name_6 == "clean_firm" ? true : false
+        is_firm_hydro_resource_6 = backend_data_name_6 == "firm_hydro" ? true : false
 
         block_7 = resource_blocks["block_7"]
         name_resource_7 = block_7["name"]
@@ -510,6 +525,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_7 = is_new_resource_7 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_7 *= backend_data_name_7 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_7 = backend_data_name_7 == "clean_firm" ? true : false
+        is_firm_hydro_resource_7 = backend_data_name_7 == "firm_hydro" ? true : false
 
         block_8 = resource_blocks["block_8"]
         name_resource_8 = block_8["name"]
@@ -524,6 +540,7 @@ using ElectricityDecarbonizationGame
         b_color_resource_8 = is_new_resource_8 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_8 *= backend_data_name_8 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_8 = backend_data_name_8 == "clean_firm" ? true : false
+        is_firm_hydro_resource_8 = backend_data_name_8 == "firm_hydro" ? true : false
 
         # Uncertainty parameters
         uncertainty_parameters = _game_setup["uncertainty_parameters"]
@@ -749,7 +766,9 @@ using ElectricityDecarbonizationGame
             else
                 cap_resource_3_stage_3 = bt_resource_3 * bc_resource_3[1]
             end
-            cum_cap_resource_3 = is_new_resource_3 ? bt_resource_3 * bc_resource_3[1] : sc_resource_3
+            # Note: this is for hydro only: can expand but with initial capacity
+            # TODO: make this for all resources
+            cum_cap_resource_3 = is_new_resource_3 ? sc_resource_3 + bt_resource_3 * bc_resource_3[1] : sc_resource_3
         end
     end
 
@@ -902,7 +921,9 @@ using ElectricityDecarbonizationGame
                 end
                 bt_resource_8 += 1
                 available_build_tokens -= 1
-                cum_cap_resource_8 = is_new_resource_8 ? sc_resource_8 + new_cap : sc_resource_8
+                # Note: I'm assuming this is nuclear for Pakistan 
+                # TODO: Make this available for all resources
+                cum_cap_resource_8 = sc_resource_8 + new_cap
             else
                 return
             end
@@ -1002,7 +1023,7 @@ using ElectricityDecarbonizationGame
         rename!(df, "solar_pv" => "6. Solar PV (Utility Scale)")
         rename!(df, "distributed_solar" => "5. Distributed Solar PV")
         rename!(df, "onshore_wind" => "4 Onshore Wind")
-        rename!(df, "offshore_wind" => "3. Large-scale firm hydro")
+        rename!(df, "firm_hydro" => "3. Large-scale firm hydro")
         rename!(df, "battery" => "2. Battery Discharge")
         rename!(df, "battery_charge" => "1. Battery Charge")
         rename!(df, "demand_not_served" => "0. Demand not served")
@@ -1271,8 +1292,6 @@ using ElectricityDecarbonizationGame
             "Social_License" => social_license ? 1 : 0
         )
 
-        println("Shaping Tokens: ", _shaping_tokens)
-
         _uncertainty_parameters = Dict(
             "Demand_Variance" => up_demand_variance,
             "Disaster_Probability" => up_disaster_probability,
@@ -1347,7 +1366,7 @@ using ElectricityDecarbonizationGame
         rename!(df, "solar_pv" => "6. Solar PV (Utility Scale)")
         rename!(df, "distributed_solar" => "5. Distributed Solar PV")
         rename!(df, "onshore_wind" => "4. Onshore Wind")
-        rename!(df, "offshore_wind" => "3. Large-scale firm hydro")
+        rename!(df, "firm_hydro" => "3. Large-scale firm hydro")
         rename!(df, "battery" => "2. Battery Discharge")
         rename!(df, "storage_charge" => "1. Battery Charge")
         rename!(df, "nonserved" => "0. Demand not served")
@@ -1449,6 +1468,16 @@ using ElectricityDecarbonizationGame
             clean_score_stage_2 = stage_clean_points
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
+            # cannot build hydro in stage 3
+            is_new_resource_1 = is_firm_hydro_resource_1 == true ? false : is_new_resource_1
+            is_new_resource_2 = is_firm_hydro_resource_2 == true ? false : is_new_resource_2
+            is_new_resource_3 = is_firm_hydro_resource_3 == true ? false : is_new_resource_3
+            is_new_resource_4 = is_firm_hydro_resource_4 == true ? false : is_new_resource_4
+            is_new_resource_5 = is_firm_hydro_resource_5 == true ? false : is_new_resource_5
+            is_new_resource_6 = is_firm_hydro_resource_6 == true ? false : is_new_resource_6
+            is_new_resource_7 = is_firm_hydro_resource_7 == true ? false : is_new_resource_7
+            is_new_resource_8 = is_firm_hydro_resource_8 == true ? false : is_new_resource_8
+
         else
             reliability_score_stage_3 = stage_reliability_points
             total_score += stage_reliability_points
@@ -1461,7 +1490,9 @@ using ElectricityDecarbonizationGame
         end
 
         current_stage += 1
-        println("Starting Stage ", current_stage)
+        if current_stage <= 3
+            println("Starting Stage ", current_stage)
+        end
         tab = "Results"
 
         # write setup to file

@@ -38,10 +38,15 @@ function run_simulation(
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
     end
-    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] || tryparse(Int,planning_year) < 2050
+    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] || tryparse(Int,planning_year) <= 2050
         resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+    end
+    if [1000 * resource_params["Build_Cost"][1, :firm_hydro] * resource_params["Build_Tokens"][1, :firm_hydro]] > resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"] || tryparse(Int,planning_year) <= 2050
+        resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"] = resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"]
+    else
+        resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"] = [1000 * resource_params["Build_Cost"][1, :firm_hydro] * resource_params["Build_Tokens"][1, :firm_hydro]]
     end
 
     ending_capacity = DataFrame(Resource=resources.Resource, Ending_Cap_MW=resources.Existing_Cap_MW)
@@ -444,7 +449,6 @@ function update_step(
     backlash_risk::DataFrame,
     backlash_rates::DataFrame
 )
-
     G = size(resource_params["Build_Tokens"], 2)
     resources = names(resource_params["Build_Tokens"])
 
@@ -499,7 +503,6 @@ function run_stage(
     scoring_params::Dict,
     input_path::String,
 )
-
     in_path = (joinpath(input_path, "EDG_inputs", planning_year))
 
     (resources, G) = load_resources_input(in_path)
@@ -518,10 +521,15 @@ function run_stage(
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
     end
-    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] || tryparse(Int,planning_year) < 2050
+    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] || tryparse(Int,planning_year) <= 2050
         resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+    end
+    if [1000 * resource_params["Build_Cost"][1, :firm_hydro] * resource_params["Build_Tokens"][1, :firm_hydro]] > resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"] || tryparse(Int,planning_year) <= 2050
+        resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"] = resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"]
+    else
+        resources.Existing_Cap_MW[resources.Resource.=="firm_hydro"] = [1000 * resource_params["Build_Cost"][1, :firm_hydro] * resource_params["Build_Tokens"][1, :firm_hydro]]
     end
     # Prevent clean firm capacity unless Innovation: Clean Firm shaping point is invested (and issue warning)
     if resources.Existing_Cap_MW[resources.Resource.=="clean_firm"][1] > 0 && shaping_tokens["Innovation_Clean_Firm"] == 0
@@ -574,20 +582,19 @@ function advance_stage(
     backlash_rates::DataFrame;
     input_path::String="."
 )
-
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
     if planning_year == "2035"
     elseif planning_year == "2050"
         # Update resource parameters
-        resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] / 2
+        # resource_params["Build_Cost"].existing_nuclear[1] = round(resource_params["Build_Cost"].existing_nuclear[1] / 2)
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.5
 
     elseif planning_year == "2065"
         # Update resource parameters
-        resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
+        # resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.9
     else

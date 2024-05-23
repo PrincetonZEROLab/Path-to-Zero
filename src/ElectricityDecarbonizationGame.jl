@@ -20,7 +20,7 @@ using PrecompileTools: @compile_workload
             "solar_pv",
             "distributed_solar",
             "onshore_wind",
-            "offshore_wind",
+            "firm_hydro",
             "battery",
             "clean_firm"]
 

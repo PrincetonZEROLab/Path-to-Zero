@@ -12,7 +12,7 @@
         <div class="row justify-content-md-center">
             <div class="col-4">
                 <q-input filled v-model="team_name" label="Team name (single word)" stack-label lable-color="rgb(28, 31, 47)" :dense="dense" />
-                <q-btn color="secondary" label="Confirm team" :loading="transcribing" v-on:click="team_name_confirmed = !team_name_confirmed"></q-btn>
+                <q-btn style="background-color: rgb(16, 16, 129); color: white;" label="Confirm team" :loading="transcribing" v-on:click="team_name_confirmed = !team_name_confirmed"></q-btn>
                 <h5 style="color: rgba(255, 0, 0, 0.649);">{{team_name_error}}</h5>
             </div>
             <div class="col-4">

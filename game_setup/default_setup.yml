@@ -14,8 +14,8 @@ available_budget_tokens: 5
 available_shaping_tokens: 2
 available_build_tokens:
   - 10
-  - 20
-  - 40
+  - 11
+  - 12
 
 stages:
   - 2035
@@ -48,7 +48,7 @@ resource_blocks:
     start_capacity: 10
     build_cost: 20
     backlash_risk: "high"
-    EDG_data_name: "offshore_wind"
+    EDG_data_name: "firm_hydro"
     new_resource: true
     social_backlash: false
 
