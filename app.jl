@@ -911,7 +911,7 @@ using ElectricityDecarbonizationGame
     @onbutton resource_8_build_p begin
         if available_build_tokens > 0
             new_cap = (bt_resource_8 + 1) * bc_resource_8[1]
-            if (is_new_resource_8) || (new_cap <= sc_resource_8)
+            if (is_new_resource_8) || (new_cap <= sc_resource_8 || current_stage < 3)
                 if current_stage == 1
                     cap_resource_8_stage_1 = new_cap
                 elseif current_stage == 2
@@ -923,7 +923,7 @@ using ElectricityDecarbonizationGame
                 available_build_tokens -= 1
                 # Note: I'm assuming this is nuclear for Pakistan 
                 # TODO: Make this available for all resources
-                cum_cap_resource_8 = sc_resource_8 + new_cap
+                cum_cap_resource_8 = current_stage < 3 ? sc_resource_8 + new_cap : sc_resource_8
             else
                 return
             end
@@ -940,7 +940,13 @@ using ElectricityDecarbonizationGame
             else
                 cap_resource_8_stage_3 = bt_resource_8 * bc_resource_8[1]
             end
-            cum_cap_resource_8 = is_new_resource_8 ? bt_resource_8 * bc_resource_8[1] : sc_resource_8
+            # Note: this is for nuclear only: can expand but with initial capacity
+            # TODO: make this for all resources
+            if current_stage < 3
+                cum_cap_resource_8 = is_new_resource_8 ? bt_resource_8 * bc_resource_8[1] : sc_resource_8
+            else
+                cum_cap_resource_8 = is_new_resource_8 ? sc_resource_8 + bt_resource_8 * bc_resource_8[1] : sc_resource_8
+            end
         end
     end
 
