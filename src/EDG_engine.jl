@@ -17,8 +17,6 @@ function run_simulation(
     path::String="."
 )
 
-    println(resource_params["Start_Capacity"])
-
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
@@ -26,8 +24,6 @@ function run_simulation(
     in_path = (joinpath(path, "EDG_inputs", planning_year))
 
     (resources, G) = load_resources_input(in_path)
-
-    println(resource_params["Start_Capacity"])
 
     # Update capacities to reflect capacity input
     for g in G
@@ -37,6 +33,17 @@ function run_simulation(
 
     # Battery energy capacity set to 4 hour duration (4:1 energy to power ratio)
     resources.Existing_Cap_MWh[resources.Resource.=="battery"] = resources.Existing_Cap_MW[resources.Resource.=="battery"] .* 4
+    # Retire existing capacity if not maintained
+    if [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]] > resources.Existing_Cap_MW[resources.Resource.=="existing_gas"]
+        resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = resources.Existing_Cap_MW[resources.Resource.=="existing_gas"]
+    else
+        resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
+    end
+    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+        resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+    else
+        resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+    end
 
     ending_capacity = DataFrame(Resource=resources.Resource, Ending_Cap_MW=resources.Existing_Cap_MW)
 
