@@ -63,13 +63,13 @@ using ElectricityDecarbonizationGame
     @in current_stage = 1
 
     # Border color
-    @out b_color_resource_1 = "" 
-    @out b_color_resource_2 = "" 
-    @out b_color_resource_3 = "" 
-    @out b_color_resource_4 = "" 
-    @out b_color_resource_5 = "" 
-    @out b_color_resource_6 = "" 
-    @out b_color_resource_7 = "" 
+    @out b_color_resource_1 = ""
+    @out b_color_resource_2 = ""
+    @out b_color_resource_3 = ""
+    @out b_color_resource_4 = ""
+    @out b_color_resource_5 = ""
+    @out b_color_resource_6 = ""
+    @out b_color_resource_7 = ""
     @out b_color_resource_8 = ""
 
     # Resource names
@@ -83,13 +83,13 @@ using ElectricityDecarbonizationGame
     @out name_resource_8 = "UNKNOWN"
 
     # Build button names
-    @out bb_name_resource_1 = "Added capacity" 
-    @out bb_name_resource_2 = "Added capacity" 
-    @out bb_name_resource_3 = "Added capacity" 
-    @out bb_name_resource_4 = "Added capacity" 
-    @out bb_name_resource_5 = "Added capacity" 
-    @out bb_name_resource_6 = "Added capacity" 
-    @out bb_name_resource_7 = "Added capacity" 
+    @out bb_name_resource_1 = "Added capacity"
+    @out bb_name_resource_2 = "Added capacity"
+    @out bb_name_resource_3 = "Added capacity"
+    @out bb_name_resource_4 = "Added capacity"
+    @out bb_name_resource_5 = "Added capacity"
+    @out bb_name_resource_6 = "Added capacity"
+    @out bb_name_resource_7 = "Added capacity"
     @out bb_name_resource_8 = "Added capacity"
 
     # Build Capacity
@@ -128,7 +128,7 @@ using ElectricityDecarbonizationGame
     @out cum_cap_resource_6 = 0
     @out cum_cap_resource_7 = 0
     @out cum_cap_resource_8 = 0
-    
+
     # Build Tokens
     @out bt_resource_1 = 0
     @out bt_resource_2 = 0
@@ -210,38 +210,6 @@ using ElectricityDecarbonizationGame
     @in sp_clean_stage_2 = [80, 78, 76, 73, 70]
     @in sp_clean_stage_3 = [99.9, 99, 98, 96, 90]
     @in sp_reliability = [99.9, 99.5, 99, 98, 97]
-
-    @in rows = [Dict("1" => 60,
-                        "2" => 58,
-                        "3" => 56,
-                        "4" => 53,
-                        "5" =>50),
-                Dict("1" => 60,
-                        "2" => 58,
-                        "3" => 56,
-                        "4" => 53,
-                        "5" =>50),
-                Dict("1" => 60,
-                        "2" => 58,
-                        "3" => 56,
-                        "4" => 53,
-                        "5" => 50)
-        ]
-    @in columns = [Dict("name" => "1",
-    "required" => true,
-    "label" => "1"),
-    Dict("name" => "2",
-    "required" => true,
-    "label" => "2"),
-    Dict("name" => "3",
-    "required" => true,
-    "label" => "3"),
-    Dict("name" => "4",
-    "required" => true,
-    "label" => "4"),
-    Dict("name" => "5",
-    "required" => true,
-    "label" => "5")]
 
     # buttons
     @in resource_1_build_p = false
@@ -403,15 +371,19 @@ using ElectricityDecarbonizationGame
         # Initial capacity for each resource
         _game_setup = YAML.load_file(joinpath(FILE_PATH, selected_file))
 
+        if haskey(_game_setup, "current_stage")
+            current_stage = _game_setup["current_stage"]
+        end
+
         available_budget_tokens = _game_setup["available_budget_tokens"]
         available_shaping_tokens = _game_setup["available_shaping_tokens"]
         _available_build_tokens = _game_setup["available_build_tokens"]
-        available_build_tokens = _available_build_tokens[1]
+        available_build_tokens = _available_build_tokens[current_stage]
 
         _stages = _game_setup["stages"]
         @assert length(_stages) == 3
 
-        year = _stages[1]
+        year = _stages[current_stage]
 
         label_year_1 = "NOW-" * string(_stages[1])
         label_year_2 = string(_stages[1] + 1) * "-" * string(_stages[2])
@@ -426,7 +398,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_1 = block_1["backlash_risk"]
         backend_data_name_1 = block_1["EDG_data_name"]
         is_new_resource_1 = block_1["new_resource"]
-        name_resource_1 = is_new_resource_1 ? name_resource_1 : name_resource_1*" (EXISTING)"
+        name_resource_1 = is_new_resource_1 ? name_resource_1 : name_resource_1 * " (EXISTING)"
         cum_cap_resource_1 = sc_resource_1
         bb_name_resource_1 = is_new_resource_1 ? bb_name_resource_1 : "Retained capacity"
         b_color_resource_1 = is_new_resource_1 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -440,7 +412,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_2 = block_2["backlash_risk"]
         backend_data_name_2 = block_2["EDG_data_name"]
         is_new_resource_2 = block_2["new_resource"]
-        name_resource_2 = is_new_resource_2 ? name_resource_2 : name_resource_2*" (EXISTING)"
+        name_resource_2 = is_new_resource_2 ? name_resource_2 : name_resource_2 * " (EXISTING)"
         cum_cap_resource_2 = sc_resource_2
         bb_name_resource_2 = is_new_resource_2 ? bb_name_resource_2 : "Retained capacity"
         b_color_resource_2 = is_new_resource_2 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -454,7 +426,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_3 = block_3["backlash_risk"]
         backend_data_name_3 = block_3["EDG_data_name"]
         is_new_resource_3 = block_3["new_resource"]
-        name_resource_3 = is_new_resource_3 ? name_resource_3 : name_resource_3*" (EXISTING)"
+        name_resource_3 = is_new_resource_3 ? name_resource_3 : name_resource_3 * " (EXISTING)"
         cum_cap_resource_3 = sc_resource_3
         bb_name_resource_3 = is_new_resource_3 ? bb_name_resource_3 : "Retained capacity"
         b_color_resource_3 = is_new_resource_3 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -468,7 +440,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_4 = block_4["backlash_risk"]
         backend_data_name_4 = block_4["EDG_data_name"]
         is_new_resource_4 = block_4["new_resource"]
-        name_resource_4 = is_new_resource_4 ? name_resource_4 : name_resource_4*" (EXISTING)"
+        name_resource_4 = is_new_resource_4 ? name_resource_4 : name_resource_4 * " (EXISTING)"
         cum_cap_resource_4 = sc_resource_4
         bb_name_resource_4 = is_new_resource_4 ? bb_name_resource_4 : "Retained capacity"
         b_color_resource_4 = is_new_resource_4 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -482,7 +454,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_5 = block_5["backlash_risk"]
         backend_data_name_5 = block_5["EDG_data_name"]
         is_new_resource_5 = block_5["new_resource"]
-        name_resource_5 = is_new_resource_5 ? name_resource_5 : name_resource_5*" (EXISTING)"
+        name_resource_5 = is_new_resource_5 ? name_resource_5 : name_resource_5 * " (EXISTING)"
         cum_cap_resource_5 = sc_resource_5
         bb_name_resource_5 = is_new_resource_5 ? bb_name_resource_5 : "Retained capacity"
         b_color_resource_5 = is_new_resource_5 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -496,7 +468,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_6 = block_6["backlash_risk"]
         backend_data_name_6 = block_6["EDG_data_name"]
         is_new_resource_6 = block_6["new_resource"]
-        name_resource_6 = is_new_resource_6 ? name_resource_6 : name_resource_6*" (EXISTING)"
+        name_resource_6 = is_new_resource_6 ? name_resource_6 : name_resource_6 * " (EXISTING)"
         cum_cap_resource_6 = sc_resource_6
         bb_name_resource_6 = is_new_resource_6 ? bb_name_resource_6 : "Retained capacity"
         b_color_resource_6 = is_new_resource_6 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -510,7 +482,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_7 = block_7["backlash_risk"]
         backend_data_name_7 = block_7["EDG_data_name"]
         is_new_resource_7 = block_7["new_resource"]
-        name_resource_7 = is_new_resource_7 ? name_resource_7 : name_resource_7*" (EXISTING)"
+        name_resource_7 = is_new_resource_7 ? name_resource_7 : name_resource_7 * " (EXISTING)"
         cum_cap_resource_7 = sc_resource_7
         bb_name_resource_7 = is_new_resource_7 ? bb_name_resource_7 : "Retained capacity"
         b_color_resource_7 = is_new_resource_7 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -524,7 +496,7 @@ using ElectricityDecarbonizationGame
         sbp_resource_8 = block_8["backlash_risk"]
         backend_data_name_8 = block_8["EDG_data_name"]
         is_new_resource_8 = block_8["new_resource"]
-        name_resource_8 = is_new_resource_8 ? name_resource_8 : name_resource_8*" (EXISTING)"
+        name_resource_8 = is_new_resource_8 ? name_resource_8 : name_resource_8 * " (EXISTING)"
         cum_cap_resource_8 = sc_resource_8
         bb_name_resource_8 = is_new_resource_8 ? bb_name_resource_8 : "Retained capacity"
         b_color_resource_8 = is_new_resource_8 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
@@ -555,6 +527,79 @@ using ElectricityDecarbonizationGame
         sp_clean_stage_2 = scoring_parameters["Clean_Stage_2"]
         sp_clean_stage_3 = scoring_parameters["Clean_Stage_3"]
         sp_reliability = scoring_parameters["Reliability"]
+    
+        # Load prevoius stage setup
+        if current_stage > 1
+            social_backlash_resource_1 = resource_blocks["block_1"]["social_backlash"]
+            social_backlash_resource_2 = resource_blocks["block_2"]["social_backlash"]
+            social_backlash_resource_3 = resource_blocks["block_3"]["social_backlash"]
+            social_backlash_resource_4 = resource_blocks["block_4"]["social_backlash"]
+            social_backlash_resource_5 = resource_blocks["block_5"]["social_backlash"]
+            social_backlash_resource_6 = resource_blocks["block_6"]["social_backlash"]
+            social_backlash_resource_7 = resource_blocks["block_7"]["social_backlash"]
+            social_backlash_resource_8 = resource_blocks["block_8"]["social_backlash"]
+
+            # shaping tokens
+            if _game_setup["shaping_tokens"]["resilience"]
+                bt_resilience = true
+                bt_resilience_is_disabled = true
+            end
+            if _game_setup["shaping_tokens"]["innovation_experience"]
+                bt_innovation_experience = true
+                bt_innovation_experience_is_disabled = true
+            end
+            if _game_setup["shaping_tokens"]["innovation_clean_firm"]
+                bt_innovation_clean_firm = true
+                bt_innovation_clean_firm_is_disabled = true
+                is_clean_firm_resource_1 = false
+                is_clean_firm_resource_2 = false
+                is_clean_firm_resource_3 = false
+                is_clean_firm_resource_4 = false
+                is_clean_firm_resource_5 = false
+                is_clean_firm_resource_6 = false
+                is_clean_firm_resource_7 = false
+                is_clean_firm_resource_8 = false
+                b_color_resource_1 = replace(b_color_resource_1, color_select => "")
+                b_color_resource_2 = replace(b_color_resource_2, color_select => "")
+                b_color_resource_3 = replace(b_color_resource_3, color_select => "")
+                b_color_resource_4 = replace(b_color_resource_4, color_select => "")
+                b_color_resource_5 = replace(b_color_resource_5, color_select => "")
+                b_color_resource_6 = replace(b_color_resource_6, color_select => "")
+                b_color_resource_7 = replace(b_color_resource_7, color_select => "")
+                b_color_resource_8 = replace(b_color_resource_8, color_select => "")
+            end
+            if _game_setup["shaping_tokens"]["social_license"]
+                bt_social_license = true
+                bt_social_license_is_disabled = true
+            end
+            # update scores
+            reliability_score_stage_1 = _game_setup["reliability_scores"][1]
+            reliability_score_stage_2 = _game_setup["reliability_scores"][2]
+            reliability_score_stage_3 = _game_setup["reliability_scores"][3]
+            clean_score_stage_1 = _game_setup["clean_scores"][1]
+            clean_score_stage_2 = _game_setup["clean_scores"][2]
+            clean_score_stage_3 = _game_setup["clean_scores"][3]
+            total_score = sum([reliability_score_stage_1, reliability_score_stage_2, reliability_score_stage_3, clean_score_stage_1, clean_score_stage_2, clean_score_stage_3])
+
+            # update built capacity from prevoius stages
+            cap_resource_1_stage_1 = get(_game_setup["resource_blocks"]["block_1"], "cap_built_stage_1", 0)
+            cap_resource_2_stage_1 = get(_game_setup["resource_blocks"]["block_2"], "cap_built_stage_1", 0)
+            cap_resource_3_stage_1 = get(_game_setup["resource_blocks"]["block_3"], "cap_built_stage_1", 0)
+            cap_resource_4_stage_1 = get(_game_setup["resource_blocks"]["block_4"], "cap_built_stage_1", 0)
+            cap_resource_5_stage_1 = get(_game_setup["resource_blocks"]["block_5"], "cap_built_stage_1", 0)
+            cap_resource_6_stage_1 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_1", 0)
+            cap_resource_7_stage_1 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_1", 0)
+            cap_resource_8_stage_1 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_1", 0)
+
+            cap_resource_1_stage_2 = get(_game_setup["resource_blocks"]["block_1"], "cap_built_stage_2", 0)
+            cap_resource_2_stage_2 = get(_game_setup["resource_blocks"]["block_2"], "cap_built_stage_2", 0)
+            cap_resource_3_stage_2 = get(_game_setup["resource_blocks"]["block_3"], "cap_built_stage_2", 0)
+            cap_resource_4_stage_2 = get(_game_setup["resource_blocks"]["block_4"], "cap_built_stage_2", 0)
+            cap_resource_5_stage_2 = get(_game_setup["resource_blocks"]["block_5"], "cap_built_stage_2", 0)
+            cap_resource_6_stage_2 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_2", 0)
+            cap_resource_7_stage_2 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_2", 0)
+            cap_resource_8_stage_2 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_2", 0)
+        end
     end
 
     # buy build tokens
@@ -573,7 +618,7 @@ using ElectricityDecarbonizationGame
         elseif available_budget_tokens == 4
             bt_color_5 = "border: 1px solid black;"
         elseif available_budget_tokens == 3
-            bt_color_4 = bt_color_5= "border: 1px solid black;"
+            bt_color_4 = bt_color_5 = "border: 1px solid black;"
         elseif available_budget_tokens == 2
             bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
         elseif available_budget_tokens == 1
