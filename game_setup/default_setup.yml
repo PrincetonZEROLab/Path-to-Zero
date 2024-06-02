@@ -1,14 +1,5 @@
 ## GAME SETUP 
-# 1. Resource blocks are defined by the following parameters:
-#   1a. Starting capacity (in MW)
-#   1b. Build cost  (Input GW per build point for round)
-#   1c. Backlash risk
-# 2. Uncertainty parameters
-# 3. Experience rate
-# 4. Backlash rates
-# 5. Scoring parameters
-
-# game parameters
+current_stage: 1
 available_budget_tokens: 5
 available_shaping_tokens: 2
 available_build_tokens:
@@ -31,6 +22,7 @@ resource_blocks:
     backlash_risk: "high"
     EDG_data_name: "onshore_wind"
     new_resource: true
+    social_backlash: false
 
   block_2:
     name: "UTILITY-SCALE SOLAR PV"
@@ -39,6 +31,7 @@ resource_blocks:
     backlash_risk: "moderate"
     EDG_data_name: "solar_pv"
     new_resource: true
+    social_backlash: false
 
   block_3:
     name: "OFFSHORE WIND POWER"
@@ -47,6 +40,7 @@ resource_blocks:
     backlash_risk: "low"
     EDG_data_name: "offshore_wind"
     new_resource: true
+    social_backlash: false
 
   block_4:
     name: "DISTRIBUTED SOLAR PV"
@@ -55,6 +49,7 @@ resource_blocks:
     backlash_risk: "none"
     EDG_data_name: "distributed_solar"
     new_resource: true
+    social_backlash: false
 
   block_5:
     name: "BATTERY ENERGY STORAGE"
@@ -63,6 +58,7 @@ resource_blocks:
     backlash_risk: "none"
     EDG_data_name: "battery"
     new_resource: true
+    social_backlash: false
 
   block_6:
     name: "CLEAN FIRM RESOURCE"
@@ -71,6 +67,7 @@ resource_blocks:
     backlash_risk: "low"
     EDG_data_name: "clean_firm"
     new_resource: true
+    social_backlash: false
 
   block_7:
     name: "NUCLEAR"
@@ -79,6 +76,7 @@ resource_blocks:
     backlash_risk: "moderate"
     EDG_data_name: "existing_nuclear"
     new_resource: false
+    social_backlash: false
 
   block_8:
     name: "NATURAL GAS"
@@ -87,6 +85,7 @@ resource_blocks:
     backlash_risk: "low"
     EDG_data_name: "existing_gas"
     new_resource: false
+    social_backlash: false
 
 # Uncertainty parameters
 uncertainty_parameters: 
@@ -132,4 +131,20 @@ scoring_parameters:
     - 99.0
     - 98.0
     - 97.0
+  
+shaping_tokens:
+  resilience: false
+  innovation_experience: false
+  innovation_clean_firm: false
+  social_license: false
+
+reliability_scores:
+  1: 0
+  2: 0
+  3: 0
+
+clean_scores:
+  1: 0
+  2: 0
+  3: 0
 
