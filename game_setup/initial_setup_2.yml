@@ -1,0 +1,150 @@
+## GAME SETUP 
+current_stage: 1
+available_budget_tokens: 5
+available_shaping_tokens: 2
+available_build_tokens:
+  - 10
+  - 11
+  - 12
+
+stages:
+  - 2030
+  - 2040
+  - 2050
+
+# Resource names
+resource_blocks:
+
+  block_1:
+    name: "ONSHORE WIND POWER"
+    start_capacity: 10
+    build_cost: 10
+    backlash_risk: "moderate"
+    EDG_data_name: "onshore_wind"
+    new_resource: true
+    social_backlash: false
+
+  block_2:
+    name: "UTILITY-SCALE SOLAR PV"
+    start_capacity: 0
+    build_cost: 15
+    backlash_risk: "moderate"
+    EDG_data_name: "solar_pv"
+    new_resource: true
+    social_backlash: false
+
+  block_3:
+    name: "OFFSHORE WIND POWER"
+    start_capacity: 0
+    build_cost: 8
+    backlash_risk: "low"
+    EDG_data_name: "offshore_wind"
+    new_resource: true
+    social_backlash: false
+
+  block_4:
+    name: "DISTRIBUTED SOLAR PV"
+    start_capacity: 10
+    build_cost: 12
+    backlash_risk: "none"
+    EDG_data_name: "distributed_solar"
+    new_resource: true
+    social_backlash: false
+
+  block_5:
+    name: "BATTERY ENERGY STORAGE"
+    start_capacity: 0
+    build_cost: 20
+    backlash_risk: "none"
+    EDG_data_name: "battery"
+    new_resource: true
+    social_backlash: false
+
+  block_6:
+    name: "CLEAN FIRM RESOURCE"
+    start_capacity: 0
+    build_cost: 5
+    backlash_risk: "low"
+    EDG_data_name: "clean_firm"
+    new_resource: true
+    social_backlash: false
+
+  block_7:
+    name: "NUCLEAR"
+    start_capacity: 10
+    build_cost: 10
+    backlash_risk: "high"
+    EDG_data_name: "existing_nuclear"
+    new_resource: false
+    social_backlash: false
+
+  block_8:
+    name: "NATURAL GAS"
+    start_capacity: 60
+    build_cost: 20
+    backlash_risk: "low"
+    EDG_data_name: "existing_gas"
+    new_resource: false
+    social_backlash: false
+
+# Uncertainty parameters
+uncertainty_parameters: 
+  Demand_Variance: 0.05
+  Disaster_Probability: 0.1
+  Outage_Probability: 0.66
+  Outage_Rate: 0.5
+
+# Experience rate is decline in technology cost for each build point spent on each resource
+experience_rate: 0.05
+
+# Backlash rates are probability used in a Bernoulli distribution with one draw per build point spent on each resource (halved by Shaping points)  
+backlash_rates:
+  none: 0
+  low: 0.1
+  moderate: 0.17
+  high: 0.25
+
+# Scoring setup
+scoring_parameters:
+  Max_Points: 5
+  Clean_Stage_1:
+    - 60
+    - 58
+    - 56
+    - 53
+    - 50
+  Clean_Stage_2:
+    - 80
+    - 78
+    - 76
+    - 73
+    - 70
+  Clean_Stage_3:
+    - 99.9
+    - 99
+    - 98
+    - 96
+    - 90
+  Reliability:
+    - 99.9
+    - 99.5
+    - 99.0
+    - 98.0
+    - 97.0
+  
+shaping_tokens:
+  resilience: false
+  innovation_experience: false
+  innovation_clean_firm: false
+  social_license: false
+
+reliability_scores:
+  1: 0
+  2: 0
+  3: 0
+
+clean_scores:
+  1: 0
+  2: 0
+  3: 0
+
