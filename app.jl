@@ -358,8 +358,8 @@ using ElectricityDecarbonizationGame
             filename = fileuploads["name"]
 
             try
-                isdir(FILE_PATH) || mkpath(FILE_PATH)
-                mv(fileuploads["path"], joinpath(FILE_PATH, filename), force=true)
+                isdir(team_path) || mkpath(team_path)
+                mv(fileuploads["path"], joinpath(team_path, filename), force=true)
             catch e
                 @error "Error processing file: $e"
                 notify(__model__, "Error processing file: $(fileuploads["name"])")
@@ -367,7 +367,7 @@ using ElectricityDecarbonizationGame
 
             fileuploads = Dict{AbstractString,AbstractString}()
         end
-        upfiles = readdir(FILE_PATH)
+        upfiles = readdir(team_path)
     end
     @event uploaded begin
         @info "uploaded"
@@ -386,7 +386,9 @@ using ElectricityDecarbonizationGame
             team_name_error = ""
             team_path = joinpath(FILE_PATH, team_name)
             isdir(team_path) || mkpath(team_path)
-            cp(joinpath(FILE_PATH, "default_setup.yml"), joinpath(team_path, "default_setup.yml"); force=true)
+            for file in filter(x -> endswith(x, ".yml"), readdir(FILE_PATH))
+                cp(joinpath(FILE_PATH, file), joinpath(team_path, file); force=true)
+            end
             upfiles = readdir(team_path)
         end
     end
