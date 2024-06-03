@@ -579,25 +579,25 @@ function advance_stage(
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
+    resource_params["Start_Capacity"], resource_results, dispatch_results, uncertainty_results, scores = run_stage(stage_num, planning_year, resource_params, shaping_tokens, uncertainty_params, scoring_params,
+        input_path)
+    social_backlash, resource_params["Build_Cost"], experience_results = update_step(resource_params, shaping_tokens, experience_rate, backlash_risk, backlash_rates)
+
+    # update resource parameters based on planning year
     if planning_year == "2030"
-    elseif planning_year == "2040"
         # Update resource parameters
         resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] / 2
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.5
-
-    elseif planning_year == "2050"
+    elseif planning_year == "2040"
         # Update resource parameters
         resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.9
+    elseif planning_year == "2050"
     else
         throw(ArgumentError("Invalid planning year"))
     end
-
-    resource_params["Start_Capacity"], resource_results, dispatch_results, uncertainty_results, scores = run_stage(stage_num, planning_year, resource_params, shaping_tokens, uncertainty_params, scoring_params,
-        input_path)
-    social_backlash, resource_params["Build_Cost"], experience_results = update_step(resource_params, shaping_tokens, experience_rate, backlash_risk, backlash_rates)
 
     return resource_params, dispatch_results, uncertainty_results, scores, social_backlash, experience_results
 end

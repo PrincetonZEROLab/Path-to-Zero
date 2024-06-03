@@ -25,6 +25,8 @@ using ElectricityDecarbonizationGame
     @out show_pannels = "display: "
     @out show_game_over = "display: none"
 
+    @out nuclear_relicensed = "display: none"
+
     @in color_default = "background-color: rgb(16, 16, 129);"
     @in color_select = "background-color: rgb(255, 77, 31);"
 
@@ -623,6 +625,10 @@ using ElectricityDecarbonizationGame
             cap_resource_6_stage_2 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_2", 0)
             cap_resource_7_stage_2 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_2", 0)
             cap_resource_8_stage_2 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_2", 0)
+        end
+
+        if current_stage == 2
+            nuclear_relicensed = "display:"
         end
     end
 
@@ -1451,12 +1457,14 @@ using ElectricityDecarbonizationGame
             clean_score_stage_1 = stage_clean_points
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
+            nuclear_relicensed = "display:"
         elseif current_stage == 2
             reliability_score_stage_2 = stage_reliability_points
             total_score += stage_reliability_points
             clean_score_stage_2 = stage_clean_points
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
+            nuclear_relicensed = "display: none"
         else
             reliability_score_stage_3 = stage_reliability_points
             total_score += stage_reliability_points
