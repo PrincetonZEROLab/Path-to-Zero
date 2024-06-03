@@ -21,7 +21,7 @@ using ElectricityDecarbonizationGame
     @in team_name_confirmed = false
 
     @out tab = "Build"
-    @out game_over = false
+    @in game_over = false
     @out show_pannels = "display: "
     @out show_game_over = "display: none"
 
@@ -551,7 +551,7 @@ using ElectricityDecarbonizationGame
         sp_clean_stage_2 = scoring_parameters["Clean_Stage_2"]
         sp_clean_stage_3 = scoring_parameters["Clean_Stage_3"]
         sp_reliability = scoring_parameters["Reliability"]
-    
+
         # Load prevoius stage setup
         if current_stage > 1
             social_backlash_resource_1 = resource_blocks["block_1"]["social_backlash"]
@@ -1463,146 +1463,146 @@ using ElectricityDecarbonizationGame
         current_stage += 1
         if current_stage <= 3
             println("Starting Stage ", current_stage)
+
+            # write setup to file
+            data = Dict(
+                "current_stage" => current_stage,
+                "available_budget_tokens" => available_budget_tokens,
+                "available_shaping_tokens" => _init_shaping_tokens,
+                "available_build_tokens" => _available_build_tokens,
+                "stages" => _stages,
+                "resource_blocks" => Dict(
+                    "block_1" => Dict(
+                        "name" => name_resource_1,
+                        "start_capacity" => sc_resource_1,
+                        "build_cost" => bc_resource_1,
+                        "backlash_risk" => sbp_resource_1,
+                        "EDG_data_name" => backend_data_name_1,
+                        "new_resource" => is_new_resource_1,
+                        "social_backlash" => social_backlash_resource_1,
+                        "cap_built_stage_1" => cap_resource_1_stage_1,
+                        "cap_built_stage_2" => cap_resource_1_stage_2,
+                    ),
+                    "block_2" => Dict(
+                        "name" => name_resource_2,
+                        "start_capacity" => sc_resource_2,
+                        "build_cost" => bc_resource_2,
+                        "backlash_risk" => sbp_resource_2,
+                        "EDG_data_name" => backend_data_name_2,
+                        "new_resource" => is_new_resource_2,
+                        "social_backlash" => social_backlash_resource_2,
+                        "cap_built_stage_1" => cap_resource_2_stage_1,
+                        "cap_built_stage_2" => cap_resource_2_stage_2,
+                    ),
+                    "block_3" => Dict(
+                        "name" => name_resource_3,
+                        "start_capacity" => sc_resource_3,
+                        "build_cost" => bc_resource_3,
+                        "backlash_risk" => sbp_resource_3,
+                        "EDG_data_name" => backend_data_name_3,
+                        "new_resource" => is_new_resource_3,
+                        "social_backlash" => social_backlash_resource_3,
+                        "cap_built_stage_1" => cap_resource_3_stage_1,
+                        "cap_built_stage_2" => cap_resource_3_stage_2,
+                    ),
+                    "block_4" => Dict(
+                        "name" => name_resource_4,
+                        "start_capacity" => sc_resource_4,
+                        "build_cost" => bc_resource_4,
+                        "backlash_risk" => sbp_resource_4,
+                        "EDG_data_name" => backend_data_name_4,
+                        "new_resource" => is_new_resource_4,
+                        "social_backlash" => social_backlash_resource_4,
+                        "cap_built_stage_1" => cap_resource_4_stage_1,
+                        "cap_built_stage_2" => cap_resource_4_stage_2,
+                    ),
+                    "block_5" => Dict(
+                        "name" => name_resource_5,
+                        "start_capacity" => sc_resource_5,
+                        "build_cost" => bc_resource_5,
+                        "backlash_risk" => sbp_resource_5,
+                        "EDG_data_name" => backend_data_name_5,
+                        "new_resource" => is_new_resource_5,
+                        "social_backlash" => social_backlash_resource_5,
+                        "cap_built_stage_1" => cap_resource_5_stage_1,
+                        "cap_built_stage_2" => cap_resource_5_stage_2,
+                    ),
+                    "block_6" => Dict(
+                        "name" => name_resource_6,
+                        "start_capacity" => sc_resource_6,
+                        "build_cost" => bc_resource_6,
+                        "backlash_risk" => sbp_resource_6,
+                        "EDG_data_name" => backend_data_name_6,
+                        "new_resource" => is_new_resource_6,
+                        "social_backlash" => social_backlash_resource_6,
+                        "cap_built_stage_1" => cap_resource_6_stage_1,
+                        "cap_built_stage_2" => cap_resource_6_stage_2,
+                    ),
+                    "block_7" => Dict(
+                        "name" => name_resource_7,
+                        "start_capacity" => sc_resource_7,
+                        "build_cost" => bc_resource_7,
+                        "backlash_risk" => sbp_resource_7,
+                        "EDG_data_name" => backend_data_name_7,
+                        "new_resource" => is_new_resource_7,
+                        "social_backlash" => social_backlash_resource_7,
+                        "cap_built_stage_1" => cap_resource_7_stage_1,
+                        "cap_built_stage_2" => cap_resource_7_stage_2,
+                    ),
+                    "block_8" => Dict(
+                        "name" => name_resource_8,
+                        "start_capacity" => sc_resource_8,
+                        "build_cost" => bc_resource_8,
+                        "backlash_risk" => sbp_resource_8,
+                        "EDG_data_name" => backend_data_name_8,
+                        "new_resource" => is_new_resource_8,
+                        "social_backlash" => social_backlash_resource_8,
+                        "cap_built_stage_1" => cap_resource_8_stage_1,
+                        "cap_built_stage_2" => cap_resource_8_stage_2,
+                    ),
+                ),
+                "uncertainty_parameters" => Dict(
+                    "Demand_Variance" => up_demand_variance,
+                    "Disaster_Probability" => up_disaster_probability,
+                    "Outage_Probability" => up_outage_probability,
+                    "Outage_Rate" => up_outage_rate
+                ),
+                "experience_rate" => experience_rate,
+                "backlash_rates" => Dict(
+                    "none" => br_none,
+                    "low" => br_low,
+                    "moderate" => br_moderate,
+                    "high" => br_high
+                ),
+                "scoring_parameters" => Dict(
+                    "Max_Points" => sp_max_points,
+                    "Clean_Stage_1" => sp_clean_stage_1,
+                    "Clean_Stage_2" => sp_clean_stage_2,
+                    "Clean_Stage_3" => sp_clean_stage_3,
+                    "Reliability" => sp_reliability
+                ),
+                "shaping_tokens" => Dict(
+                    "resilience" => resilience,
+                    "innovation_experience" => innovation_experience,
+                    "innovation_clean_firm" => innovation_clean_firm,
+                    "social_license" => social_license
+                ),
+                "reliability_scores" => Dict(
+                    1 => reliability_score_stage_1,
+                    2 => reliability_score_stage_2,
+                    3 => reliability_score_stage_3
+                ),
+                "clean_scores" => Dict(
+                    1 => clean_score_stage_1,
+                    2 => clean_score_stage_2,
+                    3 => clean_score_stage_3
+                ),
+            )
+            open(joinpath(team_path, "stage_$(current_stage).yml"), "w") do f
+                write(f, YAML.yaml(data))
+            end
         end
         tab = "Results"
-
-        # write setup to file
-        data = Dict(
-            "current_stage" => current_stage,
-            "available_budget_tokens" => available_budget_tokens,
-            "available_shaping_tokens" => _init_shaping_tokens,
-            "available_build_tokens" => _available_build_tokens,
-            "stages" => _stages,
-            "resource_blocks" => Dict(
-                "block_1" => Dict(
-                    "name" => name_resource_1,
-                    "start_capacity" => sc_resource_1,
-                    "build_cost" => bc_resource_1,
-                    "backlash_risk" => sbp_resource_1,
-                    "EDG_data_name" => backend_data_name_1,
-                    "new_resource" => is_new_resource_1,
-                    "social_backlash" => social_backlash_resource_1,
-                    "cap_built_stage_1" => cap_resource_1_stage_1,
-                    "cap_built_stage_2" => cap_resource_1_stage_2,
-                ),
-                "block_2" => Dict(
-                    "name" => name_resource_2,
-                    "start_capacity" => sc_resource_2,
-                    "build_cost" => bc_resource_2,
-                    "backlash_risk" => sbp_resource_2,
-                    "EDG_data_name" => backend_data_name_2,
-                    "new_resource" => is_new_resource_2,
-                    "social_backlash" => social_backlash_resource_2,
-                    "cap_built_stage_1" => cap_resource_2_stage_1,
-                    "cap_built_stage_2" => cap_resource_2_stage_2,
-                ),
-                "block_3" => Dict(
-                    "name" => name_resource_3,
-                    "start_capacity" => sc_resource_3,
-                    "build_cost" => bc_resource_3,
-                    "backlash_risk" => sbp_resource_3,
-                    "EDG_data_name" => backend_data_name_3,
-                    "new_resource" => is_new_resource_3,
-                    "social_backlash" => social_backlash_resource_3,
-                    "cap_built_stage_1" => cap_resource_3_stage_1,
-                    "cap_built_stage_2" => cap_resource_3_stage_2,
-                ),
-                "block_4" => Dict(
-                    "name" => name_resource_4,
-                    "start_capacity" => sc_resource_4,
-                    "build_cost" => bc_resource_4,
-                    "backlash_risk" => sbp_resource_4,
-                    "EDG_data_name" => backend_data_name_4,
-                    "new_resource" => is_new_resource_4,
-                    "social_backlash" => social_backlash_resource_4,
-                    "cap_built_stage_1" => cap_resource_4_stage_1,
-                    "cap_built_stage_2" => cap_resource_4_stage_2,
-                ),
-                "block_5" => Dict(
-                    "name" => name_resource_5,
-                    "start_capacity" => sc_resource_5,
-                    "build_cost" => bc_resource_5,
-                    "backlash_risk" => sbp_resource_5,
-                    "EDG_data_name" => backend_data_name_5,
-                    "new_resource" => is_new_resource_5,
-                    "social_backlash" => social_backlash_resource_5,
-                    "cap_built_stage_1" => cap_resource_5_stage_1,
-                    "cap_built_stage_2" => cap_resource_5_stage_2,
-                ),
-                "block_6" => Dict(
-                    "name" => name_resource_6,
-                    "start_capacity" => sc_resource_6,
-                    "build_cost" => bc_resource_6,
-                    "backlash_risk" => sbp_resource_6,
-                    "EDG_data_name" => backend_data_name_6,
-                    "new_resource" => is_new_resource_6,
-                    "social_backlash" => social_backlash_resource_6,
-                    "cap_built_stage_1" => cap_resource_6_stage_1,
-                    "cap_built_stage_2" => cap_resource_6_stage_2,
-                ),
-                "block_7" => Dict(
-                    "name" => name_resource_7,
-                    "start_capacity" => sc_resource_7,
-                    "build_cost" => bc_resource_7,
-                    "backlash_risk" => sbp_resource_7,
-                    "EDG_data_name" => backend_data_name_7,
-                    "new_resource" => is_new_resource_7,
-                    "social_backlash" => social_backlash_resource_7,
-                    "cap_built_stage_1" => cap_resource_7_stage_1,
-                    "cap_built_stage_2" => cap_resource_7_stage_2,
-                ),
-                "block_8" => Dict(
-                    "name" => name_resource_8,
-                    "start_capacity" => sc_resource_8,
-                    "build_cost" => bc_resource_8,
-                    "backlash_risk" => sbp_resource_8,
-                    "EDG_data_name" => backend_data_name_8,
-                    "new_resource" => is_new_resource_8,
-                    "social_backlash" => social_backlash_resource_8,
-                    "cap_built_stage_1" => cap_resource_8_stage_1,
-                    "cap_built_stage_2" => cap_resource_8_stage_2,
-                ),
-            ),
-            "uncertainty_parameters" => Dict(
-                "Demand_Variance" => up_demand_variance,
-                "Disaster_Probability" => up_disaster_probability,
-                "Outage_Probability" => up_outage_probability,
-                "Outage_Rate" => up_outage_rate
-                ),
-            "experience_rate" => experience_rate,
-            "backlash_rates" => Dict(
-                "none" => br_none,
-                "low" => br_low,
-                "moderate" => br_moderate,
-                "high" => br_high
-            ),
-            "scoring_parameters" => Dict(
-                "Max_Points" => sp_max_points,
-                "Clean_Stage_1" => sp_clean_stage_1,
-                "Clean_Stage_2" => sp_clean_stage_2,
-                "Clean_Stage_3" => sp_clean_stage_3,
-                "Reliability" => sp_reliability
-            ),
-            "shaping_tokens" => Dict(
-                "resilience" => resilience,
-                "innovation_experience" => innovation_experience,
-                "innovation_clean_firm" => innovation_clean_firm,
-                "social_license" => social_license
-            ),
-            "reliability_scores" => Dict(
-                1 => reliability_score_stage_1,
-                2 => reliability_score_stage_2,
-                3 => reliability_score_stage_3
-            ),
-            "clean_scores" => Dict(
-                1 => clean_score_stage_1,
-                2 => clean_score_stage_2,
-                3 => clean_score_stage_3
-            ),
-            )
-        open(joinpath(team_path, "stage_$(current_stage).yml"), "w") do f
-            write(f, YAML.yaml(data))
-        end
     end
 end
 

@@ -261,7 +261,7 @@
 
                 <div class="row">
                     <q-btn color="primary" label="Buy Build Tokens" v-on:click="bt_buy_build_token = true"
-                        :disabled="bt_buy_build_token_is_disabled"></q-btn>
+                        :disabled="bt_buy_build_token_is_disabled || game_over"></q-btn>
                 </div>
 
                 <q-separator horizontal />
@@ -314,12 +314,12 @@
                                     <div class="col-1">
                                         <q-btn label="-" v-on:click="resource_1_build_m = true"
                                             :style="bt_resource_1_disabled"
-                                            :disabled="social_backlash_resource_1 || is_clean_firm_resource_1"></q-btn>
+                                            :disabled="social_backlash_resource_1 || is_clean_firm_resource_1 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <q-btn label="+" v-on:click="resource_1_build_p = true"
                                             :style="bt_resource_1_disabled"
-                                            :disabled="social_backlash_resource_1 || is_clean_firm_resource_1"></q-btn>
+                                            :disabled="social_backlash_resource_1 || is_clean_firm_resource_1 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_1}}</strong></h5>
@@ -382,11 +382,11 @@
                                     <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
                                     <div class="col-1"> <q-btn label="-" v-on:click="resource_2_build_m = true"
                                             :style="bt_resource_2_disabled"
-                                            :disabled="social_backlash_resource_2 || is_clean_firm_resource_2"></q-btn>
+                                            :disabled="social_backlash_resource_2 || is_clean_firm_resource_2 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1"> <q-btn label="+" v-on:click="resource_2_build_p = true"
                                             :style="bt_resource_2_disabled"
-                                            :disabled="social_backlash_resource_2 || is_clean_firm_resource_2"></q-btn>
+                                            :disabled="social_backlash_resource_2 || is_clean_firm_resource_2 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_2}}</strong></h5>
@@ -452,11 +452,11 @@
                                     <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
                                     <div class="col-1"> <q-btn label="-" v-on:click="resource_3_build_m = true"
                                             :style="bt_resource_3_disabled"
-                                            :disabled="social_backlash_resource_3 || is_clean_firm_resource_3"></q-btn>
+                                            :disabled="social_backlash_resource_3 || is_clean_firm_resource_3 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1"> <q-btn label="+" v-on:click="resource_3_build_p = true"
                                             :style="bt_resource_3_disabled"
-                                            :disabled="social_backlash_resource_3 || is_clean_firm_resource_3"></q-btn>
+                                            :disabled="social_backlash_resource_3 || is_clean_firm_resource_3 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_3}}</strong></h5>
@@ -519,11 +519,11 @@
                                     <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
                                     <div class="col-1"> <q-btn label="-" v-on:click="resource_4_build_m = true"
                                             :style="bt_resource_4_disabled"
-                                            :disabled="social_backlash_resource_4 || is_clean_firm_resource_4"></q-btn>
+                                            :disabled="social_backlash_resource_4 || is_clean_firm_resource_4 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1"> <q-btn label="+" v-on:click="resource_4_build_p = true"
                                             :style="bt_resource_4_disabled"
-                                            :disabled="social_backlash_resource_4 || is_clean_firm_resource_4"></q-btn>
+                                            :disabled="social_backlash_resource_4 || is_clean_firm_resource_4 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_4}}</strong></h5>
@@ -587,11 +587,11 @@
                                     <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
                                     <div class="col-1"> <q-btn label="-" v-on:click="resource_5_build_m = true"
                                             :style="bt_resource_5_disabled"
-                                            :disabled="social_backlash_resource_5 || is_clean_firm_resource_5"></q-btn>
+                                            :disabled="social_backlash_resource_5 || is_clean_firm_resource_5 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1"> <q-btn label="+" v-on:click="resource_5_build_p = true"
                                             :style="bt_resource_5_disabled"
-                                            :disabled="social_backlash_resource_5 || is_clean_firm_resource_5"></q-btn>
+                                            :disabled="social_backlash_resource_5 || is_clean_firm_resource_5 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_5}}</strong></h5>
@@ -654,11 +654,11 @@
                                     <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
                                     <div class="col-1"> <q-btn label="-" v-on:click="resource_6_build_m = true"
                                             :style="bt_resource_6_disabled"
-                                            :disabled="social_backlash_resource_6 || is_clean_firm_resource_6"></q-btn>
+                                            :disabled="social_backlash_resource_6 || is_clean_firm_resource_6 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1"> <q-btn label="+" v-on:click="resource_6_build_p = true"
                                             :style="bt_resource_6_disabled"
-                                            :disabled="social_backlash_resource_6 || is_clean_firm_resource_6"></q-btn>
+                                            :disabled="social_backlash_resource_6 || is_clean_firm_resource_6 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_6}}</strong></h5>
@@ -723,11 +723,11 @@
                                     <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
                                     <div class="col-1"> <q-btn label="-" v-on:click="resource_7_build_m = true"
                                             :style="bt_resource_7_disabled"
-                                            :disabled="social_backlash_resource_7 || is_clean_firm_resource_7"></q-btn>
+                                            :disabled="social_backlash_resource_7 || is_clean_firm_resource_7 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1"> <q-btn label="+" v-on:click="resource_7_build_p = true"
                                             :style="bt_resource_7_disabled"
-                                            :disabled="social_backlash_resource_7 || is_clean_firm_resource_7"></q-btn>
+                                            :disabled="social_backlash_resource_7 || is_clean_firm_resource_7 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_7}}</strong></h5>
@@ -790,11 +790,11 @@
                                     <!-- <div class="col-1"><st-big-number :number="bc_resource_1"></st-big-number></div> -->
                                     <div class="col-1"> <q-btn label="-" v-on:click="resource_8_build_m = true"
                                             :style="bt_resource_8_disabled"
-                                            :disabled="social_backlash_resource_8 || is_clean_firm_resource_8"></q-btn>
+                                            :disabled="social_backlash_resource_8 || is_clean_firm_resource_8 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1"> <q-btn label="+" v-on:click="resource_8_build_p = true"
                                             :style="bt_resource_8_disabled"
-                                            :disabled="social_backlash_resource_8 || is_clean_firm_resource_8"></q-btn>
+                                            :disabled="social_backlash_resource_8 || is_clean_firm_resource_8 || game_over"></q-btn>
                                     </div>
                                     <div class="col-1">
                                         <h5><strong>{{bt_resource_8}}</strong></h5>
@@ -815,7 +815,7 @@
                     <q-btn
                         style="display: inline-block; font-size: 25px; background-color:rgb(16, 16, 129); color:white"
                         :loading="run_simulation" :percentage="run_simulation" glossy v-on:click="run_simulation = true"
-                        label="Run Dispatch Simulator" />
+                        label="Run Dispatch Simulator" :disabled="game_over"/>
                 </div>
                 <div style="text-align: center;margin-top : 25px;">
                     <!-- <q-btn style="display: inline-block; padding: 10px; font-size: 25px; background-color:rgb(16, 16, 129); color:white;" glossy
@@ -823,7 +823,7 @@
                         label="Confirm Portfolio"></q-btn> -->
                     <q-btn style="display: inline-block; width: 305px; padding: 10px; font-size: 25px;"
                         color="deep-orange" glossy :loading="advance_stage" :percentage="advance_stage"
-                        v-on:click="advance_stage = true" label="Advance Stage"></q-btn>
+                        v-on:click="advance_stage = true" label="Advance Stage" :disabled="game_over"></q-btn>
                 </div>
                 <br>
             </q-tab-panel>
@@ -866,7 +866,7 @@
                         label="Confirm Portfolio"></q-btn> -->
                     <q-btn style="display: inline-block; width: 305px; padding: 10px; font-size: 25px;"
                         color="deep-orange" glossy :loading="advance_stage" :percentage="advance_stage"
-                        v-on:click="advance_stage = true" label="Advance Stage"></q-btn>
+                        v-on:click="advance_stage = true" label="Advance Stage" :disabled="game_over"></q-btn>
                 </div>
                 <br>
             </q-tab-panel>
@@ -879,7 +879,7 @@
                                     <div class="col-sm-4">'
                                         <q-btn color="primary" label="Buy Shaping Tokens"
                                             v-on:click="bt_buy_shaping_token = true"
-                                            :disabled="bt_buy_shaping_token_is_disabled"></q-btn>
+                                            :disabled="bt_buy_shaping_token_is_disabled || game_over"></q-btn>
                                     </div>
 
                                 </div>
@@ -893,7 +893,7 @@
                                                 <q-toggle v-model="bt_resilience" label="Climate Resilience"
                                                     style="font-size: large;" checked-icon="check" color="blue"
                                                     unchecked-icon="clear" right-label
-                                                    :disable="bt_resilience_is_disabled" />
+                                                    :disable="bt_resilience_is_disabled || game_over" />
                                                 <p style="font-size: medium;"> Reduces by half the probability of
                                                     generator forced outages when a Climate Disaster is experienced.</p>
                                             </div>
@@ -901,7 +901,7 @@
                                                 <q-toggle v-model="bt_innovation_experience" checked-icon="check"
                                                     color="green" label="Accelerated Innovation" unchecked-icon="clear"
                                                     style="font-size: large;" right-label
-                                                    :disable="bt_innovation_experience_is_disabled" />
+                                                    :disable="bt_innovation_experience_is_disabled || game_over" />
                                                 <p style="font-size: medium;">Doubles pace of cost reduction as each
                                                     technology is deployed.</p>
                                             </div>
@@ -912,7 +912,7 @@
                                                 <q-toggle v-model="bt_innovation_clean_firm" checked-icon="check"
                                                     color="yellow" label="Innovation Clean Firm" unchecked-icon="clear"
                                                     style="font-size: large;" right-label
-                                                    :disable="bt_innovation_clean_firm_is_disabled" />
+                                                    :disable="bt_innovation_clean_firm_is_disabled || game_over" />
                                                 <p style="font-size: medium;">Unlocks Clean Firm Resource in subsequent
                                                     Stages</p>
                                             </div>
@@ -920,7 +920,7 @@
                                                 <q-toggle v-model="bt_social_license" checked-icon="check" color="red"
                                                     label="Benefits Sharing" unchecked-icon="clear"
                                                     style="font-size: large;" right-label
-                                                    :disable="bt_social_license_is_disabled" />
+                                                    :disable="bt_social_license_is_disabled || game_over" />
                                                 <p style="font-size: medium;">Reduces by half the probability of Social
                                                     Backlash as each technology is deployed.</p>
                                             </div>
@@ -939,7 +939,7 @@
                         label="Confirm Portfolio"></q-btn> -->
                     <q-btn style="display: inline-block; width: 305px; padding: 10px; font-size: 25px;"
                         color="deep-orange" glossy :loading="advance_stage" :percentage="advance_stage"
-                        v-on:click="advance_stage = true" label="Advance Stage"></q-btn>
+                        v-on:click="advance_stage = true" label="Advance Stage" :disabled="game_over"></q-btn>
                 </div>
                 <br>
             </q-tab-panel>
