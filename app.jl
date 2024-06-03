@@ -676,14 +676,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_1 > 0
             bt_resource_1 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_1 * bc_resource_1[1]
             if current_stage == 1
-                cap_resource_1_stage_1 = bt_resource_1 * bc_resource_1[1]
+                cap_resource_1_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_1_stage_2 = bt_resource_1 * bc_resource_1[1]
+                cap_resource_1_stage_2 = new_cap
             else
-                cap_resource_1_stage_3 = bt_resource_1 * bc_resource_1[1]
+                cap_resource_1_stage_3 = new_cap
             end
-            cum_cap_resource_1 = is_new_resource_1 ? bt_resource_1 * bc_resource_1[1] : sc_resource_1
+            cum_cap_resource_1 = is_new_resource_1 ? sc_resource_1 + new_cap : sc_resource_1
         end
     end
 
@@ -710,14 +711,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_2 > 0
             bt_resource_2 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_2 * bc_resource_2[1]
             if current_stage == 1
-                cap_resource_2_stage_1 = bt_resource_2 * bc_resource_2[1]
+                cap_resource_2_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_2_stage_2 = bt_resource_2 * bc_resource_2[1]
+                cap_resource_2_stage_2 = new_cap
             else
-                cap_resource_2_stage_3 = bt_resource_2 * bc_resource_2[1]
+                cap_resource_2_stage_3 = new_cap
             end
-            cum_cap_resource_2 = is_new_resource_2 ? bt_resource_2 * bc_resource_2[1] : sc_resource_2
+            cum_cap_resource_2 = is_new_resource_2 ? sc_resource_2 + new_cap : sc_resource_2
         end
     end
 
@@ -744,14 +746,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_3 > 0
             bt_resource_3 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_3 * bc_resource_3[1]
             if current_stage == 1
-                cap_resource_3_stage_1 = bt_resource_3 * bc_resource_3[1]
+                cap_resource_3_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_3_stage_2 = bt_resource_3 * bc_resource_3[1]
+                cap_resource_3_stage_2 = new_cap
             else
-                cap_resource_3_stage_3 = bt_resource_3 * bc_resource_3[1]
+                cap_resource_3_stage_3 = new_cap
             end
-            cum_cap_resource_3 = is_new_resource_3 ? bt_resource_3 * bc_resource_3[1] : sc_resource_3
+            cum_cap_resource_3 = is_new_resource_3 ? sc_resource_3 + new_cap : sc_resource_3
         end
     end
 
@@ -778,14 +781,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_4 > 0
             bt_resource_4 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_4 * bc_resource_4[1]
             if current_stage == 1
-                cap_resource_4_stage_1 = bt_resource_4 * bc_resource_4[1]
+                cap_resource_4_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_4_stage_2 = bt_resource_4 * bc_resource_4[1]
+                cap_resource_4_stage_2 = new_cap
             else
-                cap_resource_4_stage_3 = bt_resource_4 * bc_resource_4[1]
+                cap_resource_4_stage_3 = new_cap
             end
-            cum_cap_resource_4 = is_new_resource_4 ? bt_resource_4 * bc_resource_4[1] : sc_resource_4
+            cum_cap_resource_4 = is_new_resource_4 ? sc_resource_4 + new_cap : sc_resource_4
         end
     end
 
@@ -812,14 +816,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_5 > 0
             bt_resource_5 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_5 * bc_resource_5[1]
             if current_stage == 1
-                cap_resource_5_stage_1 = bt_resource_5 * bc_resource_5[1]
+                cap_resource_5_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_5_stage_2 = bt_resource_5 * bc_resource_5[1]
+                cap_resource_5_stage_2 = new_cap
             else
-                cap_resource_5_stage_3 = bt_resource_5 * bc_resource_5[1]
+                cap_resource_5_stage_3 = new_cap
             end
-            cum_cap_resource_5 = is_new_resource_5 ? bt_resource_5 * bc_resource_5[1] : sc_resource_5
+            cum_cap_resource_5 = is_new_resource_5 ? sc_resource_5 + new_cap : sc_resource_5
         end
     end
 
@@ -846,14 +851,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_6 > 0
             bt_resource_6 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_6 * bc_resource_6[1]
             if current_stage == 1
-                cap_resource_6_stage_1 = bt_resource_6 * bc_resource_6[1]
+                cap_resource_6_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_6_stage_2 = bt_resource_6 * bc_resource_6[1]
+                cap_resource_6_stage_2 = new_cap
             else
-                cap_resource_6_stage_3 = bt_resource_6 * bc_resource_6[1]
+                cap_resource_6_stage_3 = new_cap
             end
-            cum_cap_resource_6 = is_new_resource_6 ? bt_resource_6 * bc_resource_6[1] : sc_resource_6
+            cum_cap_resource_6 = is_new_resource_6 ? sc_resource_6 + new_cap : sc_resource_6
         end
     end
 
@@ -880,14 +886,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_7 > 0
             bt_resource_7 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_7 * bc_resource_7[1]
             if current_stage == 1
-                cap_resource_7_stage_1 = bt_resource_7 * bc_resource_7[1]
+                cap_resource_7_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_7_stage_2 = bt_resource_7 * bc_resource_7[1]
+                cap_resource_7_stage_2 = new_cap
             else
-                cap_resource_7_stage_3 = bt_resource_7 * bc_resource_7[1]
+                cap_resource_7_stage_3 = new_cap
             end
-            cum_cap_resource_7 = is_new_resource_7 ? bt_resource_7 * bc_resource_7[1] : sc_resource_7
+            cum_cap_resource_7 = is_new_resource_7 ? sc_resource_7 + new_cap : sc_resource_7
         end
     end
 
@@ -914,14 +921,15 @@ using ElectricityDecarbonizationGame
         if bt_resource_8 > 0
             bt_resource_8 -= 1
             available_build_tokens += 1
+            new_cap = bt_resource_8 * bc_resource_8[1]
             if current_stage == 1
-                cap_resource_8_stage_1 = bt_resource_8 * bc_resource_8[1]
+                cap_resource_8_stage_1 = new_cap
             elseif current_stage == 2
-                cap_resource_8_stage_2 = bt_resource_8 * bc_resource_8[1]
+                cap_resource_8_stage_2 = new_cap
             else
-                cap_resource_8_stage_3 = bt_resource_8 * bc_resource_8[1]
+                cap_resource_8_stage_3 = new_cap
             end
-            cum_cap_resource_8 = is_new_resource_8 ? bt_resource_8 * bc_resource_8[1] : sc_resource_8
+            cum_cap_resource_8 = is_new_resource_8 ? sc_resource_8 + new_cap : sc_resource_8
         end
     end
 
