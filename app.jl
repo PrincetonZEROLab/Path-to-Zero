@@ -243,6 +243,7 @@ using ElectricityDecarbonizationGame
     # run simulation button
     @in run_simulation = false
     # advance stage button
+    @in confirm_advance_stage = false
     @in advance_stage = false
 
     ## scores
@@ -1246,6 +1247,14 @@ using ElectricityDecarbonizationGame
     @onchange game_over begin
         # show_pannels = "display: none"
         show_game_over = "display: "
+    end
+
+    @onchange confirm_advance_stage begin
+        if any([resilience, innovation_experience, innovation_clean_firm, social_license])
+            shaping_tokens_warning = "display: none"
+        else
+            shaping_tokens_warning = "display: "
+        end
     end
 
     @onbutton advance_stage begin
