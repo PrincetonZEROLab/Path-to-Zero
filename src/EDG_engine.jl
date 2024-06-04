@@ -622,21 +622,6 @@ function compute_results(inputs::Dict,
     sample_weight = inputs["sample_weight"]
     hours_per_period = inputs["hours_per_period"]
     STOR = inputs["resources"].ID[inputs["resources"].STOR.>=1]
-    
-    # path = "."
-    # team = "Team_1"
-    # # If output directory does not exist, create it
-    # if !(isdir(path))
-    #     mkdir(path)
-    # end
-    # if !(isdir(joinpath(path, team)))
-    #     mkdir(joinpath(path, team))
-    # end
-    # if !(isdir(joinpath(path, team, planning_year)))
-    #     mkdir(joinpath(path, team, planning_year))
-    # end
-    # outpath = joinpath(path, team, planning_year)
-
     # Record generation capacity and energy results
     generation = zeros(size(G, 1))
     for g in G
@@ -736,15 +721,6 @@ function compute_results(inputs::Dict,
         Clean_Share=clean_share,
         Clean_Points=clean_score
     )
-
-    # # Write output CSV files
-    # CSV.write(joinpath(outpath, "resources_results.csv"), resource_results)
-    # CSV.write(joinpath(outpath, "reliability_results.csv"), nse_results)
-    # #CSV.write(joinpath(outpath, "cost_results.csv"), cost_results);
-    # CSV.write(joinpath(outpath, "dispatch_results.csv"), dispatch_results)
-    # CSV.write(joinpath(outpath, "uncertainty_results.csv"), uncertainty_results)
-    # CSV.write(joinpath(outpath, "scores.csv"), scores)
-    # #CSV.write(joinpath(outpath, "runtime.csv"), DataFrame(seconds=round(time)));
 
     return resource_results, nse_results, dispatch_results, uncertainty_results, scores
 end
