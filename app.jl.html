@@ -14,8 +14,10 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-4">
-                <q-input filled v-model="team_name" label="Team name (single word)" stack-label lable-color="rgb(28, 31, 47)" :dense="dense" />
-                <q-btn style="background-color: rgb(16, 16, 129); color: white;" label="Confirm team" :loading="transcribing" v-on:click="team_name_confirmed = !team_name_confirmed"></q-btn>
+                <q-input filled v-model="team_name" label="Team name (single word)" stack-label
+                    lable-color="rgb(28, 31, 47)" :dense="dense" />
+                <q-btn style="background-color: rgb(16, 16, 129); color: white;" label="Confirm team"
+                    :loading="transcribing" v-on:click="team_name_confirmed = !team_name_confirmed"></q-btn>
                 <h5 style="color: rgba(255, 0, 0, 0.649);">{{team_name_error}}</h5>
             </div>
             <div class="col-4">
@@ -29,7 +31,8 @@
             </div>
             <div class="col-4">
                 <div class="st-module st-col col">
-                    <h5 style="color: rgb(16, 16, 129); padding-left: 10px; padding-top: 20px;" :style="team_error_msg_style">Please select team name.</h5>
+                    <h5 style="color: rgb(16, 16, 129); padding-left: 10px; padding-top: 20px;"
+                        :style="team_error_msg_style">Please select team name.</h5>
                     <q-select v-model="selected_file" :options="upfiles" style="max-width: 95%; width: 95%;
                             margin: 0 auto;" :disable="team_name_not_set"></q-select>
                 </div>
@@ -191,11 +194,11 @@
                 <h5> Affordability scores </h5>
                 <p> <strong>Metric:</strong> Budget tokens remaining at end of game </p>
                 <div class="col-12">
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_1" glossy/>
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_2" glossy/>
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_3" glossy/>
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_4" glossy/>
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_5" glossy/>
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_1" glossy />
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_2" glossy />
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_3" glossy />
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_4" glossy />
+                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_5" glossy />
                 </div>
             </center>
         </div>
@@ -242,18 +245,15 @@
                         glossy :label="total_score" />
                 </div>
             </div>
-            <br>
-            <div class="row justify-center">
-                <q-btn style="font-size: large; height: 60px; width: 200px; background-color: rgb(255, 255, 255); border: 2px solid rgb(160, 218, 170);" 
-                glossy label = "Play again" onclick="history.go(0)"></q-btn>
+            <div class="row justify-center" style="margin-top: 5pt";>
+                <q-btn
+                    style="font-size: large; height: 60px; width: 200px; background-color: white; border: 2px solid rgb(160, 218, 170);"
+                    glossy label="Play again" onclick="history.go(0)"></q-btn>
             </div>
         </div>
     </div>
 
     <br><br>
-
-    <link rel="stylesheet"
-                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <div class="st-col col-12 col-sm st-module" :style="show_pannels">
         <q-tabs v-model="tab" active-color="primary" indicator-color="primary" align="justify" narrow-indicator=""
@@ -753,7 +753,9 @@
                                     <st-big-number :number=cap_resource_7_stage_3></st-big-number>
                                 </div>
                                 <div class="row" style="margin-right: 20pt;">
-                                    <p style="text-align: justify;" :style="nuclear_relicensed">*Build tokens required to maintain the capacity of existing nuclear plants are doubled to account for the refurbishing and relicensing necessary to extend their lifetime.</p>
+                                    <p style="text-align: justify;" :style="nuclear_relicensed">*Build tokens required
+                                        to maintain the capacity of existing nuclear plants are doubled to account for
+                                        the refurbishing and relicensing necessary to extend their lifetime.</p>
                                 </div>
                             </div>
                         </div>
@@ -831,7 +833,7 @@
                     <q-btn
                         style="display: inline-block; font-size: 25px; background-color:rgb(16, 16, 129); color:white"
                         :loading="run_simulation" :percentage="run_simulation" glossy v-on:click="run_simulation = true"
-                        label="Run Dispatch Simulator" :disabled="game_over"/>
+                        label="Run Dispatch Simulator" :disabled="game_over" />
                 </div>
                 <div style="text-align: center;margin-top : 10px;">
                     <q-btn style="display: inline-block; width: 305px; padding: 10px; font-size: 25px;"
@@ -855,7 +857,6 @@
                         </q-card>
                     </q-dialog>
                 </div>
-                <br>
             </q-tab-panel>
             <q-tab-panel name="Simulation Results">
 
@@ -886,7 +887,8 @@
                         <p>Week {{plot_week}}</p>
                     </div>
                 </div>
-                <p style="font-weight: bold; font-size: large; color: rgb(16, 16, 129);"> Double-click on legend to isolate trace.</p>
+                <p style="font-weight: bold; font-size: large; color: black;"> Double-click on legend to
+                    isolate resource.</p>
                 <div class="st-col col-12 col-sm " style="padding-left:10px">
                     <plotly :data="plot_traces" :layout="plot_layout" :displaylogo="false"></plotly>
                 </div>
@@ -1099,12 +1101,14 @@
                         <p>Week {{plot_stage_week}}</p>
                     </div>
                 </div>
-                <p style="font-weight: bold; font-size: large; color: rgb(16, 16, 129);"> Double-click on legend to isolate trace.</p>
+                <p style="font-weight: bold; font-size: large; color: black;"> Double-click on legend to
+                    isolate resource.</p>
                 <div class="st-col col-12 col-sm " style="padding-left:10px">
                     <plotly :data="plot_stage_traces" :layout="plot_stage_layout" :displaylogo="false"></plotly>
                 </div>
                 <div class="row" style="padding-top: 10pt; ">
-                    <div class="col-sm st-module" style="margin-left: 8pt; margin-right: 22pt;":style="!disaster_occurred">
+                    <div class="col-sm st-module" style="margin-left: 8pt; margin-right: 22pt;"
+                        :style="!disaster_occurred">
                         <st-big-number :number="demand_shock_percent" title="Demand Shock Percent"></st-big-number>
                     </div>
                 </div>
