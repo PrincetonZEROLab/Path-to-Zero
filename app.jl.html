@@ -239,11 +239,19 @@
                         glossy :label="total_score" />
                 </div>
             </div>
+            <br>
+            <div class="row justify-center">
+                <q-btn style="font-size: large; height: 60px; width: 200px; background-color: rgb(255, 255, 255); border: 2px solid rgb(160, 218, 170);" 
+                glossy label = "Play again" onclick="history.go(0)"></q-btn>
+            </div>
         </div>
     </div>
 
     <br><br>
-    
+
+    <link rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
     <div class="st-col col-12 col-sm st-module" :style="show_pannels">
         <q-tabs v-model="tab" active-color="primary" indicator-color="primary" align="justify" narrow-indicator=""
             class="q-mb-lg">
@@ -859,7 +867,7 @@
                         <p>Week {{plot_week}}</p>
                     </div>
                 </div>
-                <p style="font-weight: bold;"> Double-click on legend to isolate trace.</p>
+                <p style="font-weight: bold; font-size: large; color: rgb(16, 16, 129);"> Double-click on legend to isolate trace.</p>
                 <div class="st-col col-12 col-sm " style="padding-left:10px">
                     <plotly :data="plot_traces" :layout="plot_layout" :displaylogo="false"></plotly>
                 </div>
@@ -963,31 +971,9 @@
                         <st-big-number id="i4x8f" title="Clean Points" :number="stage_clean_points"></st-big-number>
                     </div>
                 </div>
-
-                <br />
-                <div class="row">
-                    <div class="col col-3 col-sm">
-                        <q-toggle label="Full year" v-model="plot_stage_full_year"></q-toggle>
-                    </div>
-                    <div class="col col-9 col-sm">
-                        <q-slider :min=1 v-model="plot_stage_week" :max=52 :step=1></q-slider>
-                        <p>Week {{plot_stage_week}}</p>
-                    </div>
-                </div>
-                <p style="font-weight: bold;"> Double-click on legend to isolate trace.</p>
-                <div class="st-col col-12 col-sm " style="padding-left:10px">
-                    <plotly :data="plot_stage_traces" :layout="plot_stage_layout" :displaylogo="false"></plotly>
-                </div>
-
-                <link rel="stylesheet"
-                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-
-                <div class="row">
-                    <p style="text-align: center;"></p>
-                </div>
-                <h4>Climate Disaster (resources unavailable)</h4>
-                <div class="q-pa-md q-gutter-sm">
-                    <q-banner class="text-white" style="background-color: rgb(171, 20, 20);" :style="disaster_occurred">
+                <h4 style="padding-top: 10pt;">Climate Disaster</h4>
+                <div class="q-pa-md q-gutter-sm" :style="disaster_occurred">
+                    <q-banner class="text-white" style="background-color: rgb(171, 20, 20);">
                         <div class="row justify-center">
 
                             <span class="material-symbols-outlined" style="font-size: xx-large;">
@@ -998,7 +984,7 @@
                                 of your resources are damaged</p>
                         </div>
                     </q-banner>
-                    <div class="row" :style="disaster_occurred">
+                    <div class="row">
                         <div class="col-sm st-module">
                             <st-big-number :number="demand_shock_percent" title="Demand Shock Percent"></st-big-number>
                         </div>
@@ -1006,7 +992,6 @@
                             <st-big-number :number="outage_weeks" title="Outage Weeks"></st-big-number>
                         </div>
                     </div>
-
                 </div>
                 <div class="q-pa-sm rounded-borders">
                     <!-- Resources: -->
@@ -1031,9 +1016,6 @@
                         </center>
                     </q-list>
                 </div>
-                <div class="row">
-                    <p style="text-align: center;"></p>
-                </div>
                 <h4>Social Backlash</h4>
                 <div class="q-pa-sm rounded-borders">
                     <!-- Resources: -->
@@ -1057,6 +1039,26 @@
                                 style="font-size: large;" color="red" checked-icon="clear" left-label disable />
                         </center>
                     </q-list>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col col-3 col-sm">
+                        <q-toggle label="Full year" v-model="plot_stage_full_year"></q-toggle>
+                    </div>
+                    <div class="col col-9 col-sm">
+                        <q-slider :min=1 v-model="plot_stage_week" :max=52 :step=1></q-slider>
+                        <p>Week {{plot_stage_week}}</p>
+                    </div>
+                </div>
+                <p style="font-weight: bold; font-size: large; color: rgb(16, 16, 129);"> Double-click on legend to isolate trace.</p>
+                <div class="st-col col-12 col-sm " style="padding-left:10px">
+                    <plotly :data="plot_stage_traces" :layout="plot_stage_layout" :displaylogo="false"></plotly>
+                </div>
+                <div class="row" style="padding-top: 10pt; ">
+                    <div class="col-sm st-module" style="margin-left: 8pt; margin-right: 22pt;":style="!disaster_occurred">
+                        <st-big-number :number="demand_shock_percent" title="Demand Shock Percent"></st-big-number>
+                    </div>
                 </div>
             </q-tab-panel>
         </q-tab-panels>
