@@ -1536,7 +1536,7 @@ using ElectricityDecarbonizationGame
         end
 
         current_stage += 1
-        if current_stage <= 3
+        if current_stage <= 4
             println("Starting Stage ", current_stage)
 
             # write setup to file
