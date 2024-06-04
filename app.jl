@@ -267,6 +267,19 @@ using ElectricityDecarbonizationGame
         backgroundcolor="red",
     )
 
+    const plot_colors = Dict(
+        "Existing Nuclear" => "#8c564b",
+        "Existing Gas" => "#d62728",
+        "Clean Firm" => "#17becf",
+        "Solar PV (Utility Scale)" => "#EBC334",
+        "Distributed Solar PV" => "#ff7f0e",
+        "Onshore Wind" => "#2ca02c",
+        "Offshore Wind" => "#1f77b4",
+        "Battery Discharge" => "#e377c2",
+        "Battery Charge" => "#9467bd",
+        "Demand not served" => "#000000"
+    )
+
     # shaping tokens
     @in resilience = false
     @in innovation_experience = false
@@ -1010,22 +1023,30 @@ using ElectricityDecarbonizationGame
         Clean_Share = scores[!, :Clean_Share][1]
         Clean_Points = scores[!, :Clean_Points][1]
 
-        # plotting
+        ## plotting
         plot_week = 1
         plot_full_year = true
         df = copy(dispatch_results)
-        rename!(df, "existing_nuclear" => "9. Existing Nuclear")
-        rename!(df, "existing_gas" => "8. Existing Gas")
-        rename!(df, "clean_firm" => "7. Clean Firm")
-        rename!(df, "solar_pv" => "6. Solar PV (Utility Scale)")
-        rename!(df, "distributed_solar" => "5. Distributed Solar PV")
-        rename!(df, "onshore_wind" => "4 Onshore Wind")
-        rename!(df, "offshore_wind" => "3. Offshore Wind")
-        rename!(df, "battery" => "2. Battery Discharge")
-        rename!(df, "battery_charge" => "1. Battery Charge")
-        rename!(df, "demand_not_served" => "0. Demand not served")
+        rename!(df, "existing_nuclear" => "Existing Nuclear")
+        rename!(df, "existing_gas" => "Existing Gas")
+        rename!(df, "clean_firm" => "Clean Firm")
+        rename!(df, "solar_pv" => "Solar PV (Utility Scale)")
+        rename!(df, "distributed_solar" => "Distributed Solar PV")
+        rename!(df, "onshore_wind" => "Onshore Wind")
+        rename!(df, "offshore_wind" => "Offshore Wind")
+        rename!(df, "battery" => "Battery Discharge")
+        rename!(df, "battery_charge" => "Battery Charge")
+        rename!(df, "demand_not_served" => "Demand not served")
+        # sort columns by cumulative capacity
+        sorted_idx = sortperm([1,1,1,cum_cap_resource_5,1,cum_cap_resource_8,cum_cap_resource_7,cum_cap_resource_2,cum_cap_resource_4,cum_cap_resource_1,cum_cap_resource_3,cum_cap_resource_5,cum_cap_resource_6])
+        cols = names(df)[sorted_idx]
+        select!(df, cols)
+        # move battery charge and demand not served to the beginning
+        df = df[!, ["Battery Charge","Demand not served", setdiff(names(df), ["Battery Charge","Demand not served"])...]]
+        # select non-zero columns
+        df = df[!, [col for col in names(df) if sum(df[!, col]) != 0]]
         plot_df = df
-        plot_traces = get_traces(plot_df, plot_week, plot_full_year)
+        plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors)
     end
 
     @onchange plot_week begin
@@ -1033,7 +1054,7 @@ using ElectricityDecarbonizationGame
             plot_week = 1
         end
         if !plot_full_year && !isempty(plot_df)
-            plot_traces = get_traces(plot_df, plot_week, plot_full_year)
+            plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors)
         end
     end
 
@@ -1042,7 +1063,7 @@ using ElectricityDecarbonizationGame
             plot_week = 1
         end
         if !isempty(plot_df)
-            plot_traces = get_traces(plot_df, plot_week, plot_full_year)
+            plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors)
         end
     end
 
@@ -1145,7 +1166,7 @@ using ElectricityDecarbonizationGame
             plot_stage_week = 1
         end
         if !plot_stage_full_year && !isempty(plot_stage_results)
-            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year)
+            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors)
         end
     end
 
@@ -1154,7 +1175,7 @@ using ElectricityDecarbonizationGame
             plot_stage_week = 1
         end
         if !isempty(plot_stage_results)
-            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year)
+            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors)
         end
     end
 
@@ -1357,18 +1378,26 @@ using ElectricityDecarbonizationGame
         plot_stage_week = 1
         plot_stage_full_year = true
         df = copy(dispatch_results)
-        rename!(df, "existing_nuclear" => "9. Existing Nuclear")
-        rename!(df, "existing_gas" => "8. Existing Gas")
-        rename!(df, "clean_firm" => "7. Clean Firm")
-        rename!(df, "solar_pv" => "6. Solar PV (Utility Scale)")
-        rename!(df, "distributed_solar" => "5. Distributed Solar PV")
-        rename!(df, "onshore_wind" => "4. Onshore Wind")
-        rename!(df, "offshore_wind" => "3. Offshore Wind")
-        rename!(df, "battery" => "2. Battery Discharge")
-        rename!(df, "storage_charge" => "1. Battery Charge")
-        rename!(df, "nonserved" => "0. Demand not served")
+        rename!(df, "existing_nuclear" => "Existing Nuclear")
+        rename!(df, "existing_gas" => "Existing Gas")
+        rename!(df, "clean_firm" => "Clean Firm")
+        rename!(df, "solar_pv" => "Solar PV (Utility Scale)")
+        rename!(df, "distributed_solar" => "Distributed Solar PV")
+        rename!(df, "onshore_wind" => "Onshore Wind")
+        rename!(df, "offshore_wind" => "Offshore Wind")
+        rename!(df, "battery" => "Battery Discharge")
+        rename!(df, "storage_charge" => "Battery Charge")
+        rename!(df, "nonserved" => "Demand not served")
+        # sort columns by cumulative capacity
+        sorted_idx = sortperm([1,1,1,cum_cap_resource_5,1,cum_cap_resource_8,cum_cap_resource_7,cum_cap_resource_2,cum_cap_resource_4,cum_cap_resource_1,cum_cap_resource_3,cum_cap_resource_5,cum_cap_resource_6])
+        cols = names(df)[sorted_idx]
+        select!(df, cols)
+        # move battery charge and demand not served to the beginning
+        df = df[!, ["Battery Charge","Demand not served", setdiff(names(df), ["Battery Charge","Demand not served"])...]]
+        # select non-zero columns
+        df = df[!, [col for col in names(df) if sum(df[!, col]) != 0]]
         plot_stage_results = df
-        plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year)
+        plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors)
 
         # update costs
         bc_resource_1 = resource_params["Build_Cost"][1, backend_data_name_1]

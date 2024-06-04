@@ -859,6 +859,7 @@
                         <p>Week {{plot_week}}</p>
                     </div>
                 </div>
+                <p style="font-weight: bold;"> Double-click on legend to isolate trace.</p>
                 <div class="st-col col-12 col-sm " style="padding-left:10px">
                     <plotly :data="plot_traces" :layout="plot_layout" :displaylogo="false"></plotly>
                 </div>
@@ -930,8 +931,6 @@
                                         </div>
                                     </center>
                                 </q-list>
-
-
                             </div>
                         </div>
                     </div>
@@ -975,6 +974,7 @@
                         <p>Week {{plot_stage_week}}</p>
                     </div>
                 </div>
+                <p style="font-weight: bold;"> Double-click on legend to isolate trace.</p>
                 <div class="st-col col-12 col-sm " style="padding-left:10px">
                     <plotly :data="plot_stage_traces" :layout="plot_stage_layout" :displaylogo="false"></plotly>
                 </div>
