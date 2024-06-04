@@ -34,7 +34,9 @@ using ElectricityDecarbonizationGame
     @out year = 0
 
     @in available_budget_tokens = 5
+    @out _current_stage_budget_tokens = 5
     @out _init_shaping_tokens = 2
+    @out _current_stage_shaping_tokens = 2
     @out available_shaping_tokens = 2
     @out _available_build_tokens = [10, 11, 12]
     @out available_build_tokens = 10
@@ -286,6 +288,7 @@ using ElectricityDecarbonizationGame
     @in innovation_experience = false
     @in innovation_clean_firm = false
     @in social_license = false
+    @in shaping_tokens_warning = "display:"
 
     @out is_clean_firm_resource_1 = false
     @out is_clean_firm_resource_2 = false
@@ -297,7 +300,9 @@ using ElectricityDecarbonizationGame
     @out is_clean_firm_resource_8 = false
 
     @in bt_buy_build_token = false
-    @out bt_buy_build_token_is_disabled = false
+    @in bt_undo_buy_build_token = false
+    @in bt_buy_shaping_token = false
+    @in bt_undo_buy_shaping_token = false
 
     @in bt_resilience = false
     @in bt_innovation_experience = false
@@ -418,7 +423,9 @@ using ElectricityDecarbonizationGame
         end
 
         available_budget_tokens = _game_setup["available_budget_tokens"]
+        _current_stage_budget_tokens = _game_setup["available_budget_tokens"]
         available_shaping_tokens = _game_setup["available_shaping_tokens"]
+        _current_stage_shaping_tokens = _game_setup["current_stage_shaping_tokens"]
         _available_build_tokens = _game_setup["available_build_tokens"]
         available_build_tokens = _available_build_tokens[current_stage]
 
@@ -653,8 +660,12 @@ using ElectricityDecarbonizationGame
         if available_budget_tokens >= 2
             available_build_tokens += 1
             available_budget_tokens -= 2
-        else
-            bt_buy_build_token_is_disabled = true
+        end
+    end
+    @onbutton bt_undo_buy_build_token begin
+        if available_budget_tokens <= (_current_stage_budget_tokens - 2)
+            available_build_tokens -= 1
+            available_budget_tokens += 2
         end
     end
 
@@ -662,12 +673,16 @@ using ElectricityDecarbonizationGame
         if available_budget_tokens == 5
             bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
         elseif available_budget_tokens == 4
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
             bt_color_5 = "border: 1px solid black;"
         elseif available_budget_tokens == 3
+            bt_color_1 = bt_color_2 = bt_color_3 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
             bt_color_4 = bt_color_5 = "border: 1px solid black;"
         elseif available_budget_tokens == 2
+            bt_color_1 = bt_color_2 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
             bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
         elseif available_budget_tokens == 1
+            bt_color_1 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
             bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
         elseif available_budget_tokens == 0
             bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
@@ -1091,14 +1106,16 @@ using ElectricityDecarbonizationGame
         end
     end
 
-    @in bt_buy_shaping_token = false
-    @out bt_buy_shaping_token_is_disabled = false
     @onbutton bt_buy_shaping_token begin
-        if available_budget_tokens >= 1
+        if available_budget_tokens >= 1 && available_shaping_tokens < 4
             available_shaping_tokens += 1
             available_budget_tokens -= 1
-        else
-            bt_buy_shaping_token_is_disabled = true
+        end
+    end
+    @onbutton bt_undo_buy_shaping_token begin
+        if (available_budget_tokens <= (_current_stage_budget_tokens - 1)) && ((available_shaping_tokens > _current_stage_shaping_tokens))
+            available_shaping_tokens -= 1
+            available_budget_tokens += 1
         end
     end
 
@@ -1456,6 +1473,8 @@ using ElectricityDecarbonizationGame
         bt_resource_7 = 0
         bt_resource_8 = 0
 
+        _current_stage_budget_tokens = available_budget_tokens
+
         # disable shaping if used
         if (resilience == true) && (bt_resilience_is_disabled == false)
             bt_resilience_is_disabled = true
@@ -1525,6 +1544,7 @@ using ElectricityDecarbonizationGame
                 "current_stage" => current_stage,
                 "available_budget_tokens" => available_budget_tokens,
                 "available_shaping_tokens" => _init_shaping_tokens,
+                "current_stage_shaping_tokens" => available_shaping_tokens,
                 "available_build_tokens" => _available_build_tokens,
                 "stages" => _stages,
                 "resource_blocks" => Dict(
