@@ -18,7 +18,7 @@ resource_blocks:
 
   block_1:
     name: "ONSHORE WIND POWER"
-    start_capacity: 10
+    start_capacity: 0
     build_cost: 10
     backlash_risk: "moderate"
     EDG_data_name: "onshore_wind"
@@ -27,7 +27,7 @@ resource_blocks:
 
   block_2:
     name: "UTILITY-SCALE SOLAR PV"
-    start_capacity: 5
+    start_capacity: 0
     build_cost: 15
     backlash_risk: "low"
     EDG_data_name: "solar_pv"
@@ -38,7 +38,7 @@ resource_blocks:
     name: "OFFSHORE WIND POWER"
     start_capacity: 0
     build_cost: 5
-    backlash_risk: "low"
+    backlash_risk: "moderate"
     EDG_data_name: "offshore_wind"
     new_resource: true
     social_backlash: false
