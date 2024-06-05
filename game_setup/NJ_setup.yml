@@ -36,7 +36,7 @@ resource_blocks:
 
   block_3:
     name: "OFFSHORE WIND POWER"
-    start_capacity: 5
+    start_capacity: 0
     build_cost: 5
     backlash_risk: "low"
     EDG_data_name: "offshore_wind"
@@ -46,7 +46,7 @@ resource_blocks:
   block_4:
     name: "DISTRIBUTED SOLAR PV"
     start_capacity: 10
-    build_cost: 8
+    build_cost: 10
     backlash_risk: "none"
     EDG_data_name: "distributed_solar"
     new_resource: true
