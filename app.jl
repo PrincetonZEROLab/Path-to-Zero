@@ -449,7 +449,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_1 = block_1["new_resource"]
         name_resource_1 = is_new_resource_1 ? name_resource_1 : name_resource_1 * " (EXISTING)"
         cum_cap_resource_1 = sc_resource_1
-        bb_name_resource_1 = is_new_resource_1 ? bb_name_resource_1 : "Retained capacity"
+        bb_name_resource_1 = is_new_resource_1 ? "Added capacity" : "Retained capacity"
         b_color_resource_1 = is_new_resource_1 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_1 *= backend_data_name_1 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_1 = backend_data_name_1 == "clean_firm" ? true : false
@@ -463,7 +463,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_2 = block_2["new_resource"]
         name_resource_2 = is_new_resource_2 ? name_resource_2 : name_resource_2 * " (EXISTING)"
         cum_cap_resource_2 = sc_resource_2
-        bb_name_resource_2 = is_new_resource_2 ? bb_name_resource_2 : "Retained capacity"
+        bb_name_resource_2 = is_new_resource_2 ? "Added capacity" : "Retained capacity"
         b_color_resource_2 = is_new_resource_2 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_2 *= backend_data_name_2 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_2 = backend_data_name_2 == "clean_firm" ? true : false
@@ -477,7 +477,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_3 = block_3["new_resource"]
         name_resource_3 = is_new_resource_3 ? name_resource_3 : name_resource_3 * " (EXISTING)"
         cum_cap_resource_3 = sc_resource_3
-        bb_name_resource_3 = is_new_resource_3 ? bb_name_resource_3 : "Retained capacity"
+        bb_name_resource_3 = is_new_resource_3 ? "Added capacity" : "Retained capacity"
         b_color_resource_3 = is_new_resource_3 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_3 *= backend_data_name_3 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_3 = backend_data_name_3 == "clean_firm" ? true : false
@@ -491,7 +491,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_4 = block_4["new_resource"]
         name_resource_4 = is_new_resource_4 ? name_resource_4 : name_resource_4 * " (EXISTING)"
         cum_cap_resource_4 = sc_resource_4
-        bb_name_resource_4 = is_new_resource_4 ? bb_name_resource_4 : "Retained capacity"
+        bb_name_resource_4 = is_new_resource_4 ? "Added capacity" : "Retained capacity"
         b_color_resource_4 = is_new_resource_4 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_4 *= backend_data_name_4 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_4 = backend_data_name_4 == "clean_firm" ? true : false
@@ -505,7 +505,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_5 = block_5["new_resource"]
         name_resource_5 = is_new_resource_5 ? name_resource_5 : name_resource_5 * " (EXISTING)"
         cum_cap_resource_5 = sc_resource_5
-        bb_name_resource_5 = is_new_resource_5 ? bb_name_resource_5 : "Retained capacity"
+        bb_name_resource_5 = is_new_resource_5 ? "Added capacity" : "Retained capacity"
         b_color_resource_5 = is_new_resource_5 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_5 *= backend_data_name_5 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_5 = backend_data_name_5 == "clean_firm" ? true : false
@@ -519,7 +519,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_6 = block_6["new_resource"]
         name_resource_6 = is_new_resource_6 ? name_resource_6 : name_resource_6 * " (EXISTING)"
         cum_cap_resource_6 = sc_resource_6
-        bb_name_resource_6 = is_new_resource_6 ? bb_name_resource_6 : "Retained capacity"
+        bb_name_resource_6 = is_new_resource_6 ? "Added capacity" : "Retained capacity"
         b_color_resource_6 = is_new_resource_6 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_6 *= backend_data_name_6 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_6 = backend_data_name_6 == "clean_firm" ? true : false
@@ -533,7 +533,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_7 = block_7["new_resource"]
         name_resource_7 = is_new_resource_7 ? name_resource_7 : name_resource_7 * " (EXISTING)"
         cum_cap_resource_7 = sc_resource_7
-        bb_name_resource_7 = is_new_resource_7 ? bb_name_resource_7 : "Retained capacity"
+        bb_name_resource_7 = is_new_resource_7 ? "Added capacity" : "Retained capacity"
         b_color_resource_7 = is_new_resource_7 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_7 *= backend_data_name_7 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_7 = backend_data_name_7 == "clean_firm" ? true : false
@@ -547,7 +547,7 @@ using ElectricityDecarbonizationGame
         is_new_resource_8 = block_8["new_resource"]
         name_resource_8 = is_new_resource_8 ? name_resource_8 : name_resource_8 * " (EXISTING)"
         cum_cap_resource_8 = sc_resource_8
-        bb_name_resource_8 = is_new_resource_8 ? bb_name_resource_8 : "Retained capacity"
+        bb_name_resource_8 = is_new_resource_8 ? "Added capacity" : "Retained capacity"
         b_color_resource_8 = is_new_resource_8 ? "border: 2px solid rgb(16, 16, 129);" : "border: 2px solid rgb(255, 198, 151);"
         b_color_resource_8 *= backend_data_name_8 == "clean_firm" ? color_select : ""
         is_clean_firm_resource_8 = backend_data_name_8 == "clean_firm" ? true : false
