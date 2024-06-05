@@ -21,6 +21,7 @@ using ElectricityDecarbonizationGame
     @in team_name_confirmed = false
 
     @out tab = "Build"
+    @in back_to_build_tab = false
     @in game_over = false
     @out show_pannels = "display: "
     @out show_game_over = "display: none"
@@ -1695,6 +1696,10 @@ using ElectricityDecarbonizationGame
             end
         end
         tab = "Results"
+    end
+
+    @onbutton back_to_build_tab begin
+        tab = "Build"
     end
 end
 
