@@ -6,8 +6,9 @@ function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict)
     varnames = [name for name in names(df) if !(name in exclude)]
     lineattr = full_year ? [attr(width=1.5,color = colors[i]) for i in varnames] : [attr(width=2,color = colors[i]) for i in varnames]
     lineattr_dem = full_year ? attr(width=1, color="#101081") : attr(width=2, dash="dash", color="#101081")
-    traces = [PlotlyBase.scatter(x=df[start_hour:end_hour, :hour], y=df[start_hour:end_hour, variable], line = lineattr[i], mode="lines", stackgroup="one", name=variable*colors[variable]) for (i, variable) in enumerate(varnames)]
-    pushfirst!(traces, PlotlyBase.scatter(x=df[start_hour:end_hour, :hour], y=df[start_hour:end_hour, :demand_gw], line = lineattr_dem, mode="lines", name="Demand"))
+    x_axis = full_year ? df[start_hour:end_hour, :hour]/(24*7) : (df[start_hour:end_hour, :hour] .- (df[start_hour, :hour]-1))/24
+    traces = [PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, variable], line = lineattr[i], mode="lines", stackgroup="one", name=variable) for (i, variable) in enumerate(varnames)]
+    pushfirst!(traces, PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, :demand_gw], line = lineattr_dem, mode="lines", name="Demand"))
     return traces
 end
 
