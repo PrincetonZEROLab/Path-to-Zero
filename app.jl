@@ -423,13 +423,28 @@ using ElectricityDecarbonizationGame
             _init_shaping_tokens = _game_setup["available_shaping_tokens"]
         end
 
+        if current_stage == 2
+            nuclear_relicensed = "display:"
+        else
+            nuclear_relicensed = "display: none"
+        end
+
+        if current_stage == 4
+            game_over = true
+            show_game_over = "display: "
+            current_stage = 3
+        else
+            game_over = false
+            show_game_over = "display: none"
+        end
+
         available_budget_tokens = _game_setup["available_budget_tokens"]
         _current_stage_budget_tokens = _game_setup["available_budget_tokens"]
         available_shaping_tokens = _game_setup["available_shaping_tokens"]
         _current_stage_shaping_tokens = _game_setup["current_stage_shaping_tokens"]
         _available_build_tokens = _game_setup["available_build_tokens"]
         available_build_tokens = _available_build_tokens[current_stage]
-
+        
         _stages = _game_setup["stages"]
         @assert length(_stages) == 3
 
@@ -649,10 +664,24 @@ using ElectricityDecarbonizationGame
             cap_resource_6_stage_2 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_2", 0)
             cap_resource_7_stage_2 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_2", 0)
             cap_resource_8_stage_2 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_2", 0)
-        end
 
-        if current_stage == 2
-            nuclear_relicensed = "display:"
+            cap_resource_1_stage_3 = get(_game_setup["resource_blocks"]["block_1"], "cap_built_stage_3", 0)
+            cap_resource_2_stage_3 = get(_game_setup["resource_blocks"]["block_2"], "cap_built_stage_3", 0)
+            cap_resource_3_stage_3 = get(_game_setup["resource_blocks"]["block_3"], "cap_built_stage_3", 0)
+            cap_resource_4_stage_3 = get(_game_setup["resource_blocks"]["block_4"], "cap_built_stage_3", 0)
+            cap_resource_5_stage_3 = get(_game_setup["resource_blocks"]["block_5"], "cap_built_stage_3", 0)
+            cap_resource_6_stage_3 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_3", 0)
+            cap_resource_7_stage_3 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_3", 0)
+            cap_resource_8_stage_3 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_3", 0)
+
+            bt_resource_1 = 0
+            bt_resource_2 = 0
+            bt_resource_3 = 0
+            bt_resource_4 = 0
+            bt_resource_5 = 0
+            bt_resource_6 = 0
+            bt_resource_7 = 0
+            bt_resource_8 = 0
         end
     end
 
@@ -1491,6 +1520,7 @@ using ElectricityDecarbonizationGame
         bt_resource_8 = 0
 
         _current_stage_budget_tokens = available_budget_tokens
+        _current_stage_shaping_tokens = available_shaping_tokens
 
         # disable shaping if used
         if (resilience == true) && (bt_resilience_is_disabled == false)
@@ -1575,6 +1605,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_1,
                         "cap_built_stage_1" => cap_resource_1_stage_1,
                         "cap_built_stage_2" => cap_resource_1_stage_2,
+                        "cap_built_stage_3" => cap_resource_1_stage_3
                     ),
                     "block_2" => Dict(
                         "name" => name_resource_2,
@@ -1586,6 +1617,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_2,
                         "cap_built_stage_1" => cap_resource_2_stage_1,
                         "cap_built_stage_2" => cap_resource_2_stage_2,
+                        "cap_built_stage_3" => cap_resource_2_stage_3
                     ),
                     "block_3" => Dict(
                         "name" => name_resource_3,
@@ -1597,6 +1629,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_3,
                         "cap_built_stage_1" => cap_resource_3_stage_1,
                         "cap_built_stage_2" => cap_resource_3_stage_2,
+                        "cap_built_stage_3" => cap_resource_3_stage_3
                     ),
                     "block_4" => Dict(
                         "name" => name_resource_4,
@@ -1608,6 +1641,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_4,
                         "cap_built_stage_1" => cap_resource_4_stage_1,
                         "cap_built_stage_2" => cap_resource_4_stage_2,
+                        "cap_built_stage_3" => cap_resource_4_stage_3
                     ),
                     "block_5" => Dict(
                         "name" => name_resource_5,
@@ -1619,6 +1653,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_5,
                         "cap_built_stage_1" => cap_resource_5_stage_1,
                         "cap_built_stage_2" => cap_resource_5_stage_2,
+                        "cap_built_stage_3" => cap_resource_5_stage_3
                     ),
                     "block_6" => Dict(
                         "name" => name_resource_6,
@@ -1630,6 +1665,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_6,
                         "cap_built_stage_1" => cap_resource_6_stage_1,
                         "cap_built_stage_2" => cap_resource_6_stage_2,
+                        "cap_built_stage_3" => cap_resource_6_stage_3
                     ),
                     "block_7" => Dict(
                         "name" => name_resource_7,
@@ -1641,6 +1677,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_7,
                         "cap_built_stage_1" => cap_resource_7_stage_1,
                         "cap_built_stage_2" => cap_resource_7_stage_2,
+                        "cap_built_stage_3" => cap_resource_7_stage_3
                     ),
                     "block_8" => Dict(
                         "name" => name_resource_8,
@@ -1652,6 +1689,7 @@ using ElectricityDecarbonizationGame
                         "social_backlash" => social_backlash_resource_8,
                         "cap_built_stage_1" => cap_resource_8_stage_1,
                         "cap_built_stage_2" => cap_resource_8_stage_2,
+                        "cap_built_stage_3" => cap_resource_8_stage_3
                     ),
                 ),
                 "uncertainty_parameters" => Dict(
