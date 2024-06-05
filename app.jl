@@ -264,7 +264,7 @@ using ElectricityDecarbonizationGame
     @out plot_layout = PlotlyBase.Layout(
         title="Simulation Results",
         Dict{Symbol,Any}(:paper_bgcolor => "rgb(242, 246, 247)", :plot_bgcolor => "rgb(242, 246, 247)");
-        xaxis=attr(title="Hour", showgrid=true),
+        xaxis=attr(title="Week", showgrid=true, dtick=5),
         yaxis=attr(title="Usage", showgrid=true),
         legend=attr(x=1, y=1.02, yanchor="bottom", xanchor="right", orientation="h"),
         backgroundcolor="red",
@@ -328,7 +328,7 @@ using ElectricityDecarbonizationGame
     @out plot_stage_layout = PlotlyBase.Layout(
         title="",
         Dict{Symbol,Any}(:paper_bgcolor => "rgb(242, 246, 247)", :plot_bgcolor => "rgb(242, 246, 247)");
-        xaxis=attr(title="Hour", showgrid=true),
+        xaxis=attr(title="Week", showgrid=true, dtick=5),
         yaxis=attr(title="Usage", showgrid=true),
         legend=attr(x=1, y=1.02, yanchor="bottom", xanchor="right", orientation="h"),
         backgroundcolor="red",
@@ -1071,6 +1071,8 @@ using ElectricityDecarbonizationGame
         end
         if !plot_full_year && !isempty(plot_df)
             plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors)
+            PlotlyBase.relayout!(plot_layout, xaxis=attr(title="Day", showgrid=true, dtick=1))
+            plot_layout = plot_layout
         end
     end
 
@@ -1080,6 +1082,12 @@ using ElectricityDecarbonizationGame
         end
         if !isempty(plot_df)
             plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors)
+            if plot_full_year
+                PlotlyBase.relayout!(plot_layout, xaxis=attr(title="Week", showgrid=true, dtick=5))
+            else
+                PlotlyBase.relayout!(plot_layout, xaxis=attr(title="Day", showgrid=true, dtick=1))
+            end
+            plot_layout = plot_layout
         end
     end
 
@@ -1185,6 +1193,8 @@ using ElectricityDecarbonizationGame
         end
         if !plot_stage_full_year && !isempty(plot_stage_results)
             plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors)
+            PlotlyBase.relayout!(plot_stage_layout, xaxis=attr(title="Day", showgrid=true, dtick=1))
+            plot_stage_layout = plot_stage_layout
         end
     end
 
@@ -1194,6 +1204,12 @@ using ElectricityDecarbonizationGame
         end
         if !isempty(plot_stage_results)
             plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors)
+            if plot_stage_full_year
+                PlotlyBase.relayout!(plot_stage_layout, xaxis=attr(title="Week", showgrid=true, dtick=5))
+            else
+                PlotlyBase.relayout!(plot_stage_layout, xaxis=attr(title="Day", showgrid=true, dtick=1))
+            end
+            plot_stage_layout = plot_stage_layout
         end
     end
 
