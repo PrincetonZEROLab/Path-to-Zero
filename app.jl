@@ -1320,7 +1320,7 @@ using ElectricityDecarbonizationGame
     end
 
     @onchange confirm_advance_stage begin
-        if any([resilience, innovation_experience, innovation_clean_firm, social_license])
+        if available_shaping_tokens == 0
             shaping_tokens_warning = "display: none"
         else
             shaping_tokens_warning = "display: "
