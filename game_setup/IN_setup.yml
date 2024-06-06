@@ -73,7 +73,7 @@ resource_blocks:
   block_7:
     name: "NEW NUCLEAR"
     start_capacity: 0
-    build_cost: 4
+    build_cost: 5
     backlash_risk: "moderate"
     EDG_data_name: "existing_nuclear"
     new_resource: true
@@ -81,8 +81,8 @@ resource_blocks:
 
   block_8:
     name: "COAL"
-    start_capacity: 90
-    build_cost: 20
+    start_capacity: 75
+    build_cost: 25
     backlash_risk: "moderate"
     EDG_data_name: "existing_gas"
     new_resource: false
