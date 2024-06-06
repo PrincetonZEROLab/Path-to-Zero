@@ -694,15 +694,15 @@ using ElectricityDecarbonizationGame
 
     # buy build tokens
     @onbutton bt_buy_build_token begin
-        if available_budget_tokens >= 2
-            available_build_tokens += 1
-            available_budget_tokens -= 2
+        if available_budget_tokens >= 1
+            available_build_tokens += 2
+            available_budget_tokens -= 1
         end
     end
     @onbutton bt_undo_buy_build_token begin
-        if available_budget_tokens <= (_current_stage_budget_tokens - 2)
-            available_build_tokens -= 1
-            available_budget_tokens += 2
+        if (available_budget_tokens < _current_stage_budget_tokens)
+            available_build_tokens -= 2
+            available_budget_tokens += 1
         end
     end
 
