@@ -1,5 +1,7 @@
 # The following links provide access to the game for each team 
 
+### Game Instructions can be found [here](https://bit.ly/Path_to_Zero_Instructions).
+
 | Team Name | Link |
 |-----------|------|
 | Team 1    | [Link to Path to Zero](https://stunning-xylophone-g5vxqqpr64qhwg5g-8000.app.github.dev/ ) |
