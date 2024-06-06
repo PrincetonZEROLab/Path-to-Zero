@@ -1,4 +1,4 @@
-function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict)
+function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict, setup_IN::Bool=false)
     start_hour = full_year ? 1 : (week - 1) * 24 * 7 + 1
     end_hour = (full_year ? 52 : week) * 24 * 7
     df_week = df[start_hour:end_hour, :]
@@ -7,6 +7,19 @@ function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict)
     lineattr = full_year ? [attr(width=1.5,color = colors[i]) for i in varnames] : [attr(width=2,color = colors[i]) for i in varnames]
     lineattr_dem = full_year ? attr(width=1, color="#101081") : attr(width=2, dash="dash", color="#101081")
     x_axis = full_year ? df[start_hour:end_hour, :hour]/(24*7) : (df[start_hour:end_hour, :hour] .- (df[start_hour, :hour]-1))/24
+    if setup_IN
+        for i in eachindex(varnames)
+            if varnames[i] == "Existing Gas"
+                varnames[i] = "Existing Coal"
+                colors["Existing Coal"] = colors["Existing Gas"]
+                rename!(df, "Existing Gas" => "Existing Coal")
+            elseif varnames[i] == "Existing Nuclear"
+                varnames[i] = "New Nuclear"
+                colors["New Nuclear"] = colors["Existing Nuclear"]
+                rename!(df, "Existing Nuclear" => "New Nuclear")
+            end
+        end
+    end
     traces = [PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, variable], line = lineattr[i], mode="lines", stackgroup="one", name=variable) for (i, variable) in enumerate(varnames)]
     pushfirst!(traces, PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, :demand_gw], line = lineattr_dem, mode="lines", name="Demand"))
     return traces
@@ -17,7 +30,8 @@ function run_simulation(
     planning_year::Int64,
     resource_params::Dict,
     scoring_params::Dict;
-    path::String="."
+    path::String=".",
+    nuclear_is_new::Bool=false
 )
 
     stage_num = "Stage_" * string(stage_num)
@@ -42,10 +56,13 @@ function run_simulation(
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
     end
-    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
-        resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
-    else
-        resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+
+    if !nuclear_is_new
+        if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+        else
+            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+        end
     end
 
     ending_capacity = DataFrame(Resource=resources.Resource, Ending_Cap_MW=resources.Existing_Cap_MW)
@@ -502,6 +519,7 @@ function run_stage(
     uncertainty_params::Dict,
     scoring_params::Dict,
     input_path::String,
+    nuclear_is_new::Bool=false
 )
 
     in_path = (joinpath(input_path, "EDG_inputs", planning_year))
@@ -522,10 +540,12 @@ function run_stage(
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
     end
-    if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
-        resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
-    else
-        resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+    if !nuclear_is_new
+        if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+        else
+            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+        end
     end
     # Prevent clean firm capacity unless Innovation: Clean Firm shaping point is invested (and issue warning)
     if resources.Existing_Cap_MW[resources.Resource.=="clean_firm"][1] > 0 && shaping_tokens["Innovation_Clean_Firm"] == 0
@@ -576,25 +596,31 @@ function advance_stage(
     experience_rate::Float64,
     backlash_risk::DataFrame,
     backlash_rates::DataFrame;
-    input_path::String="."
+    input_path::String=".",
+    is_IN_setup::Bool=false,
+    nuclear_is_new::Bool=false
 )
 
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
     resource_params["Start_Capacity"], resource_results, dispatch_results, uncertainty_results, scores = run_stage(stage_num, planning_year, resource_params, shaping_tokens, uncertainty_params, scoring_params,
-        input_path)
+        input_path, nuclear_is_new)
     social_backlash, resource_params["Build_Cost"], experience_results = update_step(resource_params, shaping_tokens, experience_rate, backlash_risk, backlash_rates)
 
     # update resource parameters based on planning year
-    if planning_year == "2030"
-        # Update resource parameters
-        resource_params["Build_Cost"].existing_nuclear[1] = ceil(resource_params["Build_Cost"].existing_nuclear[1] / 2)
+    if planning_year == "2030" 
+        if !is_IN_setup    
+            # Update resource parameters
+            resource_params["Build_Cost"].existing_nuclear[1] = ceil(resource_params["Build_Cost"].existing_nuclear[1] / 2)
+        end
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.5
     elseif planning_year == "2040"
-        # Update resource parameters
-        resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
+        if !is_IN_setup
+            # Update resource parameters
+            resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
+        end
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.9
     elseif planning_year == "2050"

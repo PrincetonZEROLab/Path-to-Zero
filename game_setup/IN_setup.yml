@@ -29,7 +29,7 @@ resource_blocks:
     name: "UTILITY-SCALE SOLAR PV"
     start_capacity: 0
     build_cost: 15
-    backlash_risk: "low"
+    backlash_risk: "moderate"
     EDG_data_name: "solar_pv"
     new_resource: true
     social_backlash: false
@@ -73,7 +73,7 @@ resource_blocks:
   block_7:
     name: "NEW NUCLEAR"
     start_capacity: 0
-    build_cost: 5
+    build_cost: 4
     backlash_risk: "moderate"
     EDG_data_name: "existing_nuclear"
     new_resource: true
@@ -82,7 +82,7 @@ resource_blocks:
   block_8:
     name: "COAL"
     start_capacity: 90
-    build_cost: 30
+    build_cost: 20
     backlash_risk: "moderate"
     EDG_data_name: "existing_gas"
     new_resource: false
