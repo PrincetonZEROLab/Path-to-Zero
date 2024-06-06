@@ -422,7 +422,7 @@ using ElectricityDecarbonizationGame
 
         if current_stage == 1
             _init_shaping_tokens = _game_setup["available_shaping_tokens"]
-            is_IN_setup = selected_file == "IN_setup.yml" 
+            is_IN_setup = selected_file == "WY_setup.yml" 
         end
 
         if current_stage == 2
