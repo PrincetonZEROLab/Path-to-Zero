@@ -611,6 +611,8 @@ using ElectricityDecarbonizationGame
             social_backlash_resource_7 = resource_blocks["block_7"]["social_backlash"]
             social_backlash_resource_8 = resource_blocks["block_8"]["social_backlash"]
 
+            available_shaping_tokens = sum(values(_game_setup["shaping_tokens"]))
+
             # shaping tokens
             if _game_setup["shaping_tokens"]["resilience"]
                 bt_resilience = true
