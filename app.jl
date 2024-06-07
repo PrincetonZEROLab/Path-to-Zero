@@ -1604,6 +1604,7 @@ using ElectricityDecarbonizationGame
 
             # write setup to file
             data = Dict(
+                "scenario" => selected_file,
                 "current_stage" => current_stage,
                 "available_budget_tokens" => available_budget_tokens,
                 "available_shaping_tokens" => _init_shaping_tokens,
@@ -1746,7 +1747,8 @@ using ElectricityDecarbonizationGame
                     3 => clean_score_stage_3
                 ),
             )
-            open(joinpath(team_path, "stage_$(current_stage).yml"), "w") do f
+            scenario_name = split(selected_file, ".")[1]
+            open(joinpath(team_path, "$(scenario_name)_stage_$(current_stage).yml"), "w") do f
                 write(f, YAML.yaml(data))
             end
         end
