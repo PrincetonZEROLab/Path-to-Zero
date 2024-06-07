@@ -655,6 +655,11 @@ using ElectricityDecarbonizationGame
             clean_score_stage_3 = _game_setup["clean_scores"][3]
             total_score = sum([reliability_score_stage_1, reliability_score_stage_2, reliability_score_stage_3, clean_score_stage_1, clean_score_stage_2, clean_score_stage_3])
 
+            if game_over
+                affordability_score = 3 * available_budget_tokens
+                total_score += affordability_score
+            end
+
             # update built capacity from prevoius stages
             cap_resource_1_stage_1 = get(_game_setup["resource_blocks"]["block_1"], "cap_built_stage_1", 0)
             cap_resource_2_stage_1 = get(_game_setup["resource_blocks"]["block_2"], "cap_built_stage_1", 0)
