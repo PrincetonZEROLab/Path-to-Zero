@@ -228,7 +228,7 @@ using ElectricityDecarbonizationGame
     @in sbp_resource_8 = "none"
 
     # new nuclear resource
-    @out is_IN_setup = false
+    @out is_WY_setup = false
     @out nuclear_relicensed = "display: none"
 
     ## SHAPE THE FUTURE TAB
@@ -438,12 +438,12 @@ using ElectricityDecarbonizationGame
 
         if current_stage == 1
             _init_shaping_tokens = _game_setup["available_shaping_tokens"]
-            is_IN_setup = selected_file == "WY_setup.yml" 
+            is_WY_setup = selected_file == "WY_setup.yml" 
         end
 
         if current_stage == 2
-            is_IN_setup = _game_setup["is_IN_setup"]
-            if !is_IN_setup
+            is_WY_setup = _game_setup["is_WY_setup"]
+            if !is_WY_setup
                 nuclear_relicensed = "display:"
             end
         else
@@ -616,7 +616,7 @@ using ElectricityDecarbonizationGame
 
         # Load prevoius stage data (if available)
         if current_stage > 1
-            is_IN_setup = _game_setup["is_IN_setup"]
+            is_WY_setup = _game_setup["is_WY_setup"]
 
             social_backlash_resource_1 = resource_blocks["block_1"]["social_backlash"]
             social_backlash_resource_2 = resource_blocks["block_2"]["social_backlash"]
@@ -1127,7 +1127,7 @@ using ElectricityDecarbonizationGame
         # select non-zero columns
         df = df[!, [col for col in names(df) if sum(df[!, col]) != 0]]
         plot_df = df
-        plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors, is_IN_setup)
+        plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors, is_WY_setup)
     end
 
     # update plot based on selected week
@@ -1136,7 +1136,7 @@ using ElectricityDecarbonizationGame
             plot_week = 1
         end
         if !plot_full_year && !isempty(plot_df)
-            plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors, is_IN_setup)
+            plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors, is_WY_setup)
             PlotlyBase.relayout!(plot_layout, xaxis=attr(title="Day", showgrid=true, dtick=1))
             plot_layout = plot_layout
         end
@@ -1148,7 +1148,7 @@ using ElectricityDecarbonizationGame
             plot_week = 1
         end
         if !isempty(plot_df)
-            plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors, is_IN_setup)
+            plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors, is_WY_setup)
             if plot_full_year
                 PlotlyBase.relayout!(plot_layout, xaxis=attr(title="Week", showgrid=true, dtick=5))
             else
@@ -1236,7 +1236,7 @@ using ElectricityDecarbonizationGame
             plot_stage_week = 1
         end
         if !plot_stage_full_year && !isempty(plot_stage_results)
-            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors, is_IN_setup)
+            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors, is_WY_setup)
             PlotlyBase.relayout!(plot_stage_layout, xaxis=attr(title="Day", showgrid=true, dtick=1))
             plot_stage_layout = plot_stage_layout
         end
@@ -1247,7 +1247,7 @@ using ElectricityDecarbonizationGame
             plot_stage_week = 1
         end
         if !isempty(plot_stage_results)
-            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors, is_IN_setup)
+            plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors, is_WY_setup)
             if plot_stage_full_year
                 PlotlyBase.relayout!(plot_stage_layout, xaxis=attr(title="Week", showgrid=true, dtick=5))
             else
@@ -1432,7 +1432,7 @@ using ElectricityDecarbonizationGame
             high=br_high
         )
 
-        resource_params, dispatch_results, uncertainty_results, scores, social_backlash, experience_results = advance_stage(current_stage, year, resource_params, _shaping_tokens, _uncertainty_parameters, _scoring_parameters, _experience_rate, _backlash_risk, _backlash_rates, is_IN_setup=is_IN_setup, nuclear_is_new=is_new_resource_7)
+        resource_params, dispatch_results, uncertainty_results, scores, social_backlash, experience_results = advance_stage(current_stage, year, resource_params, _shaping_tokens, _uncertainty_parameters, _scoring_parameters, _experience_rate, _backlash_risk, _backlash_rates, is_WY_setup=is_WY_setup, nuclear_is_new=is_new_resource_7)
 
         # update resource parameters
         start_capacity_running = resource_params["Start_Capacity"] ./ 1000
@@ -1483,7 +1483,7 @@ using ElectricityDecarbonizationGame
         # select non-zero columns
         df = df[!, [col for col in names(df) if sum(df[!, col]) != 0]]
         plot_stage_results = df
-        plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors, is_IN_setup)
+        plot_stage_traces = get_traces(plot_stage_results, plot_stage_week, plot_stage_full_year, plot_colors, is_WY_setup)
 
         # update costs
         bc_resource_1 = resource_params["Build_Cost"][1, backend_data_name_1]
@@ -1578,7 +1578,7 @@ using ElectricityDecarbonizationGame
             clean_score_stage_1 = stage_clean_points
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
-            if !is_IN_setup
+            if !is_WY_setup
                 nuclear_relicensed = "display:"
             end
         elseif current_stage == 2
@@ -1612,7 +1612,7 @@ using ElectricityDecarbonizationGame
                 "available_shaping_tokens" => _init_shaping_tokens,
                 "current_stage_shaping_tokens" => available_shaping_tokens,
                 "available_build_tokens" => _available_build_tokens,
-                "is_IN_setup" => is_IN_setup,
+                "is_WY_setup" => is_WY_setup,
                 "stages" => _stages,
                 "resource_blocks" => Dict(
                     "block_1" => Dict(

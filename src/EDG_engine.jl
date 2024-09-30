@@ -597,7 +597,7 @@ function advance_stage(
     backlash_risk::DataFrame,
     backlash_rates::DataFrame;
     input_path::String=".",
-    is_IN_setup::Bool=false,
+    is_WY_setup::Bool=false,
     nuclear_is_new::Bool=false
 )
 
@@ -610,14 +610,14 @@ function advance_stage(
 
     # update resource parameters based on planning year
     if planning_year == "2030" 
-        if !is_IN_setup    
+        if !is_WY_setup    
             # Update resource parameters
             resource_params["Build_Cost"].existing_nuclear[1] = ceil(resource_params["Build_Cost"].existing_nuclear[1] / 2)
         end
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.5
     elseif planning_year == "2040"
-        if !is_IN_setup
+        if !is_WY_setup
             # Update resource parameters
             resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
         end
