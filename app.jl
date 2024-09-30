@@ -1096,7 +1096,7 @@ using ElectricityDecarbonizationGame
             "Reliability" => sp_reliability
         )
 
-        scores, dispatch_results, resource_results = run_simulation(current_stage, year, resource_params, scoring_params, nuclear_is_new=is_new_resource_7)
+        scores, dispatch_results, resource_results = run_simulation(current_stage, year, resource_params, scoring_params, is_new_nuclear=is_new_resource_7)
         
         ## update scores
         Reliability = scores[!, :Reliability][1]
@@ -1432,7 +1432,7 @@ using ElectricityDecarbonizationGame
             high=br_high
         )
 
-        resource_params, dispatch_results, uncertainty_results, scores, social_backlash, experience_results = advance_stage(current_stage, year, resource_params, _shaping_tokens, _uncertainty_parameters, _scoring_parameters, _experience_rate, _backlash_risk, _backlash_rates, is_WY_setup=is_WY_setup, nuclear_is_new=is_new_resource_7)
+        resource_params, dispatch_results, uncertainty_results, scores, social_backlash, experience_results = advance_stage(current_stage, year, resource_params, _shaping_tokens, _uncertainty_parameters, _scoring_parameters, _experience_rate, _backlash_risk, _backlash_rates, is_WY_setup=is_WY_setup, is_new_nuclear=is_new_resource_7)
 
         # update resource parameters
         start_capacity_running = resource_params["Start_Capacity"] ./ 1000

@@ -1,13 +1,13 @@
-function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict, setup_IN::Bool=false)
+function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict, is_WY_setup::Bool=false)
     start_hour = full_year ? 1 : (week - 1) * 24 * 7 + 1
     end_hour = (full_year ? 52 : week) * 24 * 7
     df_week = df[start_hour:end_hour, :]
     exclude = ["hour", "demand_gw", "battery_storage_level", "storage_level"]
     varnames = [name for name in names(df) if !(name in exclude)]
-    lineattr = full_year ? [attr(width=1.5,color = colors[i]) for i in varnames] : [attr(width=2,color = colors[i]) for i in varnames]
+    lineattr = full_year ? [attr(width=1.5, color=colors[i]) for i in varnames] : [attr(width=2, color=colors[i]) for i in varnames]
     lineattr_dem = full_year ? attr(width=1, color="#101081") : attr(width=2, dash="dash", color="#101081")
-    x_axis = full_year ? df[start_hour:end_hour, :hour]/(24*7) : (df[start_hour:end_hour, :hour] .- (df[start_hour, :hour]-1))/24
-    if setup_IN
+    x_axis = full_year ? df[start_hour:end_hour, :hour] / (24 * 7) : (df[start_hour:end_hour, :hour] .- (df[start_hour, :hour] - 1)) / 24
+    if is_WY_setup
         for i in eachindex(varnames)
             if varnames[i] == "Existing Gas"
                 varnames[i] = "Existing Coal"
@@ -20,8 +20,8 @@ function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict, set
             end
         end
     end
-    traces = [PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, variable], line = lineattr[i], mode="lines", stackgroup="one", name=variable) for (i, variable) in enumerate(varnames)]
-    pushfirst!(traces, PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, :demand_gw], line = lineattr_dem, mode="lines", name="Demand"))
+    traces = [PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, variable], line=lineattr[i], mode="lines", stackgroup="one", name=variable) for (i, variable) in enumerate(varnames)]
+    pushfirst!(traces, PlotlyBase.scatter(x=x_axis, y=df[start_hour:end_hour, :demand_gw], line=lineattr_dem, mode="lines", name="Demand"))
     return traces
 end
 
@@ -31,7 +31,7 @@ function run_simulation(
     resource_params::Dict,
     scoring_params::Dict;
     path::String=".",
-    nuclear_is_new::Bool=false
+    is_new_nuclear::Bool=false
 )
 
     stage_num = "Stage_" * string(stage_num)
@@ -45,7 +45,7 @@ function run_simulation(
     # Update capacities to reflect capacity input
     for g in G
         resources.Existing_Cap_MW[resources.Resource.==names(resource_params["Start_Capacity"])[g]] =
-        1000 * ([resource_params["Start_Capacity"][1, g] + resource_params["Build_Cost"][1, g] * resource_params["Build_Tokens"][1, g]])
+            1000 * ([resource_params["Start_Capacity"][1, g] + resource_params["Build_Cost"][1, g] * resource_params["Build_Tokens"][1, g]])
     end
 
     # Battery energy capacity set to 4 hour duration (4:1 energy to power ratio)
@@ -57,7 +57,7 @@ function run_simulation(
         resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
     end
 
-    if !nuclear_is_new
+    if !is_new_nuclear
         if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
             resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
         else
@@ -463,7 +463,8 @@ function update_step(
     shaping_tokens::Dict,
     experience_rate::Float64, # Experience rate is decline in technology cost for each build point spent on each resource
     backlash_risk::DataFrame,
-    backlash_rates::DataFrame
+    backlash_rates::DataFrame,
+    is_new_nuclear::Bool=false
 )
 
     G = size(resource_params["Build_Tokens"], 2)
@@ -486,9 +487,6 @@ function update_step(
             social_backlash[1, resource] = 1
         end
     end
-    #social_backlash
-    ##
-
 
     ## Calculate cost reductions from experience curves for each resource
     # Actual experience rate is random variable drawn from a normal distribution with mean
@@ -502,7 +500,10 @@ function update_step(
         else
             experience = max(0.01, rand(Normal(experience_rate, 0.05), 1)[1])
         end
-        if !(contains(resources[g], "existing") || resource_params["Build_Tokens"][1, resource] == 0)
+        is_existing = contains(resources[g], "existing")
+        is_existing_nuclear = contains(resources[g], "existing_nuclear")
+        build_tokens = resource_params["Build_Tokens"][1, resource]
+        if !(is_existing || build_tokens == 0) || (is_new_nuclear && is_existing_nuclear && build_tokens > 0)
             experience_results[1, resource] = round(experience, digits=3)
             resource_params["Build_Cost"][1, resource] =
                 round(resource_params["Build_Cost"][1, resource] / (1 - experience)^resource_params["Build_Tokens"][1, resource])
@@ -519,7 +520,7 @@ function run_stage(
     uncertainty_params::Dict,
     scoring_params::Dict,
     input_path::String,
-    nuclear_is_new::Bool=false
+    is_new_nuclear::Bool=false
 )
 
     in_path = (joinpath(input_path, "EDG_inputs", planning_year))
@@ -529,9 +530,9 @@ function run_stage(
 
     for res in names(resource_params["Start_Capacity"])
         resources.Existing_Cap_MW[resources.Resource.==res] =
-        1000 * ([resource_params["Start_Capacity"][1, Symbol(res)] + resource_params["Build_Cost"][1, Symbol(res)] * resource_params["Build_Tokens"][1, Symbol(res)]])
+            1000 * ([resource_params["Start_Capacity"][1, Symbol(res)] + resource_params["Build_Cost"][1, Symbol(res)] * resource_params["Build_Tokens"][1, Symbol(res)]])
     end
-    
+
     # Battery energy capacity set to 4 hour duration (4:1 energy to power ratio)
     resources.Existing_Cap_MWh[resources.Resource.=="battery"] = resources.Existing_Cap_MW[resources.Resource.=="battery"] .* 4
     # Retire existing capacity if not maintained
@@ -540,7 +541,7 @@ function run_stage(
     else
         resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
     end
-    if !nuclear_is_new
+    if !is_new_nuclear
         if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
             resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
         else
@@ -598,19 +599,19 @@ function advance_stage(
     backlash_rates::DataFrame;
     input_path::String=".",
     is_WY_setup::Bool=false,
-    nuclear_is_new::Bool=false
+    is_new_nuclear::Bool=false
 )
 
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
     resource_params["Start_Capacity"], resource_results, dispatch_results, uncertainty_results, scores = run_stage(stage_num, planning_year, resource_params, shaping_tokens, uncertainty_params, scoring_params,
-        input_path, nuclear_is_new)
-    social_backlash, resource_params["Build_Cost"], experience_results = update_step(resource_params, shaping_tokens, experience_rate, backlash_risk, backlash_rates)
+        input_path, is_new_nuclear)
+    social_backlash, resource_params["Build_Cost"], experience_results = update_step(resource_params, shaping_tokens, experience_rate, backlash_risk, backlash_rates, is_new_nuclear)
 
     # update resource parameters based on planning year
-    if planning_year == "2030" 
-        if !is_WY_setup    
+    if planning_year == "2030"
+        if !is_WY_setup
             # Update resource parameters
             resource_params["Build_Cost"].existing_nuclear[1] = ceil(resource_params["Build_Cost"].existing_nuclear[1] / 2)
         end
@@ -640,7 +641,7 @@ function compute_results(inputs::Dict,
     ending_capacity::DataFrame,
     scoring_params::Dict)
 
-    
+
     # sets and constants for local use
     RES = inputs["resources"].Resource
     G = inputs["G"]
