@@ -13,6 +13,7 @@ using ElectricityDecarbonizationGame
 
 @app begin
 
+    ### UI setup
     # team setup
     @out team_path = ""
     @out team_name_not_set = true
@@ -20,62 +21,66 @@ using ElectricityDecarbonizationGame
     @in team_name = ""
     @in team_name_confirmed = false
 
+    # general variables
+    @in game_over = false
+    @in selected_file = "Select Setup File"
+
+    # tabs
     @out tab = "Build"
     @in back_to_build_tab = false
-    @in game_over = false
     @out show_pannels = "display: "
     @out show_game_over = "display: none"
 
-    @out nuclear_relicensed = "display: none"
-
+    # stages boxes
+    @in label_year_1 = "NOW-2030"
+    @in label_year_2 = "2031-2040"
+    @in label_year_3 = "2041-2050"
+    @out year = 0   # load from game setup. 0 is a default value
+    @out _stages = [2030, 2040, 2050]
+    @in color_year_1 = "background-color: rgb(16, 16, 129)"
+    @in color_year_2 = "background-color: rgb(16, 16, 129)"
+    @in color_year_3 = "background-color: rgb(16, 16, 129)"
     @in color_default = "background-color: rgb(16, 16, 129);"
     @in color_select = "background-color: rgb(255, 77, 31);"
 
-    @out _stages = [2030, 2040, 2050]
-    @out year = 0
+    # stage scores
+    @in stage_reliability = 0.0
+    @in stage_reliability_points = 0.0
+    @in stage_clean_share = 0.0
+    @in stage_clean_points = 0.0
 
+    # buttons to show tokens remaining
     @in available_budget_tokens = 5
     @out _current_stage_budget_tokens = 5
-    @out _init_shaping_tokens = 2
-    @out _current_stage_shaping_tokens = 2
     @out available_shaping_tokens = 2
-    @out _available_build_tokens = [10, 11, 12]
+    @out _current_stage_shaping_tokens = 2
+    @out _init_shaping_tokens = 2
     @out available_build_tokens = 10
+    @out _available_build_tokens = [10, 11, 12]
 
+    # scores variables
     @out reliability_score_stage_1 = 0
     @out reliability_score_stage_2 = 0
     @out reliability_score_stage_3 = 0
     @out clean_score_stage_1 = 0
     @out clean_score_stage_2 = 0
     @out clean_score_stage_3 = 0
-    @out affordability_score = 15
+    @out affordability_score = 15 # maximum score if all budget tokens are available
     @out total_score = 0
 
-    @in color_year_1 = "background-color: rgb(16, 16, 129)"
-    @in color_year_2 = "background-color: rgb(16, 16, 129)"
-    @in color_year_3 = "background-color: rgb(16, 16, 129)"
-
+    # buttons to show budget tokens remaining
     @out bt_color_1 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
     @out bt_color_2 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
     @out bt_color_3 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
     @out bt_color_4 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
     @out bt_color_5 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
 
-    @in label_year_1 = "NOW-2030"
-    @in label_year_2 = "2031-2040"
-    @in label_year_3 = "2041-2050"
+    # buttons to buy build tokens
+    @in bt_buy_build_token = false
+    @in bt_undo_buy_build_token = false
 
-    @in shaping_tokens = Dict(
-        "Resilience" => [0, false],
-        "Innovation_Experience" => [0, false],
-        "Innovation_Clean_Firm" => [0, false],
-        "Social_License" => [0, false]
-    )
-
-    # year
-    @in current_stage = 1
-
-    # Border color
+    ## RESOURCE BLOCKS
+    # Border color for each resource block
     @out b_color_resource_1 = ""
     @out b_color_resource_2 = ""
     @out b_color_resource_3 = ""
@@ -105,6 +110,25 @@ using ElectricityDecarbonizationGame
     @out bb_name_resource_7 = "Added capacity"
     @out bb_name_resource_8 = "Added capacity"
 
+    # buttons to build capacity 
+    @in resource_1_build_p = false
+    @in resource_2_build_p = false
+    @in resource_3_build_p = false
+    @in resource_4_build_p = false
+    @in resource_5_build_p = false
+    @in resource_6_build_p = false
+    @in resource_7_build_p = false
+    @in resource_8_build_p = false
+
+    @in resource_1_build_m = false
+    @in resource_2_build_m = false
+    @in resource_3_build_m = false
+    @in resource_4_build_m = false
+    @in resource_5_build_m = false
+    @in resource_6_build_m = false
+    @in resource_7_build_m = false
+    @in resource_8_build_m = false
+
     # Build Capacity
     @in cap_resource_1_stage_1 = 0
     @in cap_resource_2_stage_1 = 0
@@ -133,6 +157,7 @@ using ElectricityDecarbonizationGame
     @in cap_resource_7_stage_3 = 0
     @in cap_resource_8_stage_3 = 0
 
+    # Cumulative Capacity
     @out cum_cap_resource_1 = 0
     @out cum_cap_resource_2 = 0
     @out cum_cap_resource_3 = 0
@@ -172,7 +197,7 @@ using ElectricityDecarbonizationGame
     @in bc_resource_7 = 0
     @in bc_resource_8 = 0
 
-    # is new resource
+    # is new resource flag 
     @out is_new_resource_1 = false
     @out is_new_resource_2 = false
     @out is_new_resource_3 = false
@@ -182,14 +207,15 @@ using ElectricityDecarbonizationGame
     @out is_new_resource_7 = false
     @out is_new_resource_8 = false
 
-    # uncertainty parameters
-    @in up_demand_variance = 0.1
-    @in up_disaster_probability = 0.1
-    @in up_outage_probability = 0.66
-    @in up_outage_rate = 0.5
-
-    # experience rate
-    @in experience_rate = 0.5
+    # is clean firm flag
+    @out is_clean_firm_resource_1 = false
+    @out is_clean_firm_resource_2 = false
+    @out is_clean_firm_resource_3 = false
+    @out is_clean_firm_resource_4 = false
+    @out is_clean_firm_resource_5 = false
+    @out is_clean_firm_resource_6 = false
+    @out is_clean_firm_resource_7 = false
+    @out is_clean_firm_resource_8 = false
 
     # social backlash parameters
     @in sbp_resource_1 = "none"
@@ -201,62 +227,28 @@ using ElectricityDecarbonizationGame
     @in sbp_resource_7 = "none"
     @in sbp_resource_8 = "none"
 
-    # name for backend data
-    @in backend_data_name_1 = "resource_1"
-    @in backend_data_name_2 = "resource_2"
-    @in backend_data_name_3 = "resource_3"
-    @in backend_data_name_4 = "resource_4"
-    @in backend_data_name_5 = "resource_5"
-    @in backend_data_name_6 = "resource_6"
-    @in backend_data_name_7 = "resource_7"
-    @in backend_data_name_8 = "resource_8"
+    # new nuclear resource
+    @out is_IN_setup = false
+    @out nuclear_relicensed = "display: none"
 
-    # backlash rates
-    @in br_none = 0
-    @in br_low = 0.1
-    @in br_moderate = 0.17
-    @in br_high = 0.25
+    ## SHAPE THE FUTURE TAB
+    # shaping tokens buttons
+    @in bt_resilience = false
+    @in bt_innovation_experience = false
+    @in bt_innovation_clean_firm = false
+    @in bt_social_license = false
+    @in shaping_tokens_warning = "display:"
+    # button to buy shaping tokens
+    @in bt_buy_shaping_token = false
+    @in bt_undo_buy_shaping_token = false
+    # shaping tokens disabled
+    @out bt_resilience_is_disabled = false
+    @out bt_innovation_experience_is_disabled = false
+    @out bt_innovation_clean_firm_is_disabled = false
+    @out bt_social_license_is_disabled = false
 
-    # scoring setup
-    @in sp_max_points = 5
-    @in sp_clean_stage_1 = [60, 58, 56, 53, 50]
-    @in sp_clean_stage_2 = [80, 78, 76, 73, 70]
-    @in sp_clean_stage_3 = [99.9, 99, 98, 96, 90]
-    @in sp_reliability = [99.9, 99.5, 99, 98, 97]
-
-    # buttons
-    @in resource_1_build_p = false
-    @in resource_2_build_p = false
-    @in resource_3_build_p = false
-    @in resource_4_build_p = false
-    @in resource_5_build_p = false
-    @in resource_6_build_p = false
-    @in resource_7_build_p = false
-    @in resource_8_build_p = false
-
-    @in resource_1_build_m = false
-    @in resource_2_build_m = false
-    @in resource_3_build_m = false
-    @in resource_4_build_m = false
-    @in resource_5_build_m = false
-    @in resource_6_build_m = false
-    @in resource_7_build_m = false
-    @in resource_8_build_m = false
-
-    # run simulation button
+    ## SIMULATION
     @in run_simulation = false
-    # advance stage button
-    @in confirm_advance_stage = false
-    @in advance_stage = false
-
-    ## scores
-    # simulation scores
-    @in Reliability = 0.0
-    @in Reliability_Points = 0.0
-    @in Clean_Share = 0.0
-    @in Clean_Points = 0.0
-
-    ## PLOTTING
     # plotting simulation results
     @out plot_df = DataFrame()
     @in plot_full_year = true
@@ -271,71 +263,12 @@ using ElectricityDecarbonizationGame
         backgroundcolor="red",
     )
 
-    const plot_colors = Dict(
-        "Existing Nuclear" => "#8c564b",
-        "Existing Gas" => "#d62728",
-        "Clean Firm" => "#17becf",
-        "Solar PV (Utility Scale)" => "#EBC334",
-        "Distributed Solar PV" => "#ff7f0e",
-        "Onshore Wind" => "#2ca02c",
-        "Offshore Wind" => "#1f77b4",
-        "Battery Discharge" => "#e377c2",
-        "Battery Charge" => "#9467bd",
-        "Demand not served" => "#000000"
-    )
+    # advance stage button
+    @in confirm_advance_stage = false
+    @in advance_stage = false
 
-    # shaping tokens
-    @in resilience = false
-    @in innovation_experience = false
-    @in innovation_clean_firm = false
-    @in social_license = false
-    @in shaping_tokens_warning = "display:"
-
-    @out is_clean_firm_resource_1 = false
-    @out is_clean_firm_resource_2 = false
-    @out is_clean_firm_resource_3 = false
-    @out is_clean_firm_resource_4 = false
-    @out is_clean_firm_resource_5 = false
-    @out is_clean_firm_resource_6 = false
-    @out is_clean_firm_resource_7 = false
-    @out is_clean_firm_resource_8 = false
-
-    @in bt_buy_build_token = false
-    @in bt_undo_buy_build_token = false
-    @in bt_buy_shaping_token = false
-    @in bt_undo_buy_shaping_token = false
-
-    @in bt_resilience = false
-    @in bt_innovation_experience = false
-    @in bt_innovation_clean_firm = false
-    @in bt_social_license = false
-
-    @out bt_resilience_is_disabled = false
-    @out bt_innovation_experience_is_disabled = false
-    @out bt_innovation_clean_firm_is_disabled = false
-    @out bt_social_license_is_disabled = false
-
-    # stage scores
-    @in stage_reliability = 0.0
-    @in stage_reliability_points = 0.0
-    @in stage_clean_share = 0.0
-    @in stage_clean_points = 0.0
-
-    # plotting stage results
-    @out plot_stage_results = DataFrame()
-    @in plot_stage_full_year = true
-    @in plot_stage_week = 1
-    @out plot_stage_traces = [PlotlyBase.scatter(x=1:24*7, y=zeros(Float32, 24 * 7))]
-    @out plot_stage_layout = PlotlyBase.Layout(
-        title="",
-        Dict{Symbol,Any}(:paper_bgcolor => "rgb(242, 246, 247)", :plot_bgcolor => "rgb(242, 246, 247)");
-        xaxis=attr(title="Week", showgrid=true, dtick=5),
-        yaxis=attr(title="Usage", showgrid=true),
-        legend=attr(x=1, y=1.02, yanchor="bottom", xanchor="right", orientation="h"),
-        backgroundcolor="red",
-    )
-
-    # disaster
+    ## STAGE RESULTS
+    # disaster variables
     @out demand_shock_percent = 0.0
     @out outage_weeks = "None"
 
@@ -349,7 +282,7 @@ using ElectricityDecarbonizationGame
     @out disaster_resource_7 = false
     @out disaster_resource_8 = false
 
-    # social backlash
+    # social backlash variables
     @out social_backlash_resource_1 = false
     @out social_backlash_resource_2 = false
     @out social_backlash_resource_3 = false
@@ -367,37 +300,94 @@ using ElectricityDecarbonizationGame
     @out bt_resource_7_disabled = ""
     @out bt_resource_8_disabled = ""
 
-    # load game setup
-    @out is_IN_setup = false
-    @in selected_file = "Select Setup File"
+    ### BACKEND VARIABLES
+    @in current_stage = 1 # index of the current stage
+
+    # name for backend data
+    @in backend_data_name_1 = "resource_1"
+    @in backend_data_name_2 = "resource_2"
+    @in backend_data_name_3 = "resource_3"
+    @in backend_data_name_4 = "resource_4"
+    @in backend_data_name_5 = "resource_5"
+    @in backend_data_name_6 = "resource_6"
+    @in backend_data_name_7 = "resource_7"
+    @in backend_data_name_8 = "resource_8"
+
+    # shaping tokens data structure
+    @in shaping_tokens = Dict(
+        "Resilience" => [0, false],
+        "Innovation_Experience" => [0, false],
+        "Innovation_Clean_Firm" => [0, false],
+        "Social_License" => [0, false]
+    )
+    # value of the shaping tokens in the current stage
+    @in resilience = false
+    @in innovation_experience = false
+    @in innovation_clean_firm = false
+    @in social_license = false
+
+    # uncertainty parameters
+    @in up_demand_variance = 0.1
+    @in up_disaster_probability = 0.1
+    @in up_outage_probability = 0.66
+    @in up_outage_rate = 0.5
+
+    # experience rate
+    @in experience_rate = 0.5
+
+    # backlash rates
+    @in br_none = 0
+    @in br_low = 0.1
+    @in br_moderate = 0.17
+    @in br_high = 0.25
+
+    # scoring setup
+    @in sp_max_points = 5
+    @in sp_clean_stage_1 = [60, 58, 56, 53, 50]
+    @in sp_clean_stage_2 = [80, 78, 76, 73, 70]
+    @in sp_clean_stage_3 = [99.9, 99, 98, 96, 90]
+    @in sp_reliability = [99.9, 99.5, 99, 98, 97]
+
+    ## SCORES VARIABLES in the current stage
+    @in Reliability = 0.0
+    @in Reliability_Points = 0.0
+    @in Clean_Share = 0.0
+    @in Clean_Points = 0.0
+
+    ## PLOTTING
+    # default colors for the plot
+    const plot_colors = Dict(
+        "Existing Nuclear" => "#8c564b",
+        "Existing Gas" => "#d62728",
+        "Clean Firm" => "#17becf",
+        "Solar PV (Utility Scale)" => "#EBC334",
+        "Distributed Solar PV" => "#ff7f0e",
+        "Onshore Wind" => "#2ca02c",
+        "Offshore Wind" => "#1f77b4",
+        "Battery Discharge" => "#e377c2",
+        "Battery Charge" => "#9467bd",
+        "Demand not served" => "#000000"
+    )
+
+    # plotting stage results
+    @out plot_stage_results = DataFrame()
+    @in plot_stage_full_year = true
+    @in plot_stage_week = 1
+    @out plot_stage_traces = [PlotlyBase.scatter(x=1:24*7, y=zeros(Float32, 24 * 7))]
+    @out plot_stage_layout = PlotlyBase.Layout(
+        title="",
+        Dict{Symbol,Any}(:paper_bgcolor => "rgb(242, 246, 247)", :plot_bgcolor => "rgb(242, 246, 247)");
+        xaxis=attr(title="Week", showgrid=true, dtick=5),
+        yaxis=attr(title="Usage", showgrid=true),
+        legend=attr(x=1, y=1.02, yanchor="bottom", xanchor="right", orientation="h"),
+        backgroundcolor="red",
+    )
+
+    ### GAME LOGIC
     const FILE_PATH = joinpath("game_setup")
     mkpath(FILE_PATH)
     @out upfiles = readdir(FILE_PATH)
-    @onchange fileuploads begin
-        if !isempty(fileuploads)
-            @info "File was uploaded: " fileuploads
-            filename = fileuploads["name"]
-
-            try
-                isdir(team_path) || mkpath(team_path)
-                mv(fileuploads["path"], joinpath(team_path, filename), force=true)
-            catch e
-                @error "Error processing file: $e"
-                notify(__model__, "Error processing file: $(fileuploads["name"])")
-            end
-
-            fileuploads = Dict{AbstractString,AbstractString}()
-        end
-        upfiles = readdir(team_path)
-    end
-    @event uploaded begin
-        @info "uploaded"
-        notify(__model__, "File was uploaded")
-    end
-    @event rejected begin
-        @info "rejected"
-        notify(__model__, "Please upload a valid file")
-    end
+    # team name setup
     @onchange team_name_confirmed begin
         if !team_name_confirmed && team_name == ""
             team_name_error = "Please enter a team name"
@@ -413,9 +403,35 @@ using ElectricityDecarbonizationGame
             upfiles = readdir(team_path)
         end
     end
-    @onchange selected_file begin
+    # update setup file list 
+    @onchange fileuploads begin
+        if !isempty(fileuploads)
+            @info "File was uploaded: " fileuploads
+            filename = fileuploads["name"]
+            try
+                isdir(team_path) || mkpath(team_path)
+                mv(fileuploads["path"], joinpath(team_path, filename), force=true)
+            catch e
+                @error "Error processing file: $e"
+                notify(__model__, "Error processing file: $(fileuploads["name"])")
+            end
+            fileuploads = Dict{AbstractString,AbstractString}()
+        end
+        upfiles = readdir(team_path)
+    end
+    @event uploaded begin
+        @info "uploaded"
+        notify(__model__, "File was uploaded")
+    end
+    @event rejected begin
+        @info "rejected"
+        notify(__model__, "Please upload a valid file")
+    end
+    # load game setup from the file selected
+    @onchange selected_file begin 
         _game_setup = YAML.load_file(joinpath(team_path, selected_file))
 
+        current_stage = 1
         if haskey(_game_setup, "current_stage")
             current_stage = _game_setup["current_stage"]
         end
@@ -598,7 +614,7 @@ using ElectricityDecarbonizationGame
         sp_clean_stage_3 = scoring_parameters["Clean_Stage_3"]
         sp_reliability = scoring_parameters["Reliability"]
 
-        # Load prevoius stage setup
+        # Load prevoius stage data (if available)
         if current_stage > 1
             is_IN_setup = _game_setup["is_IN_setup"]
 
@@ -713,27 +729,7 @@ using ElectricityDecarbonizationGame
         end
     end
 
-    @onchange available_budget_tokens begin
-        if available_budget_tokens == 5
-            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-        elseif available_budget_tokens == 4
-            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_5 = "border: 1px solid black;"
-        elseif available_budget_tokens == 3
-            bt_color_1 = bt_color_2 = bt_color_3 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_4 = bt_color_5 = "border: 1px solid black;"
-        elseif available_budget_tokens == 2
-            bt_color_1 = bt_color_2 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
-        elseif available_budget_tokens == 1
-            bt_color_1 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
-        elseif available_budget_tokens == 0
-            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
-        end
-        affordability_score = 3 * available_budget_tokens
-    end
-
+    # buttons to buy/undo new capacity for each resource
     @onbutton resource_1_build_p begin
         if available_build_tokens > 0
             new_cap = (bt_resource_1 + 1) * bc_resource_1[1]
@@ -1014,6 +1010,29 @@ using ElectricityDecarbonizationGame
         end
     end
 
+    # update budget tokens and affordability score based on available budget tokens
+    @onchange available_budget_tokens begin
+        if available_budget_tokens == 5
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+        elseif available_budget_tokens == 4
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+            bt_color_5 = "border: 1px solid black;"
+        elseif available_budget_tokens == 3
+            bt_color_1 = bt_color_2 = bt_color_3 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+            bt_color_4 = bt_color_5 = "border: 1px solid black;"
+        elseif available_budget_tokens == 2
+            bt_color_1 = bt_color_2 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+            bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
+        elseif available_budget_tokens == 1
+            bt_color_1 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+            bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
+        elseif available_budget_tokens == 0
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
+        end
+        affordability_score = 3 * available_budget_tokens
+    end
+
+    # setup backend data structure and run simulation
     @onbutton run_simulation begin
         tab = "Simulation Results"
         # Compile resource parameters dict
@@ -1078,6 +1097,8 @@ using ElectricityDecarbonizationGame
         )
 
         scores, dispatch_results, resource_results = run_simulation(current_stage, year, resource_params, scoring_params, nuclear_is_new=is_new_resource_7)
+        
+        ## update scores
         Reliability = scores[!, :Reliability][1]
         Reliability_Points = scores[!, :Reliability_Points][1]
         Clean_Share = scores[!, :Clean_Share][1]
@@ -1109,6 +1130,7 @@ using ElectricityDecarbonizationGame
         plot_traces = get_traces(plot_df, plot_week, plot_full_year, plot_colors, is_IN_setup)
     end
 
+    # update plot based on selected week
     @onchange plot_week begin
         if plot_full_year && plot_week != 1
             plot_week = 1
@@ -1120,6 +1142,7 @@ using ElectricityDecarbonizationGame
         end
     end
 
+    # update plot when switching to full year view
     @onchange plot_full_year begin
         if plot_full_year
             plot_week = 1
@@ -1132,29 +1155,6 @@ using ElectricityDecarbonizationGame
                 PlotlyBase.relayout!(plot_layout, xaxis=attr(title="Day", showgrid=true, dtick=1))
             end
             plot_layout = plot_layout
-        end
-    end
-
-    @onchange current_stage begin
-        if current_stage <= length(_stages)
-            year = _stages[current_stage]
-            available_build_tokens = _available_build_tokens[current_stage]
-        end
-    end
-
-    @onchange year begin
-        if year == _stages[1]
-            color_year_1 = color_select
-            color_year_2 = color_default
-            color_year_3 = color_default
-        elseif year == _stages[2]
-            color_year_1 = color_default
-            color_year_2 = color_select
-            color_year_3 = color_default
-        else
-            color_year_1 = color_default
-            color_year_2 = color_default
-            color_year_3 = color_select
         end
     end
 
@@ -1321,17 +1321,17 @@ using ElectricityDecarbonizationGame
         end
     end
 
-    @onchange game_over begin
-        # show_pannels = "display: none"
-        show_game_over = "display: "
-    end
-
+    # advance stage
     @onchange confirm_advance_stage begin
         if available_shaping_tokens == 0
             shaping_tokens_warning = "display: none"
         else
             shaping_tokens_warning = "display: "
         end
+    end
+
+    @onbutton back_to_build_tab begin
+        tab = "Build"
     end
 
     @onbutton advance_stage begin
@@ -1357,8 +1357,8 @@ using ElectricityDecarbonizationGame
             resource_8=sc_resource_8
         )
         rename!(start_capacity, backend_data_name)
-        # capacity of first stage is equal to build tokens * build cost
 
+        # capacity of first stage is equal to build tokens * build cost
         build_tokens = DataFrame(
             resource_1=bt_resource_1,
             resource_2=bt_resource_2,
@@ -1503,6 +1503,7 @@ using ElectricityDecarbonizationGame
         else
             disaster_occurred = "display: none"
         end
+
         demand_shock_percent = uncertainty_results[1, "Demand_Shock_Percent"]
 
         disaster_resource_1 = Bool(uncertainty_results[1, backend_data_name_1])
@@ -1524,6 +1525,7 @@ using ElectricityDecarbonizationGame
         social_backlash_resource_7 = Bool(social_backlash[1, backend_data_name_7])
         social_backlash_resource_8 = Bool(social_backlash[1, backend_data_name_8])
 
+        # reset build tokens
         bt_resource_1 = 0
         bt_resource_2 = 0
         bt_resource_3 = 0
@@ -1570,7 +1572,6 @@ using ElectricityDecarbonizationGame
             b_color_resource_8 = replace(b_color_resource_8, color_select => "")
         end
 
-        # advance stage
         if current_stage == 1
             reliability_score_stage_1 = stage_reliability_points
             total_score += stage_reliability_points
@@ -1598,6 +1599,7 @@ using ElectricityDecarbonizationGame
             game_over = true
         end
 
+        # advance stage
         current_stage += 1
         if current_stage <= 4
             println("Starting Stage ", current_stage)
@@ -1747,16 +1749,43 @@ using ElectricityDecarbonizationGame
                     3 => clean_score_stage_3
                 ),
             )
+
+            # save setup to file
             scenario_name = split(selected_file, ".")[1]
             open(joinpath(team_path, "$(scenario_name)_stage_$(current_stage).yml"), "w") do f
                 write(f, YAML.yaml(data))
             end
         end
+        # update tab
         tab = "Results"
     end
 
-    @onbutton back_to_build_tab begin
-        tab = "Build"
+    @onchange current_stage begin
+        if current_stage <= length(_stages)
+            year = _stages[current_stage]
+            available_build_tokens = _available_build_tokens[current_stage]
+        end
+    end
+
+    @onchange year begin
+        if year == _stages[1]
+            color_year_1 = color_select
+            color_year_2 = color_default
+            color_year_3 = color_default
+        elseif year == _stages[2]
+            color_year_1 = color_default
+            color_year_2 = color_select
+            color_year_3 = color_default
+        else
+            color_year_1 = color_default
+            color_year_2 = color_default
+            color_year_3 = color_select
+        end
+    end
+
+    @onchange game_over begin
+        # show_pannels = "display: none"
+        show_game_over = "display: "
     end
 end
 
