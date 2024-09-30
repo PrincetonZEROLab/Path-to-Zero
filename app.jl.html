@@ -3,15 +3,16 @@
     <header id="izaa" class="st-header q-pa-sm">
         <div class="row">
             <div class="col">
-                <q-btn style="color: black; margin-left: 4pt; margin-top: 8pt; font-size: smaller; background-color: rgb(240, 240, 240);"
-                 glossy icon="refresh" label="Restart" onclick="history.go(0)"></q-btn>
+                <q-btn
+                    style="color: black; margin-left: 4pt; margin-top: 8pt; font-size: smaller; background-color: rgb(240, 240, 240);"
+                    glossy icon="refresh" label="Restart" onclick="history.go(0)"></q-btn>
             </div>
             <div class="col-6">
                 <h1 style="text-align: center; font-weight: bold; color:rgb(16, 16, 129);">Path to Zero</h1>
             </div>
             <div class="col">
             </div>
-          </div>
+        </div>
         <div class="row">
             <p style="text-align: center;"></p>
         </div>
@@ -255,7 +256,7 @@
                         glossy :label="total_score" />
                 </div>
             </div>
-            <div class="row justify-center" style="margin-top: 5pt";>
+            <div class="row justify-center" style="margin-top: 5pt" ;>
                 <q-btn
                     style="font-size: large; height: 60px; width: 200px; background-color: white; border: 2px solid rgb(160, 218, 170);"
                     glossy label="Play again" onclick="history.go(0)"></q-btn>
@@ -283,8 +284,8 @@
                 <div class="row">
                     <q-btn color="primary" label="Buy Build Tokens" v-on:click="bt_buy_build_token = true"
                         :disabled="game_over"></q-btn>
-                    <q-btn style="margin-left: 1pt;background-color: rgb(171, 191, 227); color: white" icon="undo" v-on:click="bt_undo_buy_build_token = true"
-                        :disabled="game_over"></q-btn>
+                    <q-btn style="margin-left: 1pt;background-color: rgb(171, 191, 227); color: white" icon="undo"
+                        v-on:click="bt_undo_buy_build_token = true" :disabled="game_over"></q-btn>
                 </div>
 
                 <q-separator horizontal />
@@ -856,7 +857,9 @@
                                 <q-avatar icon="warning" color="primary" text-color="white" />
                                 <span class="q-ml-sm" style="font-size:small;">Are you sure you want to confirm your
                                     resource porfolio and advance stage?</span>
-                                <span class="q-ml-sm" style="font-weight: bold; padding-top: 10pt;" :style="shaping_tokens_warning">Warning: you still have some shaping tokens left!</span>
+                                <span class="q-ml-sm" style="font-weight: bold; padding-top: 10pt;"
+                                    :style="shaping_tokens_warning">Warning: you still have some shaping tokens
+                                    left!</span>
                             </q-card-section>
 
                             <q-card-actions align="right">
@@ -914,7 +917,9 @@
                                 <q-avatar icon="warning" color="primary" text-color="white" />
                                 <span class="q-ml-sm" style="font-size:small;">Are you sure you want to confirm your
                                     resource porfolio and advance stage?</span>
-                                <span class="q-ml-sm" style="font-weight: bold; padding-top: 10pt;" :style="shaping_tokens_warning">Warning: you still have some shaping tokens left!</span>
+                                <span class="q-ml-sm" style="font-weight: bold; padding-top: 10pt;"
+                                    :style="shaping_tokens_warning">Warning: you still have some shaping tokens
+                                    left!</span>
                             </q-card-section>
 
                             <q-card-actions align="right">
@@ -936,8 +941,8 @@
                                     <div class="col-sm-4">'
                                         <q-btn color="primary" label="Buy Shaping Tokens"
                                             v-on:click="bt_buy_shaping_token = true" :disabled="game_over"></q-btn>
-                                        <q-btn style="background-color: rgb(171, 191, 227); color: white" icon="undo" v-on:click="bt_undo_buy_shaping_token = true"
-                                            :disabled="game_over"></q-btn>
+                                        <q-btn style="background-color: rgb(171, 191, 227); color: white" icon="undo"
+                                            v-on:click="bt_undo_buy_shaping_token = true" :disabled="game_over"></q-btn>
                                     </div>
 
                                 </div>
@@ -1000,7 +1005,9 @@
                                 <q-avatar icon="warning" color="primary" text-color="white" />
                                 <span class="q-ml-sm" style="font-size:small;">Are you sure you want to confirm your
                                     resource porfolio and advance stage?</span>
-                                <span class="q-ml-sm" style="font-weight: bold; padding-top: 10pt;" :style="shaping_tokens_warning">Warning: you still have some shaping tokens left!</span>
+                                <span class="q-ml-sm" style="font-weight: bold; padding-top: 10pt;"
+                                    :style="shaping_tokens_warning">Warning: you still have some shaping tokens
+                                    left!</span>
                             </q-card-section>
 
                             <q-card-actions align="right">
@@ -1123,8 +1130,10 @@
                     </div>
                 </div>
                 <div class="row justify">
-                <q-btn style="margin-left: 8pt; margin-top: 8pt; font-size: smaller; background-color: rgb(240, 240, 240);"
-                glossy color="deep-orange" icon="arrow_circle_left" label="Build pannel" v-on:click="back_to_build_tab = true"></q-btn>
+                    <q-btn
+                        style="margin-left: 8pt; margin-top: 8pt; font-size: smaller; background-color: rgb(240, 240, 240);"
+                        glossy color="deep-orange" icon="arrow_circle_left" label="Build pannel"
+                        v-on:click="back_to_build_tab = true"></q-btn>
             </q-tab-panel>
         </q-tab-panels>
     </div>
