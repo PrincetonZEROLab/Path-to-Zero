@@ -59,6 +59,10 @@
                 :label="label_year_2" />
             <q-btn style="font-size: large; color: white; height: 120px; width: 120px;" :style="color_year_3" glossy
                 :label="label_year_3" />
+            <q-btn style="font-size: large; color: white; height: 120px; width: 120px;" :style="color_year_4" glossy
+                :label="label_year_4" />
+            <q-btn style="font-size: large; color: white; height: 120px; width: 120px;" :style="color_year_5" glossy
+                :label="label_year_5" />
         </div>
     </div>
 
@@ -73,8 +77,12 @@
                 <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_1" glossy
                     label="100 / 50" />
                 <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_2" glossy
-                    label="130 / 57" />
+                    label="105 / 54" />
                 <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_3" glossy
+                    label="130 / 57" />
+                <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_4" glossy
+                    label="148 / 63" />
+                <q-btn style="font-size: large; color: white; height: 60px; width: 120px;" :style="color_year_5" glossy
                     label="180 / 73" />
             </div>
         </div>
@@ -88,14 +96,20 @@
             <div class="row justify-center">
                 <div class="col-auto">
                     <q-btn
-                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(236, 167, 149);"
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(236, 167, 149);"
                         glossy :label="reliability_score_stage_1" />
                     <q-btn
-                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(236, 167, 149);"
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(236, 167, 149);"
                         glossy :label="reliability_score_stage_2" />
                     <q-btn
-                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(236, 167, 149);"
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(236, 167, 149);"
                         glossy :label="reliability_score_stage_3" />
+                    <q-btn
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(236, 167, 149);"
+                        glossy :label="reliability_score_stage_4" />
+                    <q-btn
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(236, 167, 149);"
+                        glossy :label="reliability_score_stage_5" />
                 </div>
             </div>
             <br>
@@ -134,14 +148,20 @@
             <div class="row justify-center">
                 <div class="col-auto">
                     <q-btn
-                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(171, 191, 227);"
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(171, 191, 227);"
                         glossy :label="clean_score_stage_1" />
                     <q-btn
-                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(171, 191, 227);"
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(171, 191, 227);"
                         glossy :label="clean_score_stage_2" />
                     <q-btn
-                        style="font-size: x-large; color: white; height: 60px; width: 120px; background-color: rgb(171, 191, 227);"
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(171, 191, 227);"
                         glossy :label="clean_score_stage_3" />
+                    <q-btn
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(171, 191, 227);"
+                        glossy :label="clean_score_stage_4" />
+                    <q-btn
+                        style="font-size: 13pt; color: white; height: 40px; width: 70px; background-color: rgb(171, 191, 227);"
+                        glossy :label="clean_score_stage_5" />
                 </div>
             </div>
             <br>
@@ -183,6 +203,22 @@
                             <th>&#8805 {{sp_clean_stage_3[2]}} %</th>
                             <th>&#8805 {{sp_clean_stage_3[3]}} %</th>
                             <th>&#8805 {{sp_clean_stage_3[4]}} %</th>
+                        </tr>
+                        <tr class="active-row">
+                            <th>4</th>
+                            <th>&#8805 {{sp_clean_stage_4[0]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_4[1]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_4[2]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_4[3]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_4[4]}} %</th>
+                        </tr>
+                        <tr class="active-row">
+                            <th>5</th>
+                            <th>&#8805 {{sp_clean_stage_5[0]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_5[1]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_5[2]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_5[3]}} %</th>
+                            <th>&#8805 {{sp_clean_stage_5[4]}} %</th>
                         </tr>
                     </tbody>
                 </table>
@@ -354,6 +390,8 @@
                                     <st-big-number :number=cap_resource_1_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_1_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_1_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_1_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_1_stage_5></st-big-number>
                                 </div>
                             </div>
                         </div>
@@ -421,6 +459,8 @@
                                     <st-big-number :number=cap_resource_2_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_2_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_2_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_2_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_2_stage_5></st-big-number>
                                 </div>
                             </div>
                         </div>
@@ -491,6 +531,8 @@
                                     <st-big-number :number=cap_resource_3_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_3_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_3_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_3_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_3_stage_5></st-big-number>
                                 </div>
                             </div>
                         </div>
@@ -558,6 +600,8 @@
                                     <st-big-number :number=cap_resource_4_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_4_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_4_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_4_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_4_stage_5></st-big-number>
                                 </div>
                             </div>
                         </div>
@@ -626,6 +670,8 @@
                                     <st-big-number :number=cap_resource_5_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_5_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_5_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_5_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_5_stage_5></st-big-number>
                                 </div>
                             </div>
                         </div>
@@ -693,6 +739,8 @@
                                     <st-big-number :number=cap_resource_6_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_6_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_6_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_6_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_6_stage_5></st-big-number>
                                 </div>
                             </div>
                         </div>
@@ -762,6 +810,8 @@
                                     <st-big-number :number=cap_resource_7_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_7_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_7_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_7_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_7_stage_5></st-big-number>
                                 </div>
                                 <div class="row" style="margin-right: 20pt;">
                                     <p style="text-align: justify;" :style="nuclear_relicensed">*Build tokens required
@@ -834,6 +884,8 @@
                                     <st-big-number :number=cap_resource_8_stage_1></st-big-number>
                                     <st-big-number :number=cap_resource_8_stage_2></st-big-number>
                                     <st-big-number :number=cap_resource_8_stage_3></st-big-number>
+                                    <st-big-number :number=cap_resource_8_stage_4></st-big-number>
+                                    <st-big-number :number=cap_resource_8_stage_5></st-big-number>
                                 </div>
                             </div>
                         </div>
