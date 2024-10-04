@@ -33,13 +33,17 @@ using ElectricityDecarbonizationGame
 
     # stages boxes
     @in label_year_1 = "NOW-2030"
-    @in label_year_2 = "2031-2040"
-    @in label_year_3 = "2041-2050"
+    @in label_year_2 = "2031-2035"
+    @in label_year_3 = "2036-2040"
+    @in label_year_4 = "2041-2045"
+    @in label_year_5 = "2046-2050"
     @out year = 0   # load from game setup. 0 is a default value
-    @out _stages = [2030, 2040, 2050]
+    @out _stages = [2030, 2035, 2040, 2045, 2050]
     @in color_year_1 = "background-color: rgb(16, 16, 129)"
     @in color_year_2 = "background-color: rgb(16, 16, 129)"
     @in color_year_3 = "background-color: rgb(16, 16, 129)"
+    @in color_year_4 = "background-color: rgb(16, 16, 129)"
+    @in color_year_5 = "background-color: rgb(16, 16, 129)"
     @in color_default = "background-color: rgb(16, 16, 129);"
     @in color_select = "background-color: rgb(255, 77, 31);"
 
@@ -56,16 +60,20 @@ using ElectricityDecarbonizationGame
     @out _current_stage_shaping_tokens = 2
     @out _init_shaping_tokens = 2
     @out available_build_tokens = 10
-    @out _available_build_tokens = [10, 11, 12]
+    @out _available_build_tokens = [10, 10, 11, 11, 12]
 
     # scores variables
     @out reliability_score_stage_1 = 0
     @out reliability_score_stage_2 = 0
     @out reliability_score_stage_3 = 0
+    @out reliability_score_stage_4 = 0
+    @out reliability_score_stage_5 = 0
     @out clean_score_stage_1 = 0
     @out clean_score_stage_2 = 0
     @out clean_score_stage_3 = 0
-    @out affordability_score = 15 # maximum score if all budget tokens are available
+    @out clean_score_stage_4 = 0
+    @out clean_score_stage_5 = 0
+    @out affordability_score = 25 # maximum score if all budget tokens are available
     @out total_score = 0
 
     # buttons to show budget tokens remaining
@@ -156,6 +164,24 @@ using ElectricityDecarbonizationGame
     @in cap_resource_6_stage_3 = 0
     @in cap_resource_7_stage_3 = 0
     @in cap_resource_8_stage_3 = 0
+
+    @in cap_resource_1_stage_4 = 0
+    @in cap_resource_2_stage_4 = 0
+    @in cap_resource_3_stage_4 = 0
+    @in cap_resource_4_stage_4 = 0
+    @in cap_resource_5_stage_4 = 0
+    @in cap_resource_6_stage_4 = 0
+    @in cap_resource_7_stage_4 = 0
+    @in cap_resource_8_stage_4 = 0
+
+    @in cap_resource_1_stage_5 = 0
+    @in cap_resource_2_stage_5 = 0
+    @in cap_resource_3_stage_5 = 0
+    @in cap_resource_4_stage_5 = 0
+    @in cap_resource_5_stage_5 = 0
+    @in cap_resource_6_stage_5 = 0
+    @in cap_resource_7_stage_5 = 0
+    @in cap_resource_8_stage_5 = 0
 
     # Cumulative Capacity
     @out cum_cap_resource_1 = 0
@@ -344,8 +370,10 @@ using ElectricityDecarbonizationGame
     # scoring setup
     @in sp_max_points = 5
     @in sp_clean_stage_1 = [60, 58, 56, 53, 50]
-    @in sp_clean_stage_2 = [80, 78, 76, 73, 70]
-    @in sp_clean_stage_3 = [99.9, 99, 98, 96, 90]
+    @in sp_clean_stage_2 = [70, 68, 66, 63, 60]
+    @in sp_clean_stage_3 = [80, 78, 76, 73, 70]
+    @in sp_clean_stage_4 = [90, 88, 86, 83, 80]
+    @in sp_clean_stage_5 = [99.9, 99, 98, 96, 90]
     @in sp_reliability = [99.9, 99.5, 99, 98, 97]
 
     ## SCORES VARIABLES in the current stage
@@ -441,7 +469,7 @@ using ElectricityDecarbonizationGame
             is_WY_setup = selected_file == "WY_setup.yml" 
         end
 
-        if current_stage == 2
+        if current_stage == 2   # TODO: ask about this
             is_WY_setup = _game_setup["is_WY_setup"]
             if !is_WY_setup
                 nuclear_relicensed = "display:"
@@ -450,10 +478,10 @@ using ElectricityDecarbonizationGame
             nuclear_relicensed = "display: none"
         end
 
-        if current_stage == 4
+        if current_stage == 6
             game_over = true
             show_game_over = "display: "
-            current_stage = 3
+            current_stage = 5
         else
             game_over = false
             show_game_over = "display: none"
@@ -467,13 +495,15 @@ using ElectricityDecarbonizationGame
         available_build_tokens = _available_build_tokens[current_stage]
         
         _stages = _game_setup["stages"]
-        @assert length(_stages) == 3
+        @assert length(_stages) == 5
 
         year = _stages[current_stage]
 
         label_year_1 = "NOW-" * string(_stages[1])
         label_year_2 = string(_stages[1] + 1) * "-" * string(_stages[2])
         label_year_3 = string(_stages[2] + 1) * "-" * string(_stages[3])
+        label_year_4 = string(_stages[3] + 1) * "-" * string(_stages[4])
+        label_year_5 = string(_stages[4] + 1) * "-" * string(_stages[5])
 
         resource_blocks = _game_setup["resource_blocks"]
 
@@ -666,10 +696,14 @@ using ElectricityDecarbonizationGame
             reliability_score_stage_1 = _game_setup["reliability_scores"][1]
             reliability_score_stage_2 = _game_setup["reliability_scores"][2]
             reliability_score_stage_3 = _game_setup["reliability_scores"][3]
+            reliability_score_stage_4 = _game_setup["reliability_scores"][4]
+            reliability_score_stage_5 = _game_setup["reliability_scores"][5]
             clean_score_stage_1 = _game_setup["clean_scores"][1]
             clean_score_stage_2 = _game_setup["clean_scores"][2]
             clean_score_stage_3 = _game_setup["clean_scores"][3]
-            total_score = sum([reliability_score_stage_1, reliability_score_stage_2, reliability_score_stage_3, clean_score_stage_1, clean_score_stage_2, clean_score_stage_3])
+            clean_score_stage_4 = _game_setup["clean_scores"][4]
+            clean_score_stage_5 = _game_setup["clean_scores"][5]
+            total_score = sum([reliability_score_stage_1, reliability_score_stage_2, reliability_score_stage_3, reliability_score_stage_4, reliability_score_stage_5, clean_score_stage_1, clean_score_stage_2, clean_score_stage_3, clean_score_stage_4, clean_score_stage_5])
 
             if game_over
                 affordability_score = 3 * available_budget_tokens
@@ -703,6 +737,24 @@ using ElectricityDecarbonizationGame
             cap_resource_6_stage_3 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_3", 0)
             cap_resource_7_stage_3 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_3", 0)
             cap_resource_8_stage_3 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_3", 0)
+
+            cap_resource_1_stage_4 = get(_game_setup["resource_blocks"]["block_1"], "cap_built_stage_4", 0)
+            cap_resource_2_stage_4 = get(_game_setup["resource_blocks"]["block_2"], "cap_built_stage_4", 0)
+            cap_resource_3_stage_4 = get(_game_setup["resource_blocks"]["block_3"], "cap_built_stage_4", 0)
+            cap_resource_4_stage_4 = get(_game_setup["resource_blocks"]["block_4"], "cap_built_stage_4", 0)
+            cap_resource_5_stage_4 = get(_game_setup["resource_blocks"]["block_5"], "cap_built_stage_4", 0)
+            cap_resource_6_stage_4 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_4", 0)
+            cap_resource_7_stage_4 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_4", 0)
+            cap_resource_8_stage_4 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_4", 0)
+
+            cap_resource_1_stage_5 = get(_game_setup["resource_blocks"]["block_1"], "cap_built_stage_5", 0)
+            cap_resource_2_stage_5 = get(_game_setup["resource_blocks"]["block_2"], "cap_built_stage_5", 0)
+            cap_resource_3_stage_5 = get(_game_setup["resource_blocks"]["block_3"], "cap_built_stage_5", 0)
+            cap_resource_4_stage_5 = get(_game_setup["resource_blocks"]["block_4"], "cap_built_stage_5", 0)
+            cap_resource_5_stage_5 = get(_game_setup["resource_blocks"]["block_5"], "cap_built_stage_5", 0)
+            cap_resource_6_stage_5 = get(_game_setup["resource_blocks"]["block_6"], "cap_built_stage_5", 0)
+            cap_resource_7_stage_5 = get(_game_setup["resource_blocks"]["block_7"], "cap_built_stage_5", 0)
+            cap_resource_8_stage_5 = get(_game_setup["resource_blocks"]["block_8"], "cap_built_stage_5", 0)
 
             bt_resource_1 = 0
             bt_resource_2 = 0
@@ -1093,6 +1145,8 @@ using ElectricityDecarbonizationGame
             "Clean_Stage_1" => sp_clean_stage_1,
             "Clean_Stage_2" => sp_clean_stage_2,
             "Clean_Stage_3" => sp_clean_stage_3,
+            "Clean_Stage_4" => sp_clean_stage_4,
+            "Clean_Stage_5" => sp_clean_stage_5,
             "Reliability" => sp_reliability
         )
 
@@ -1408,6 +1462,8 @@ using ElectricityDecarbonizationGame
             "Clean_Stage_1" => sp_clean_stage_1,
             "Clean_Stage_2" => sp_clean_stage_2,
             "Clean_Stage_3" => sp_clean_stage_3,
+            "Clean_Stage_4" => sp_clean_stage_4,
+            "Clean_Stage_5" => sp_clean_stage_5,
             "Reliability" => sp_reliability
         )
 
@@ -1588,10 +1644,22 @@ using ElectricityDecarbonizationGame
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
             nuclear_relicensed = "display: none"
-        else
+        elseif current_stage == 3
             reliability_score_stage_3 = stage_reliability_points
             total_score += stage_reliability_points
             clean_score_stage_3 = stage_clean_points
+            total_score += stage_clean_points
+            affordability_score = 3 * available_budget_tokens
+        elseif current_stage == 4
+            reliability_score_stage_4 = stage_reliability_points
+            total_score += stage_reliability_points
+            clean_score_stage_4 = stage_clean_points
+            total_score += stage_clean_points
+            affordability_score = 3 * available_budget_tokens
+        elseif current_stage == 5
+            reliability_score_stage_5 = stage_reliability_points
+            total_score += stage_reliability_points
+            clean_score_stage_5 = stage_clean_points
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
             total_score += affordability_score
@@ -1601,7 +1669,7 @@ using ElectricityDecarbonizationGame
 
         # advance stage
         current_stage += 1
-        if current_stage <= 4
+        if current_stage <= 6
             println("Starting Stage ", current_stage)
 
             # write setup to file
@@ -1730,6 +1798,8 @@ using ElectricityDecarbonizationGame
                     "Clean_Stage_1" => sp_clean_stage_1,
                     "Clean_Stage_2" => sp_clean_stage_2,
                     "Clean_Stage_3" => sp_clean_stage_3,
+                    "Clean_Stage_4" => sp_clean_stage_4,
+                    "Clean_Stage_5" => sp_clean_stage_5,
                     "Reliability" => sp_reliability
                 ),
                 "shaping_tokens" => Dict(
@@ -1741,12 +1811,16 @@ using ElectricityDecarbonizationGame
                 "reliability_scores" => Dict(
                     1 => reliability_score_stage_1,
                     2 => reliability_score_stage_2,
-                    3 => reliability_score_stage_3
+                    3 => reliability_score_stage_3,
+                    4 => reliability_score_stage_4,
+                    5 => reliability_score_stage_5
                 ),
                 "clean_scores" => Dict(
                     1 => clean_score_stage_1,
                     2 => clean_score_stage_2,
-                    3 => clean_score_stage_3
+                    3 => clean_score_stage_3,
+                    4 => clean_score_stage_4,
+                    5 => clean_score_stage_5
                 ),
             )
 
@@ -1772,14 +1846,32 @@ using ElectricityDecarbonizationGame
             color_year_1 = color_select
             color_year_2 = color_default
             color_year_3 = color_default
+            color_year_4 = color_default
+            color_year_5 = color_default
         elseif year == _stages[2]
             color_year_1 = color_default
             color_year_2 = color_select
             color_year_3 = color_default
-        else
+            color_year_4 = color_default
+            color_year_5 = color_default
+        elseif year == _stages[3]
             color_year_1 = color_default
             color_year_2 = color_default
             color_year_3 = color_select
+            color_year_4 = color_default
+            color_year_5 = color_default
+        elseif year == _stages[4]
+            color_year_1 = color_default
+            color_year_2 = color_default
+            color_year_3 = color_default
+            color_year_4 = color_select
+            color_year_5 = color_default
+        elseif year == _stages[5]
+            color_year_1 = color_default
+            color_year_2 = color_default
+            color_year_3 = color_default
+            color_year_4 = color_default
+            color_year_5 = color_select
         end
     end
 
