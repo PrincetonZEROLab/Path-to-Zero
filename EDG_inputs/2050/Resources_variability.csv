@@ -1,4 +1,4 @@
-Time_Index,existing_gas,existing_nuclear,solar_pv,distributed_solar,onshore_wind,offshore_wind,battery,clean_firm
+Time_Index,natural_gas,nuclear,solar_pv,distributed_solar,onshore_wind,offshore_wind,battery,clean_firm
 1,1,1,0,0,0.4493,1,1,1
 2,1,1,0,0,0.3804,1,1,1
 3,1,1,0,0,0.3983,0.7589,1,1
