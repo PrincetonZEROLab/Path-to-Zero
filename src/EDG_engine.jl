@@ -434,6 +434,8 @@ function solve(inputs::Dict)
     set_silent(EDG_Sim)
     time = @elapsed optimize!(EDG_Sim)
 
+    @info("Objective value: ", objective_value(EDG_Sim))
+
     return (EDG_Sim, time)
 end
 
