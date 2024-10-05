@@ -385,8 +385,8 @@ using ElectricityDecarbonizationGame
     ## PLOTTING
     # default colors for the plot
     const plot_colors = Dict(
-        "Existing Nuclear" => "#8c564b",
-        "Existing Gas" => "#d62728",
+        "Nuclear" => "#8c564b",
+        "Natural Gas" => "#d62728",
         "Clean Firm" => "#17becf",
         "Solar PV (Utility Scale)" => "#EBC334",
         "Distributed Solar PV" => "#ff7f0e",
@@ -790,8 +790,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_1_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_1_stage_2 = new_cap
-                else
+                elseif current_stage == 3
                     cap_resource_1_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_1_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_1_stage_5 = new_cap
                 end
                 bt_resource_1 += 1
                 available_build_tokens -= 1
@@ -810,8 +814,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_1_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_1_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_1_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_1_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_1_stage_5 = new_cap
             end
             cum_cap_resource_1 = is_new_resource_1 ? sc_resource_1 + new_cap : sc_resource_1
         end
@@ -825,8 +833,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_2_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_2_stage_2 = new_cap
-                else
+                elseif current_stage == 3
                     cap_resource_2_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_2_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_2_stage_5 = new_cap
                 end
                 bt_resource_2 += 1
                 available_build_tokens -= 1
@@ -845,8 +857,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_2_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_2_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_2_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_2_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_2_stage_5 = new_cap
             end
             cum_cap_resource_2 = is_new_resource_2 ? sc_resource_2 + new_cap : sc_resource_2
         end
@@ -860,8 +876,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_3_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_3_stage_2 = new_cap
-                else
+                elseif current_stage == 3
                     cap_resource_3_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_3_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_3_stage_5 = new_cap
                 end
                 bt_resource_3 += 1
                 available_build_tokens -= 1
@@ -880,8 +900,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_3_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_3_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_3_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_3_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_3_stage_5 = new_cap
             end
             cum_cap_resource_3 = is_new_resource_3 ? sc_resource_3 + new_cap : sc_resource_3
         end
@@ -895,8 +919,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_4_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_4_stage_2 = new_cap
-                else
+                elseif current_stage == 3
                     cap_resource_4_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_4_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_4_stage_5 = new_cap
                 end
                 bt_resource_4 += 1
                 available_build_tokens -= 1
@@ -915,8 +943,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_4_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_4_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_4_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_4_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_4_stage_5 = new_cap
             end
             cum_cap_resource_4 = is_new_resource_4 ? sc_resource_4 + new_cap : sc_resource_4
         end
@@ -930,8 +962,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_5_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_5_stage_2 = new_cap
-                else
+                elseif current_stage == 3   
                     cap_resource_5_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_5_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_5_stage_5 = new_cap
                 end
                 bt_resource_5 += 1
                 available_build_tokens -= 1
@@ -950,8 +986,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_5_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_5_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_5_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_5_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_5_stage_5 = new_cap
             end
             cum_cap_resource_5 = is_new_resource_5 ? sc_resource_5 + new_cap : sc_resource_5
         end
@@ -965,8 +1005,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_6_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_6_stage_2 = new_cap
-                else
+                elseif current_stage == 3
                     cap_resource_6_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_6_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_6_stage_5 = new_cap
                 end
                 bt_resource_6 += 1
                 available_build_tokens -= 1
@@ -985,8 +1029,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_6_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_6_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_6_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_6_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_6_stage_5 = new_cap
             end
             cum_cap_resource_6 = is_new_resource_6 ? sc_resource_6 + new_cap : sc_resource_6
         end
@@ -1000,8 +1048,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_7_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_7_stage_2 = new_cap
-                else
+                elseif current_stage == 3
                     cap_resource_7_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_7_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_7_stage_5 = new_cap
                 end
                 bt_resource_7 += 1
                 available_build_tokens -= 1
@@ -1020,8 +1072,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_7_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_7_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_7_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_7_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_7_stage_5 = new_cap
             end
             cum_cap_resource_7 = is_new_resource_7 ? sc_resource_7 + new_cap : sc_resource_7
         end
@@ -1035,8 +1091,12 @@ using ElectricityDecarbonizationGame
                     cap_resource_8_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_8_stage_2 = new_cap
-                else
+                elseif current_stage == 3
                     cap_resource_8_stage_3 = new_cap
+                elseif current_stage == 4
+                    cap_resource_8_stage_4 = new_cap
+                elseif current_stage == 5
+                    cap_resource_8_stage_5 = new_cap
                 end
                 bt_resource_8 += 1
                 available_build_tokens -= 1
@@ -1055,8 +1115,12 @@ using ElectricityDecarbonizationGame
                 cap_resource_8_stage_1 = new_cap
             elseif current_stage == 2
                 cap_resource_8_stage_2 = new_cap
-            else
+            elseif current_stage == 3
                 cap_resource_8_stage_3 = new_cap
+            elseif current_stage == 4
+                cap_resource_8_stage_4 = new_cap
+            elseif current_stage == 5
+                cap_resource_8_stage_5 = new_cap
             end
             cum_cap_resource_8 = is_new_resource_8 ? sc_resource_8 + new_cap : sc_resource_8
         end
@@ -1162,8 +1226,8 @@ using ElectricityDecarbonizationGame
         plot_week = 1
         plot_full_year = true
         df = copy(dispatch_results)
-        rename!(df, "existing_nuclear" => "Existing Nuclear")
-        rename!(df, "existing_gas" => "Existing Gas")
+        rename!(df, "nuclear" => "Nuclear")
+        rename!(df, "natural_gas" => "Natural Gas")
         rename!(df, "clean_firm" => "Clean Firm")
         rename!(df, "solar_pv" => "Solar PV (Utility Scale)")
         rename!(df, "distributed_solar" => "Distributed Solar PV")
@@ -1520,8 +1584,8 @@ using ElectricityDecarbonizationGame
         plot_stage_week = 1
         plot_stage_full_year = true
         df = copy(dispatch_results)
-        rename!(df, "existing_nuclear" => "Existing Nuclear")
-        rename!(df, "existing_gas" => "Existing Gas")
+        rename!(df, "nuclear" => "Nuclear")
+        rename!(df, "natural_gas" => "Natural Gas")
         rename!(df, "clean_firm" => "Clean Firm")
         rename!(df, "solar_pv" => "Solar PV (Utility Scale)")
         rename!(df, "distributed_solar" => "Distributed Solar PV")

@@ -15,8 +15,8 @@ export run_simulation, advance_stage, get_traces
 using PrecompileTools: @compile_workload
 
 @compile_workload begin
-    backend_data_name = ["existing_gas",
-            "existing_nuclear",
+    backend_data_name = ["natural_gas",
+            "nuclear",
             "solar_pv",
             "distributed_solar",
             "onshore_wind",
@@ -83,8 +83,10 @@ using PrecompileTools: @compile_workload
         _scoring_parameters = Dict(
             "Max_Points" => 5,
             "Clean_Stage_1" => [60, 58, 56, 53, 50],
-            "Clean_Stage_2" => [80, 78, 76, 73, 70],
-            "Clean_Stage_3" => [99.9, 99, 98, 96, 90],
+            "Clean_Stage_2" => [70, 68, 66, 63, 60],
+            "Clean_Stage_3" => [80, 78, 76, 73, 70],
+            "Clean_Stage_4" => [90, 88, 86, 83, 80],
+            "Clean_Stage_5" => [99.9, 99, 98, 96, 90],
             "Reliability" => [99.99, 99.5, 99.0, 98.0, 97.0]
         )
 
