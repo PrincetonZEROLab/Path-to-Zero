@@ -50,18 +50,16 @@ function run_simulation(
 
     # Battery energy capacity set to 4 hour duration (4:1 energy to power ratio)
     resources.Existing_Cap_MWh[resources.Resource.=="battery"] = resources.Existing_Cap_MW[resources.Resource.=="battery"] .* 4
+    
     # Retire existing capacity if not maintained
-    if [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]] > resources.Existing_Cap_MW[resources.Resource.=="existing_gas"]
-        resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = resources.Existing_Cap_MW[resources.Resource.=="existing_gas"]
-    else
-        resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
-    end
-
-    if !is_new_nuclear
-        if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
-            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+    existing_resources = resources[resources.New_Build.==0, :]
+    for res in existing_resources.Resource
+        if res == "nuclear" && is_new_nuclear # If new nuclear, do not retire
+            continue 
+        elseif [1000 * resource_params["Build_Cost"][1, res] * resource_params["Build_Tokens"][1, res]] > resources.Existing_Cap_MW[resources.Resource.==res]
+            resources.Existing_Cap_MW[resources.Resource.==res] = resources.Existing_Cap_MW[resources.Resource.==res]
         else
-            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+            resources.Existing_Cap_MW[resources.Resource.==res] = [1000 * resource_params["Build_Cost"][1, res] * resource_params["Build_Tokens"][1, res]]
         end
     end
 
@@ -153,7 +151,7 @@ function run_simulation(
     dispatch_results = hcat(dispatch_results, DataFrame(round.(value.(model[:vGEN]).data ./ 1000, digits=3), [Symbol(inputs["resources"].Resource[g]) for g in G]))
 
     # Scoring for round (reliability and clean energy shares)
-    clean_share = round(100 - (sum(dispatch_results.existing_gas) / (sum(dispatch_results.demand_gw) - sum(dispatch_results.battery_charge))) * 100, digits=1)
+    clean_share = round(100 - (sum(dispatch_results.natural_gas) / (sum(dispatch_results.demand_gw) - sum(dispatch_results.battery_charge))) * 100, digits=1)
     reliability = nse_results.Reliability[1]
     (reliability_score, clean_score) = calc_scores(stage_num, reliability, clean_share, scoring_params)
     scores = DataFrame(
@@ -175,7 +173,7 @@ function load_resources_input(inputs_path::String)
     # Many of the columns in the input data will be unused (this is input format for the GenX model)
     # Select the ones we want for this model
     resources = DataFrames.select(resources,
-        :Resource, :Zone, :THERM, :STOR, :VRE,
+        :Resource, :Zone, :THERM, :STOR, :VRE, :New_Build,
         :Existing_Cap_MW, :Existing_Cap_MWh,
         :Var_OM_Cost_per_MWh, :Var_OM_Cost_per_MWh_In,
         :Heat_Rate_MMBTU_per_MWh, :Fuel,
@@ -502,8 +500,8 @@ function update_step(
         else
             experience = max(0.01, rand(Normal(experience_rate, 0.05), 1)[1])
         end
-        is_existing = contains(resources[g], "existing")
-        is_existing_nuclear = contains(resources[g], "existing_nuclear")
+        is_existing = resources[g] == "nuclear" || resources[g] == "natural_gas"
+        is_existing_nuclear = resources[g] == "nuclear" && is_existing
         build_tokens = resource_params["Build_Tokens"][1, resource]
         if !(is_existing || build_tokens == 0) || (is_new_nuclear && is_existing_nuclear && build_tokens > 0)
             experience_results[1, resource] = round(experience, digits=3)
@@ -537,19 +535,19 @@ function run_stage(
 
     # Battery energy capacity set to 4 hour duration (4:1 energy to power ratio)
     resources.Existing_Cap_MWh[resources.Resource.=="battery"] = resources.Existing_Cap_MW[resources.Resource.=="battery"] .* 4
+
     # Retire existing capacity if not maintained
-    if [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]] > resources.Existing_Cap_MW[resources.Resource.=="existing_gas"]
-        resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = resources.Existing_Cap_MW[resources.Resource.=="existing_gas"]
-    else
-        resources.Existing_Cap_MW[resources.Resource.=="existing_gas"] = [1000 * resource_params["Build_Cost"][1, :existing_gas] * resource_params["Build_Tokens"][1, :existing_gas]]
-    end
-    if !is_new_nuclear
-        if [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]] > resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
-            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"]
+    existing_resources = resources[resources.New_Build.==0, :]
+    for res in existing_resources.Resource
+        if res == "nuclear" && is_new_nuclear # Nuclear is maintained if is new nuclear
+            continue
+        elseif [1000 * resource_params["Build_Cost"][1, res] * resource_params["Build_Tokens"][1, res]] > resources.Existing_Cap_MW[resources.Resource.==res]
+            resources.Existing_Cap_MW[resources.Resource.==res] = resources.Existing_Cap_MW[resources.Resource.==res]
         else
-            resources.Existing_Cap_MW[resources.Resource.=="existing_nuclear"] = [1000 * resource_params["Build_Cost"][1, :existing_nuclear] * resource_params["Build_Tokens"][1, :existing_nuclear]]
+            resources.Existing_Cap_MW[resources.Resource.==res] = [1000 * resource_params["Build_Cost"][1, res] * resource_params["Build_Tokens"][1, res]]
         end
     end
+
     # Prevent clean firm capacity unless Innovation: Clean Firm shaping point is invested (and issue warning)
     if resources.Existing_Cap_MW[resources.Resource.=="clean_firm"][1] > 0 && shaping_tokens["Innovation_Clean_Firm"] == 0
         resources.Existing_Cap_MW[resources.Resource.=="clean_firm"][1] = 0
@@ -615,17 +613,19 @@ function advance_stage(
     if planning_year == "2030"
         if !is_WY_setup
             # Update resource parameters
-            resource_params["Build_Cost"].existing_nuclear[1] = ceil(resource_params["Build_Cost"].existing_nuclear[1] / 2)
+            resource_params["Build_Cost"].nuclear[1] = ceil(resource_params["Build_Cost"].nuclear[1] / 2)
         end
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.5
-    elseif planning_year == "2040"
+    elseif planning_year == "2035"
         if !is_WY_setup
             # Update resource parameters
-            resource_params["Build_Cost"].existing_nuclear[1] = resource_params["Build_Cost"].existing_nuclear[1] * 2
+            resource_params["Build_Cost"].nuclear[1] = resource_params["Build_Cost"].nuclear[1] * 2
         end
         # Update uncertainty parameters
         uncertainty_params["Disaster_Probability"] = 0.9
+    elseif planning_year == "2040"
+    elseif planning_year == "2045"
     elseif planning_year == "2050"
     else
         throw(ArgumentError("Invalid planning year"))
@@ -742,7 +742,7 @@ function compute_results(inputs::Dict,
     uncertainty_results = hcat(uncertainty_results, DataFrame(reshape(uncertainty["Forced_Outages"], 1, length(G)), uncertainty["Resources"]))
 
     # Scoring for round (reliability and clean energy shares)
-    clean_share = 100 - resource_results.Percent_GWh[resource_results.Resource.=="existing_gas"][1]
+    clean_share = 100 - resource_results.Percent_GWh[resource_results.Resource.=="natural_gas"][1]
     reliability = nse_results.Reliability[1]
     (reliability_score, clean_score) = calc_scores(stage_num, reliability, clean_share, scoring_params)
     scores = DataFrame(
