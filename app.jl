@@ -339,6 +339,16 @@ using ElectricityDecarbonizationGame
     @in backend_data_name_7 = "resource_7"
     @in backend_data_name_8 = "resource_8"
 
+    # backend data info
+    @in backend_data_info_1 = "info_1"
+    @in backend_data_info_2 = "info_2"
+    @in backend_data_info_3 = "info_3"
+    @in backend_data_info_4 = "info_4"
+    @in backend_data_info_5 = "info_5"
+    @in backend_data_info_6 = "info_6"
+    @in backend_data_info_7 = "info_7"
+    @in backend_data_info_8 = "info_8"
+
     # shaping tokens data structure
     @in shaping_tokens = Dict(
         "Resilience" => [0, false],
@@ -381,6 +391,11 @@ using ElectricityDecarbonizationGame
     @in Reliability_Points = 0.0
     @in Clean_Share = 0.0
     @in Clean_Points = 0.0
+
+    @in NSE_Percent_of_Demand = 0.0
+    @in Max_NSE_GW = 0.0
+    @in Total_NSE_GWh = 0.0
+    @in Reserve_Margin = 0.0
 
     ## PLOTTING
     # default colors for the plot
@@ -513,6 +528,7 @@ using ElectricityDecarbonizationGame
         bc_resource_1 = block_1["build_cost"]
         sbp_resource_1 = block_1["backlash_risk"]
         backend_data_name_1 = block_1["EDG_data_name"]
+        backend_data_info_1 = block_1["EDG_data_info"]
         is_new_resource_1 = block_1["new_resource"]
         name_resource_1 = is_new_resource_1 ? name_resource_1 : name_resource_1 * " (EXISTING)"
         cum_cap_resource_1 = sc_resource_1
@@ -527,6 +543,7 @@ using ElectricityDecarbonizationGame
         bc_resource_2 = block_2["build_cost"]
         sbp_resource_2 = block_2["backlash_risk"]
         backend_data_name_2 = block_2["EDG_data_name"]
+        backend_data_info_2 = block_2["EDG_data_info"]
         is_new_resource_2 = block_2["new_resource"]
         name_resource_2 = is_new_resource_2 ? name_resource_2 : name_resource_2 * " (EXISTING)"
         cum_cap_resource_2 = sc_resource_2
@@ -541,6 +558,7 @@ using ElectricityDecarbonizationGame
         bc_resource_3 = block_3["build_cost"]
         sbp_resource_3 = block_3["backlash_risk"]
         backend_data_name_3 = block_3["EDG_data_name"]
+        backend_data_info_3 = block_3["EDG_data_info"]
         is_new_resource_3 = block_3["new_resource"]
         name_resource_3 = is_new_resource_3 ? name_resource_3 : name_resource_3 * " (EXISTING)"
         cum_cap_resource_3 = sc_resource_3
@@ -555,6 +573,7 @@ using ElectricityDecarbonizationGame
         bc_resource_4 = block_4["build_cost"]
         sbp_resource_4 = block_4["backlash_risk"]
         backend_data_name_4 = block_4["EDG_data_name"]
+        backend_data_info_4 = block_4["EDG_data_info"]
         is_new_resource_4 = block_4["new_resource"]
         name_resource_4 = is_new_resource_4 ? name_resource_4 : name_resource_4 * " (EXISTING)"
         cum_cap_resource_4 = sc_resource_4
@@ -569,6 +588,7 @@ using ElectricityDecarbonizationGame
         bc_resource_5 = block_5["build_cost"]
         sbp_resource_5 = block_5["backlash_risk"]
         backend_data_name_5 = block_5["EDG_data_name"]
+        backend_data_info_5 = block_5["EDG_data_info"]
         is_new_resource_5 = block_5["new_resource"]
         name_resource_5 = is_new_resource_5 ? name_resource_5 : name_resource_5 * " (EXISTING)"
         cum_cap_resource_5 = sc_resource_5
@@ -583,6 +603,7 @@ using ElectricityDecarbonizationGame
         bc_resource_6 = block_6["build_cost"]
         sbp_resource_6 = block_6["backlash_risk"]
         backend_data_name_6 = block_6["EDG_data_name"]
+        backend_data_info_6 = block_6["EDG_data_info"]
         is_new_resource_6 = block_6["new_resource"]
         name_resource_6 = is_new_resource_6 ? name_resource_6 : name_resource_6 * " (EXISTING)"
         cum_cap_resource_6 = sc_resource_6
@@ -597,6 +618,7 @@ using ElectricityDecarbonizationGame
         bc_resource_7 = block_7["build_cost"]
         sbp_resource_7 = block_7["backlash_risk"]
         backend_data_name_7 = block_7["EDG_data_name"]
+        backend_data_info_7 = block_7["EDG_data_info"]
         is_new_resource_7 = block_7["new_resource"]
         name_resource_7 = is_new_resource_7 ? name_resource_7 : name_resource_7 * " (EXISTING)"
         cum_cap_resource_7 = sc_resource_7
@@ -611,6 +633,7 @@ using ElectricityDecarbonizationGame
         bc_resource_8 = block_8["build_cost"]
         sbp_resource_8 = block_8["backlash_risk"]
         backend_data_name_8 = block_8["EDG_data_name"]
+        backend_data_info_8 = block_8["EDG_data_info"]
         is_new_resource_8 = block_8["new_resource"]
         name_resource_8 = is_new_resource_8 ? name_resource_8 : name_resource_8 * " (EXISTING)"
         cum_cap_resource_8 = sc_resource_8
@@ -1214,13 +1237,20 @@ using ElectricityDecarbonizationGame
             "Reliability" => sp_reliability
         )
 
-        scores, dispatch_results, resource_results = run_simulation(current_stage, year, resource_params, scoring_params, is_new_nuclear=is_new_resource_7)
+        scores, dispatch_results, resource_results, nse_results = run_simulation(current_stage, year, resource_params, scoring_params, is_new_nuclear=is_new_resource_7)
         
         ## update scores
         Reliability = scores[!, :Reliability][1]
         Reliability_Points = scores[!, :Reliability_Points][1]
         Clean_Share = scores[!, :Clean_Share][1]
         Clean_Points = scores[!, :Clean_Points][1]
+
+        # update NSE results
+        NSE_Percent_of_Demand = nse_results[!, :NSE_Percent_of_Demand][1]
+        Max_NSE_GW = nse_results[!, :Max_NSE_GW][1]
+        Total_NSE_GWh = nse_results[!, :Total_NSE_GWh][1]
+        Reserve_Margin = nse_results[!, :Reserve_Margin][1]
+
 
         ## plotting
         plot_week = 1
@@ -1753,6 +1783,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_1,
                         "backlash_risk" => sbp_resource_1,
                         "EDG_data_name" => backend_data_name_1,
+                        "EDG_data_info" => backend_data_info_1,
                         "new_resource" => is_new_resource_1,
                         "social_backlash" => social_backlash_resource_1,
                         "cap_built_stage_1" => cap_resource_1_stage_1,
@@ -1765,6 +1796,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_2,
                         "backlash_risk" => sbp_resource_2,
                         "EDG_data_name" => backend_data_name_2,
+                        "EDG_data_info" => backend_data_info_2,
                         "new_resource" => is_new_resource_2,
                         "social_backlash" => social_backlash_resource_2,
                         "cap_built_stage_1" => cap_resource_2_stage_1,
@@ -1777,6 +1809,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_3,
                         "backlash_risk" => sbp_resource_3,
                         "EDG_data_name" => backend_data_name_3,
+                        "EDG_data_info" => backend_data_info_3,
                         "new_resource" => is_new_resource_3,
                         "social_backlash" => social_backlash_resource_3,
                         "cap_built_stage_1" => cap_resource_3_stage_1,
@@ -1789,6 +1822,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_4,
                         "backlash_risk" => sbp_resource_4,
                         "EDG_data_name" => backend_data_name_4,
+                        "EDG_data_info" => backend_data_info_4,
                         "new_resource" => is_new_resource_4,
                         "social_backlash" => social_backlash_resource_4,
                         "cap_built_stage_1" => cap_resource_4_stage_1,
@@ -1801,6 +1835,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_5,
                         "backlash_risk" => sbp_resource_5,
                         "EDG_data_name" => backend_data_name_5,
+                        "EDG_data_info" => backend_data_info_5,
                         "new_resource" => is_new_resource_5,
                         "social_backlash" => social_backlash_resource_5,
                         "cap_built_stage_1" => cap_resource_5_stage_1,
@@ -1813,6 +1848,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_6,
                         "backlash_risk" => sbp_resource_6,
                         "EDG_data_name" => backend_data_name_6,
+                        "EDG_data_info" => backend_data_info_6,
                         "new_resource" => is_new_resource_6,
                         "social_backlash" => social_backlash_resource_6,
                         "cap_built_stage_1" => cap_resource_6_stage_1,
@@ -1825,6 +1861,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_7,
                         "backlash_risk" => sbp_resource_7,
                         "EDG_data_name" => backend_data_name_7,
+                        "EDG_data_info" => backend_data_info_7,
                         "new_resource" => is_new_resource_7,
                         "social_backlash" => social_backlash_resource_7,
                         "cap_built_stage_1" => cap_resource_7_stage_1,
@@ -1837,6 +1874,7 @@ using ElectricityDecarbonizationGame
                         "build_cost" => bc_resource_8,
                         "backlash_risk" => sbp_resource_8,
                         "EDG_data_name" => backend_data_name_8,
+                        "EDG_data_info" => backend_data_info_8,
                         "new_resource" => is_new_resource_8,
                         "social_backlash" => social_backlash_resource_8,
                         "cap_built_stage_1" => cap_resource_8_stage_1,

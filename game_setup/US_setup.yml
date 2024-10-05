@@ -26,7 +26,8 @@ resource_blocks:
     build_cost: 10
     backlash_risk: "high"
     EDG_data_name: "onshore_wind"
-    new_resource: true
+      EDG_data_info: "Average output (capacity factor): 47%"
+      new_resource: true
     social_backlash: false
 
   block_2:
@@ -35,6 +36,7 @@ resource_blocks:
     build_cost: 15
     backlash_risk: "moderate"
     EDG_data_name: "solar_pv"
+    EDG_data_info: "Average output (capacity factor): 25%"
     new_resource: true
     social_backlash: false
 
@@ -44,6 +46,7 @@ resource_blocks:
     build_cost: 5
     backlash_risk: "low"
     EDG_data_name: "offshore_wind"
+    EDG_data_info: "Average output (capacity factor): 51%"
     new_resource: true
     social_backlash: false
 
@@ -53,6 +56,7 @@ resource_blocks:
     build_cost: 8
     backlash_risk: "none"
     EDG_data_name: "distributed_solar"
+    EDG_data_info: "Average output (capacity factor): 18%"
     new_resource: true
     social_backlash: false
 
@@ -62,6 +66,7 @@ resource_blocks:
     build_cost: 20
     backlash_risk: "none"
     EDG_data_name: "battery"
+    EDG_data_info: "4 hours of storage per GW of capacity, 85% efficient"
     new_resource: true
     social_backlash: false
 
@@ -71,6 +76,7 @@ resource_blocks:
     build_cost: 5
     backlash_risk: "low"
     EDG_data_name: "clean_firm"
+    EDG_data_info: "Unavailable in Stage 1. Unlocked with Shaping token"
     new_resource: true
     social_backlash: false
 
@@ -80,6 +86,7 @@ resource_blocks:
     build_cost: 10
     backlash_risk: "moderate"
     EDG_data_name: "nuclear"
+    EDG_data_info: "Life extension & relicensing: Costs 2x Build tokens in Stage 2."
     new_resource: false
     social_backlash: false
 
@@ -89,6 +96,7 @@ resource_blocks:
     build_cost: 20
     backlash_risk: "low"
     EDG_data_name: "natural_gas"
+    EDG_data_info: "Emitting generation source"
     new_resource: false
     social_backlash: false
 

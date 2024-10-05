@@ -327,13 +327,10 @@
                 <q-separator horizontal />
 
                 <div class="row">
-                    <!-- existing_gas -->
+                    <!-- natural_gas -->
                     <div class=" col" :style="b_color_resource_1" :disabled="is_clean_firm_resource_1">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_1}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
+                        <p style="text-align:center;">{{backend_data_info_1}}</p>
 
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
@@ -399,14 +396,11 @@
 
                     <q-separator vertical />
 
-                    <!-- existing_nuclear -->
+                    <!-- nuclear -->
                     <div class="col" :style="b_color_resource_2" :disabled="is_clean_firm_resource_2">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_2}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
-
+                        <p style="text-align:center;">{{backend_data_info_2}}</p>
+                        
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
                             <q-btn-toggle readonly v-model="sbp_resource_2" toggle-color="deep-orange" glossy
@@ -473,11 +467,8 @@
                     <!-- BATTERY ENERGY STORAGE -->
                     <div class=" col" :style="b_color_resource_3" :disabled="is_clean_firm_resource_3">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_3}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
-
+                        <p style="text-align:center;">{{backend_data_info_3}}</p>
+                        
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
                             <q-btn-toggle readonly v-model="sbp_resource_3" toggle-color="deep-orange" glossy
@@ -543,10 +534,7 @@
                     <!-- CLEAN FIRM RESOURCE -->
                     <div class="col" :style="b_color_resource_4" :disabled="is_clean_firm_resource_4">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_4}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
+                        <p style="text-align:center;">{{backend_data_info_4}}</p>
 
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
@@ -612,10 +600,7 @@
                     <!-- ONSHORE WIND POWER -->
                     <div class=" col" :style="b_color_resource_5" :disabled="is_clean_firm_resource_5">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_5}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
+                        <p style="text-align:center;">{{backend_data_info_5}}</p>
 
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
@@ -682,10 +667,7 @@
                     <!-- UTILITY-SCALE SOLAR PV -->
                     <div class="col" :style="b_color_resource_6" :disabled="is_clean_firm_resource_6">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_6}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
+                        <p style="text-align:center;">{{backend_data_info_6}}</p>
 
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
@@ -752,10 +734,7 @@
                     <!--OFFSHORE WIND POWER-->
                     <div class=" col" :style="b_color_resource_7" :disabled="is_clean_firm_resource_7">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_7}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
+                        <p style="text-align:center;">{{backend_data_info_7}}</p>
 
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
@@ -827,10 +806,7 @@
                     <!-- DISTRIBUTED SOLAR PV -->
                     <div class="col" :style="b_color_resource_8" :disable="is_clean_firm_resource_8">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_8}}</h5>
-
-                        <div class="row">
-                            <p style="text-align: center;"></p>
-                        </div>
+                        <p style="text-align:center;">{{backend_data_info_8}}</p>
 
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
@@ -956,6 +932,22 @@
                     isolate resource.</p>
                 <div class="st-col col-12 col-sm " style="padding-left:10px">
                     <plotly :data="plot_traces" :layout="plot_layout" :displaylogo="false"></plotly>
+                </div>
+
+                <div class="row" style="padding-top: 10px;">
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="ife32" title="NSE Percent of Demand" :number="NSE_Percent_of_Demand"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="ire51" title="Max NSE GW"
+                            :number="Max_NSE_GW"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="i3b6u" title="Total NSE GWh" :number="Total_NSE_GWh"></st-big-number>
+                    </div>
+                    <div class="st-col col-12 col-sm st-module">
+                        <st-big-number id="i4x8f" title="Reserve Margin" :number="Reserve_Margin"></st-big-number>
+                    </div>
                 </div>
 
                 <div style="text-align: center;margin-top : 10px;">

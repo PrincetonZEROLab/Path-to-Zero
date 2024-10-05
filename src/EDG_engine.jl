@@ -9,14 +9,14 @@ function get_traces(df::DataFrame, week::Int, full_year::Bool, colors::Dict, is_
     x_axis = full_year ? df[start_hour:end_hour, :hour] / (24 * 7) : (df[start_hour:end_hour, :hour] .- (df[start_hour, :hour] - 1)) / 24
     if is_WY_setup
         for i in eachindex(varnames)
-            if varnames[i] == "Existing Gas"
+            if varnames[i] == "Natural Gas"
                 varnames[i] = "Existing Coal"
-                colors["Existing Coal"] = colors["Existing Gas"]
-                rename!(df, "Existing Gas" => "Existing Coal")
-            elseif varnames[i] == "Existing Nuclear"
+                colors["Existing Coal"] = colors["Natural Gas"]
+                rename!(df, "Natural Gas" => "Existing Coal")
+            elseif varnames[i] == "Nuclear"
                 varnames[i] = "New Nuclear"
-                colors["New Nuclear"] = colors["Existing Nuclear"]
-                rename!(df, "Existing Nuclear" => "New Nuclear")
+                colors["New Nuclear"] = colors["Nuclear"]
+                rename!(df, "Nuclear" => "New Nuclear")
             end
         end
     end
@@ -100,8 +100,14 @@ function run_simulation(
         generation[s] =
             generation[s] - sum(sample_weight .* value.(model[:vCHARGE])[:, s].data)
     end
-    total_generation = sum(generation[setdiff(G, STOR)]) # exclude storage from total generation
 
+    ts_all_gen = vec(sum(value.(model[:vGEN][:, setdiff(G, STOR)]).data, dims=2))
+    demand = inputs["demand"].Load_MW_z1
+    reserve = ts_all_gen - demand
+    min_reserve = minimum(reserve[reserve .> 0], init=0)
+
+    total_generation = sum(generation[setdiff(G, STOR)]) # exclude storage from total generation
+    
     # Total annual demand is sumproduct of sample period weights and hourly sample period demands
     total_demand = sum(sum.(eachcol(sample_weight .* inputs["demand"])))
     # Maximum aggregate demand is the maximum of the sum of total concurrent inputs["demand"] in each hour
@@ -125,7 +131,8 @@ function run_simulation(
         Max_NSE_GW=zeros(num_segments * num_zones),
         Total_NSE_GWh=zeros(num_segments * num_zones),
         NSE_Percent_of_Demand=zeros(num_segments * num_zones),
-        Reliability=100.0
+        Reliability=100.0,
+        Reserve_Margin=min_reserve
     )
     i = 1
     for s in S
@@ -161,7 +168,7 @@ function run_simulation(
         Clean_Points=clean_score
     )
 
-    return scores, dispatch_results, resource_results
+    return scores, dispatch_results, resource_results, nse_results
 end
 
 function load_resources_input(inputs_path::String)
