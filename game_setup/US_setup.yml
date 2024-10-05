@@ -5,12 +5,16 @@ available_shaping_tokens: 2
 current_stage_shaping_tokens: 2
 available_build_tokens:
   - 10
+  - 10
+  - 11
   - 11
   - 12
 
 stages:
   - 2030
+  - 2035
   - 2040
+  - 2045
   - 2050
 
 # Resource names
@@ -75,7 +79,7 @@ resource_blocks:
     start_capacity: 10
     build_cost: 10
     backlash_risk: "moderate"
-    EDG_data_name: "existing_nuclear"
+    EDG_data_name: "nuclear"
     new_resource: false
     social_backlash: false
 
@@ -84,7 +88,7 @@ resource_blocks:
     start_capacity: 60
     build_cost: 20
     backlash_risk: "low"
-    EDG_data_name: "existing_gas"
+    EDG_data_name: "natural_gas"
     new_resource: false
     social_backlash: false
 
@@ -115,12 +119,24 @@ scoring_parameters:
     - 53
     - 50
   Clean_Stage_2:
+    - 70
+    - 68
+    - 66
+    - 63
+    - 60
+  Clean_Stage_3:
     - 80
     - 78
     - 76
     - 73
     - 70
-  Clean_Stage_3:
+  Clean_Stage_4:
+    - 90
+    - 88
+    - 86
+    - 83
+    - 80
+  Clean_Stage_5:
     - 99.9
     - 99
     - 98
@@ -143,9 +159,13 @@ reliability_scores:
   1: 0
   2: 0
   3: 0
+  4: 0
+  5: 0
 
 clean_scores:
   1: 0
   2: 0
   3: 0
+  4: 0
+  5: 0
 
