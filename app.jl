@@ -1283,7 +1283,7 @@ using ElectricityDecarbonizationGame
         end
     end
     @onbutton bt_undo_buy_shaping_token begin
-        if (available_budget_tokens <= _current_stage_budget_tokens) && (available_shaping_tokens > _current_stage_shaping_tokens)
+        if (available_budget_tokens < _current_stage_budget_tokens) && (available_shaping_tokens > 0)
             available_shaping_tokens -= 1
             available_budget_tokens += 1
         end
