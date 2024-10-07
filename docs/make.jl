@@ -1,26 +1,27 @@
 using ElectricityDecarbonizationGame
-using Documenter
-
-DocMeta.setdocmeta!(ElectricityDecarbonizationGame, :DocTestSetup, :(using ElectricityDecarbonizationGame); recursive = true)
+import Documenter
 
 # Build documentation.
 # ====================
-makedocs(;
+Documenter.makedocs(;
     modules = [ElectricityDecarbonizationGame],
     authors = "",
     sitename = "ElectricityDecarbonizationGame",
     format = Documenter.HTML(
-        canonical = "https://princetonzerolab.github.io/Path-to-Zero/stable/",
+        canonical = "https://princetonzerolab.github.io/Path-to-Zero/stable/"
     ),
     pages = [
-        "Home" => "index.md",
+        "Welcome Page" => "index.md",
+        "Getting Started" => "getting_started.md",
         "Instructions" => "instructions.md",
+        "Three-stage board" => "board.md",
     ],
+
 )
 
 # Deploy built documentation.
 # ===========================
-deploydocs(;
+Documenter.deploydocs(;
     repo="github.com/PrincetonZEROLab/Path-to-Zero.git",
     target = "build",
     branch = "gh-pages",

@@ -7,9 +7,16 @@ CurrentModule = ElectricityDecarbonizationGame
 Welcome to the [Path To Zero](https://github.com/PrincetonZEROLab/Path-to-Zero) documentation!
 
 ## What is Path To Zero?
-Path To Zero is a multi-stage planning under deep uncertainy strategy game designed to help players understand the challenges of decarbonizing the electricity sector. The purpose of the game is to develop a portfolio of resources that will meet the demand at the lowest cost while also achieving stringent environmental goals. 
+Path To Zero is a **multi-stage planning under deep uncertainy strategy game** designed to help players understand the challenges of decarbonizing the electricity sector. The objective of the game is to develop a **portfolio of resources** that can meet the demand at the lowest cost while also achieving **stringent environmental goals**. 
 
-The game involves a simulation of electricity system operations (developed in Julia and JuM), which helps players test out their strategies, build intuition about how power systems operation, and develop a plan to build a portfolio of resources that meets their reliability and clean energy goals, which are two of the three objectives for which they are scored in the game.
+The game **simulates** electricity system operations, allowing players to test out their **strategies**, build intuition about how power systems operate, and develop a plan to create a portfolio of resources that meets both their **reliability and clean energy goals**, which are two of the three objectives for which they are scored in the game.
+
+!!! tip "Credits"
+    The game was created and designed by [Jesse D. Jenkins](https://mae.princeton.edu/people/faculty/jenkins) and developed by the [Princeton ZERO Lab](https://mae.princeton.edu/people/faculty/jenkins) and the [Princeton RSE Group](https://researchcomputing.princeton.edu/services/research-software-engineering) at Princeton University.
+
+!!! note "Design"
+    The backend is developed in [Julia](http://julialang.org/) and [JuMP](http://jump.dev/), while the frontend is built using the [GenieFramework](https://genieframework.com/).
+
 
 ## Software Manual
 
@@ -22,3 +29,10 @@ Pages = [
 Depth = 2
 ```
 
+```@raw html
+<p style="text-align:center;">
+  <img src="assets/julialogo.svg" width="100" />
+  <img style="padding-left: 20px;" src="assets/jumplogo.svg" width="100" /> 
+  <img style="padding-left: 20px;" src="assets/genielogo.svg" width="80" />
+</p>
+```
