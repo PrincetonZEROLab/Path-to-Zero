@@ -65,9 +65,9 @@ function run_simulation(
 
     ending_capacity = DataFrame(Resource=resources.Resource, Ending_Cap_MW=resources.Existing_Cap_MW)
 
-    @info("SIMULATION STAGE")
-    @info("Existing capacity")
-    @info(ending_capacity)
+    @debug("SIMULATION STAGE")
+    @debug("Existing capacity")
+    @debug(ending_capacity)
 
     (demand, nse, sample_weight, hours_per_period, P, S, W, T) = load_demand_input(in_path)
     variability = load_variability_input(in_path)
@@ -439,7 +439,7 @@ function solve(inputs::Dict)
     set_silent(EDG_Sim)
     time = @elapsed optimize!(EDG_Sim)
 
-    @info("Objective value: ", objective_value(EDG_Sim))
+    @debug("Objective value: ", objective_value(EDG_Sim))
 
     return (EDG_Sim, time)
 end
@@ -563,9 +563,9 @@ function run_stage(
 
     ending_capacity = DataFrame(Resource=resources.Resource, Ending_Cap_MW=resources.Existing_Cap_MW)
 
-    @info("ADVANCE STAGE")
-    @info("Capacity")
-    @info(ending_capacity)
+    @debug("ADVANCE STAGE")
+    @debug("Capacity")
+    @debug(ending_capacity)
 
     (demand, nse, sample_weight, hours_per_period, P, S, W, T) = load_demand_input(in_path)
     variability = load_variability_input(in_path)
