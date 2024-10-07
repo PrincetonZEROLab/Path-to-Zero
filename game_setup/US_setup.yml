@@ -26,8 +26,8 @@ resource_blocks:
     build_cost: 10
     backlash_risk: "high"
     EDG_data_name: "onshore_wind"
-      EDG_data_info: "Average output (capacity factor): 47%"
-      new_resource: true
+    EDG_data_info: "Average output (capacity factor): 47%"
+    new_resource: true
     social_backlash: false
 
   block_2:

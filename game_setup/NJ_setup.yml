@@ -86,7 +86,7 @@ resource_blocks:
     build_cost: 10
     backlash_risk: "low"
     EDG_data_name: "nuclear"
-    EDG_data_info: "Unavailable in Stage 1. Unlocked with Shaping token"
+    EDG_data_info: "Life extension & relicensing: Costs 2x Build tokens in Stage 2."
     new_resource: false
     social_backlash: false
 

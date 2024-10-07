@@ -86,6 +86,7 @@ resource_blocks:
     build_cost: 5
     backlash_risk: "moderate"
     EDG_data_name: "nuclear"
+    EDG_data_info: "New nuclear resource"
     new_resource: true
     social_backlash: false
 
