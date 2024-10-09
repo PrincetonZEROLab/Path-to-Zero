@@ -1752,7 +1752,7 @@ using ElectricityDecarbonizationGame
         if uncertainty_results[1, "Disaster"] == true
             @info("Disaster Occurred")
             disaster_occurred = "display: "
-            outage_weeks = string(uncertainty_results[1, "Outage_Week"]) * " " * string(uncertainty_results[1, "Outage_Week"] + 1)
+            outage_weeks = string(uncertainty_results[1, "Outage_Week"]) * " " * string(uncertainty_results[1, "Outage_Week"] + 1) * " " * string(uncertainty_results[1, "Outage_Week"] + 2) * " " * string(uncertainty_results[1, "Outage_Week"] + 3)
         else
             disaster_occurred = "display: none"
         end

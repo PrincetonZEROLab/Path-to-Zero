@@ -294,7 +294,8 @@ function resolve_uncertainty(inputs::Dict, uncertainty_params::Dict, shaping_tok
         # the maximum available capacity for that resource is reduced by 15%. 
         # Default values can be over-written by changing function parameters.
         week = convert(Int32, round(rand(1)[1] * 52))
-        timesteps = (24*7*week+1):(24*7*week+24*14)
+        four_weeks = 24*7*4
+        timesteps = (24*7*week+1):(24*7*week+four_weeks)
         # If Shaping Token invested in Resilience then outage probability is halved
         if shaping_tokens["Resilience"] > 0
             outage_prob = uncertainty_params["Outage_Probability"] / 2
@@ -744,7 +745,7 @@ function compute_results(inputs::Dict,
         Outage_NSE_Percent=0.0
     )
     if uncertainty["Disaster"]
-        outage_range = (24*7*(uncertainty["Outage_Week"]-1)+1):(24*7*uncertainty["Outage_Week"])
+        outage_range = (24*7*(uncertainty["Outage_Week"]-1)+1):(24*7*(uncertainty["Outage_Week"]+3))
         uncertainty_results.Outage_NSE_Percent[1] = round(sum(sample_weight[outage_range] .* value.(model[:vNSE])[outage_range, :].data) / total_demand * 100, digits=1)
     end
     uncertainty_results = hcat(uncertainty_results, DataFrame(reshape(uncertainty["Forced_Outages"], 1, length(G)), uncertainty["Resources"]))
