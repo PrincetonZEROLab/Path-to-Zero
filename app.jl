@@ -1748,7 +1748,7 @@ using ElectricityDecarbonizationGame
 
         # show social backlash and disaster results
         if uncertainty_results[1, "Disaster"] == true
-            println("Disaster Occurred")
+            @info("Disaster Occurred")
             disaster_occurred = "display: "
             outage_weeks = string(uncertainty_results[1, "Outage_Week"]) * " " * string(uncertainty_results[1, "Outage_Week"] + 1)
         else
@@ -1859,14 +1859,14 @@ using ElectricityDecarbonizationGame
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
             total_score += affordability_score
-            println("Game Over")
+            @info("Game Over")
             game_over = true
         end
 
         # advance stage
         current_stage += 1
         if current_stage <= 6
-            println("Starting Stage ", current_stage)
+            @info("STARTING STAGE ", current_stage)
 
             # write setup to file
             data = Dict(

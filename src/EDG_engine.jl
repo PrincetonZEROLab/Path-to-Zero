@@ -564,9 +564,9 @@ function run_stage(
 
     ending_capacity = DataFrame(Resource=resources.Resource, Ending_Cap_MW=resources.Existing_Cap_MW)
 
-    @debug("ADVANCE STAGE")
-    @debug("Capacity")
-    @debug(ending_capacity)
+    @info("ADVANCE STAGE")
+    @info("Capacity")
+    @info(ending_capacity)
 
     (demand, nse, sample_weight, hours_per_period, P, S, W, T) = load_demand_input(in_path)
     variability = load_variability_input(in_path)
