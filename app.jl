@@ -64,7 +64,7 @@ using ElectricityDecarbonizationGame
     @out _current_stage_shaping_tokens = 2
     @out _init_shaping_tokens = 2
     @in available_build_tokens = 10
-    @out _available_build_tokens = [10, 10, 11, 11, 12]
+    @out _available_build_tokens = [10, 10, 10, 11, 12]
     @out buy_build_token_counter = 0
 
     # scores variables
