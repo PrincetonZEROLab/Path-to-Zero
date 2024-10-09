@@ -1825,7 +1825,7 @@ using ElectricityDecarbonizationGame
         end
 
         # enable clean_firm if shaping token is on
-        if innovation_clean_firm
+        if innovation_clean_firm && current_stage >= 2
             is_clean_firm_resource_1 = false
             is_clean_firm_resource_2 = false
             is_clean_firm_resource_3 = false
