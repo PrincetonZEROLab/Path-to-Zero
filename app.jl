@@ -799,6 +799,8 @@ using ElectricityDecarbonizationGame
             if game_over
                 affordability_score = 3 * available_budget_tokens
                 total_score += affordability_score
+                social_backlash_reduction = 3*sum([social_backlash_resource_1, social_backlash_resource_2, social_backlash_resource_3, social_backlash_resource_4, social_backlash_resource_5, social_backlash_resource_6, social_backlash_resource_7, social_backlash_resource_8])
+                total_score -= social_backlash_reduction
                 tab = "Build"
             end
 
@@ -1859,6 +1861,8 @@ using ElectricityDecarbonizationGame
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
             total_score += affordability_score
+            social_backlash_reduction = 3*sum([social_backlash_resource_1, social_backlash_resource_2, social_backlash_resource_3, social_backlash_resource_4, social_backlash_resource_5, social_backlash_resource_6, social_backlash_resource_7, social_backlash_resource_8])
+            total_score -= social_backlash_reduction
             @info("Game Over")
             game_over = true
         end
