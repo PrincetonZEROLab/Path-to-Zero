@@ -73,7 +73,7 @@ resource_blocks:
   block_6:
     name: "CLEAN FIRM RESOURCE"
     start_capacity: 0
-    build_cost: 5
+    build_cost: 4
     backlash_risk: "low"
     EDG_data_name: "clean_firm"
     EDG_data_info: "Unavailable in Stage 1. Unlocked with Shaping token"
