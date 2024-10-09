@@ -25,6 +25,9 @@ using ElectricityDecarbonizationGame
     @in game_over = false
     @in selected_file = "Select Setup File"
 
+    @in first_stage_selected_file = ""
+    @in restartapp = false 
+
     # tabs
     @out tab = "Build"
     @in back_to_build_tab = false
@@ -489,7 +492,8 @@ using ElectricityDecarbonizationGame
 
         if current_stage == 1
             _init_shaping_tokens = _game_setup["available_shaping_tokens"]
-            is_WY_setup = selected_file == "WY_setup.yml" 
+            is_WY_setup = selected_file == "WY_setup.yml"
+            first_stage_selected_file = selected_file
         end
 
         if current_stage == 2   # TODO: ask about this
@@ -674,9 +678,64 @@ using ElectricityDecarbonizationGame
         sp_clean_stage_2 = scoring_parameters["Clean_Stage_2"]
         sp_clean_stage_3 = scoring_parameters["Clean_Stage_3"]
         sp_reliability = scoring_parameters["Reliability"]
+        
+        # disaster 
+        disaster_resource_1 = disaster_resource_2 = disaster_resource_3 = disaster_resource_4 = disaster_resource_5 = disaster_resource_6 = disaster_resource_7 = disaster_resource_8 = false
+        demand_shock_percent = 0.0
+        outage_weeks = "None"
+        disaster_occurred = "display: none"
 
         # Load prevoius stage data (if available)
-        if current_stage > 1
+        if current_stage == 1
+            buy_build_token_counter = 0
+            # shaping tokens
+            bt_resilience = bt_innovation_experience = bt_innovation_clean_firm = bt_social_license = false
+            bt_resilience_is_disabled = bt_innovation_experience_is_disabled = bt_innovation_clean_firm_is_disabled = bt_social_license_is_disabled = false
+            available_shaping_tokens = _init_shaping_tokens
+
+            shaping_tokens = Dict(
+                "Resilience" => [0, false],
+                "Innovation_Experience" => [0, false],
+                "Innovation_Clean_Firm" => [0, false],
+                "Social_License" => [0, false]
+            )
+            Reliability = Reliability_Points = Clean_Share = Clean_Points = 0.0
+            stage_reliability = stage_reliability_points = stage_clean_share = stage_clean_points = 0.0
+
+            # NSE results
+            NSE_Percent_of_Demand = Max_NSE_GW = Total_NSE_GWh = Reserve_Margin = 0.0
+
+            # social backlash
+            social_backlash_resource_1 = social_backlash_resource_2 = social_backlash_resource_3 = social_backlash_resource_4 = social_backlash_resource_5 = social_backlash_resource_6 = social_backlash_resource_7 = social_backlash_resource_8 = false
+
+            # scores
+            reliability_score_stage_1 = reliability_score_stage_2 = reliability_score_stage_3 = reliability_score_stage_4 = reliability_score_stage_5 = 0
+            clean_score_stage_1 = clean_score_stage_2 = clean_score_stage_3 = clean_score_stage_4 = clean_score_stage_5 = 0
+            affordability_score = 15
+            total_score = 0
+
+            cap_resource_1_stage_1 = cap_resource_2_stage_1 = cap_resource_3_stage_1 = cap_resource_4_stage_1 = cap_resource_5_stage_1 = cap_resource_6_stage_1 = cap_resource_7_stage_1 = cap_resource_8_stage_1 = 0
+            cap_resource_1_stage_2 = cap_resource_2_stage_2 = cap_resource_3_stage_2 = cap_resource_4_stage_2 = cap_resource_5_stage_2 = cap_resource_6_stage_2 = cap_resource_7_stage_2 = cap_resource_8_stage_2 = 0
+            cap_resource_1_stage_3 = cap_resource_2_stage_3 = cap_resource_3_stage_3 = cap_resource_4_stage_3 = cap_resource_5_stage_3 = cap_resource_6_stage_3 = cap_resource_7_stage_3 = cap_resource_8_stage_3 = 0
+            cap_resource_1_stage_4 = cap_resource_2_stage_4 = cap_resource_3_stage_4 = cap_resource_4_stage_4 = cap_resource_5_stage_4 = cap_resource_6_stage_4 = cap_resource_7_stage_4 = cap_resource_8_stage_4 = 0
+            cap_resource_1_stage_5 = cap_resource_2_stage_5 = cap_resource_3_stage_5 = cap_resource_4_stage_5 = cap_resource_5_stage_5 = cap_resource_6_stage_5 = cap_resource_7_stage_5 = cap_resource_8_stage_5 = 0
+
+            bt_resource_1 = bt_resource_2 = bt_resource_3 = bt_resource_4 = bt_resource_5 = bt_resource_6 = bt_resource_7 = bt_resource_8 = 0
+
+            plot_df = plot_stage_results = DataFrame()
+            plot_full_year = plot_stage_full_year = true
+            plot_week = plot_stage_week = 1
+            plot_traces = plot_stage_traces = [PlotlyBase.scatter(x=1:24*7, y=zeros(Float32, 24 * 7))]
+            plot_layout = plot_stage_layout = PlotlyBase.Layout(
+                title="",
+                Dict{Symbol,Any}(:paper_bgcolor => "rgb(242, 246, 247)", :plot_bgcolor => "rgb(242, 246, 247)");
+                xaxis=attr(title="Week", showgrid=true, dtick=5),
+                yaxis=attr(title="Usage", showgrid=true),
+                legend=attr(x=1, y=1.02, yanchor="bottom", xanchor="right", orientation="h"),
+                backgroundcolor="red",
+            )
+
+        else
             is_WY_setup = _game_setup["is_WY_setup"]
 
             social_backlash_resource_1 = resource_blocks["block_1"]["social_backlash"]
@@ -739,6 +798,7 @@ using ElectricityDecarbonizationGame
             if game_over
                 affordability_score = 3 * available_budget_tokens
                 total_score += affordability_score
+                tab = "Build"
             end
 
             # update built capacity from prevoius stages

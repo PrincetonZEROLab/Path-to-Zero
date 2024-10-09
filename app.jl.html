@@ -5,7 +5,8 @@
             <div class="col">
                 <q-btn
                     style="color: black; margin-left: 4pt; margin-top: 8pt; font-size: smaller; background-color: rgb(240, 240, 240);"
-                    glossy icon="refresh" label="Restart" onclick="history.go(0)"></q-btn>
+                    glossy icon="refresh" label="Restart" v-on:click="restartapp = true">
+                </q-btn>
             </div>
             <div class="col-6">
                 <h1 style="text-align: center; font-weight: bold; color:rgb(16, 16, 129);">Path to Zero</h1>
@@ -304,7 +305,8 @@
             <div class="row justify-center" style="margin-top: 5pt" ;>
                 <q-btn
                     style="font-size: large; height: 60px; width: 200px; background-color: white; border: 2px solid rgb(160, 218, 170);"
-                    glossy label="Play again" onclick="history.go(0)"></q-btn>
+                    glossy label="Play again" v-on:click="restartapp = true">
+                </q-btn>    
             </div>
         </div>
     </div>
