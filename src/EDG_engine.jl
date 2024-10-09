@@ -101,11 +101,6 @@ function run_simulation(
             generation[s] - sum(sample_weight .* value.(model[:vCHARGE])[:, s].data)
     end
 
-    ts_all_gen = vec(sum(value.(model[:vGEN][:, setdiff(G, STOR)]).data, dims=2))
-    demand = inputs["demand"].Load_MW_z1
-    reserve = ts_all_gen - demand
-    min_reserve = minimum(reserve[reserve .> 0], init=0)
-
     total_generation = sum(generation[setdiff(G, STOR)]) # exclude storage from total generation
     
     # Total annual demand is sumproduct of sample period weights and hourly sample period demands
@@ -132,7 +127,7 @@ function run_simulation(
         Total_NSE_GWh=zeros(num_segments * num_zones),
         NSE_Percent_of_Demand=zeros(num_segments * num_zones),
         Reliability=100.0,
-        Reserve_Margin=min_reserve
+        Reserve_Margin=0.0
     )
     i = 1
     for s in S
@@ -156,6 +151,12 @@ function run_simulation(
         demand_not_served=round.(value.(model[:vNSE])[:, 1].data ./ 1000, digits=1),
     )
     dispatch_results = hcat(dispatch_results, DataFrame(round.(value.(model[:vGEN]).data ./ 1000, digits=3), [Symbol(inputs["resources"].Resource[g]) for g in G]))
+
+    firm_capacity = sum(resource_results[resource_results.Resource .== firm, :Ending_Capacity_GW] for firm in ["nuclear", "natural_gas", "clean_firm"])[1]
+    firm_capacity = isempty(firm_capacity) ? 0.0 : firm_capacity
+    vre_capacity = sum(resource_results.Ending_Capacity_GW[resource_results.Resource .== vre] .* variability[:, Symbol(vre)] for vre in ["solar_pv", "distributed_solar", "onshore_wind", "offshore_wind"])
+    reserve_margin = minimum(firm_capacity .+ vre_capacity + dispatch_results.battery - dispatch_results.battery_charge - dispatch_results.demand_gw, init=0)
+    nse_results.Reserve_Margin .= round(reserve_margin, digits=1)
 
     # Scoring for round (reliability and clean energy shares)
     clean_share = round(100 - (sum(dispatch_results.natural_gas) / (sum(dispatch_results.demand_gw) - sum(dispatch_results.battery_charge))) * 100, digits=1)
