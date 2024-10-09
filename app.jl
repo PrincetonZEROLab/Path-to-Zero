@@ -799,7 +799,25 @@ using ElectricityDecarbonizationGame
             if game_over
                 affordability_score = 3 * available_budget_tokens
                 total_score += affordability_score
-                social_backlash_reduction = 3*sum([social_backlash_resource_1, social_backlash_resource_2, social_backlash_resource_3, social_backlash_resource_4, social_backlash_resource_5, social_backlash_resource_6, social_backlash_resource_7, social_backlash_resource_8])
+                social_backlash_reduction_v = Bool[]
+                if is_new_resource_1
+                    push!(social_backlash_reduction_v, social_backlash_resource_1)
+                elseif is_new_resource_2
+                    push!(social_backlash_reduction_v, social_backlash_resource_2)
+                elseif is_new_resource_3
+                    push!(social_backlash_reduction_v, social_backlash_resource_3)
+                elseif is_new_resource_4
+                    push!(social_backlash_reduction_v, social_backlash_resource_4)
+                elseif is_new_resource_5
+                    push!(social_backlash_reduction_v, social_backlash_resource_5)
+                elseif is_new_resource_6
+                    push!(social_backlash_reduction_v, social_backlash_resource_6)
+                elseif is_new_resource_7
+                    push!(social_backlash_reduction_v, social_backlash_resource_7)
+                elseif is_new_resource_8
+                    push!(social_backlash_reduction_v, social_backlash_resource_8)
+                end
+                social_backlash_reduction = 2*sum(social_backlash_reduction_v)
                 total_score -= social_backlash_reduction
                 tab = "Build"
             end
@@ -1861,7 +1879,25 @@ using ElectricityDecarbonizationGame
             total_score += stage_clean_points
             affordability_score = 3 * available_budget_tokens
             total_score += affordability_score
-            social_backlash_reduction = 3*sum([social_backlash_resource_1, social_backlash_resource_2, social_backlash_resource_3, social_backlash_resource_4, social_backlash_resource_5, social_backlash_resource_6, social_backlash_resource_7, social_backlash_resource_8])
+            social_backlash_reduction_v = Bool[]
+            if is_new_resource_1
+                push!(social_backlash_reduction_v, social_backlash_resource_1)
+            elseif is_new_resource_2
+                push!(social_backlash_reduction_v, social_backlash_resource_2)
+            elseif is_new_resource_3
+                push!(social_backlash_reduction_v, social_backlash_resource_3)
+            elseif is_new_resource_4
+                push!(social_backlash_reduction_v, social_backlash_resource_4)
+            elseif is_new_resource_5
+                push!(social_backlash_reduction_v, social_backlash_resource_5)
+            elseif is_new_resource_6
+                push!(social_backlash_reduction_v, social_backlash_resource_6)
+            elseif is_new_resource_7
+                push!(social_backlash_reduction_v, social_backlash_resource_7)
+            elseif is_new_resource_8
+                push!(social_backlash_reduction_v, social_backlash_resource_8)
+            end
+            social_backlash_reduction = 2*sum(social_backlash_reduction_v)
             total_score -= social_backlash_reduction
             @info("Game Over")
             game_over = true

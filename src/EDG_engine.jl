@@ -34,6 +34,7 @@ function run_simulation(
     is_new_nuclear::Bool=false
 )
 
+    current_stage = stage_num
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
@@ -277,7 +278,7 @@ function load_variability_input(inputs_path::String)
 end
 
 
-function resolve_uncertainty(inputs::Dict, uncertainty_params::Dict, shaping_tokens::Dict)
+function resolve_uncertainty(inputs::Dict, uncertainty_params::Dict, shaping_tokens::Dict, current_stage::Int64)
     # Calculate random demand shock as % change in hourly forecasted demand 
     # drawn from normal distribution with mean 0 and standard deviation given by 'demand_variance' argument
     demand_shock = 1 + rand(Normal(0, uncertainty_params["Demand_Variance"]), 1)[1]
@@ -285,7 +286,8 @@ function resolve_uncertainty(inputs::Dict, uncertainty_params::Dict, shaping_tok
     inputs["demand"] = round.(demand_shock .* inputs["demand"])
 
     # Determine if a climate disaster occurs
-    disaster = rand(Bernoulli(uncertainty_params["Disaster_Probability"]), 1)[1]
+    #TODO: add probability as a vector instead of a scalar*current_stage
+    disaster = rand(Bernoulli(uncertainty_params["Disaster_Probability"]*current_stage), 1)[1]
     forced_outages = zeros(Int8, length(inputs["G"])) # Record which resources are on outage in this vector
     if disaster
         # Disaster occurs in a random week. During that week, each resource faces a chance of outage.
@@ -522,6 +524,7 @@ function update_step(
 end
 
 function run_stage(
+    current_stage::Int64,
     stage_num::String,
     planning_year::String,
     resource_params::Dict,
@@ -582,7 +585,7 @@ function run_stage(
         "hours_per_period" => hours_per_period,
         "variability" => variability)
 
-    (inputs, uncertainty) = resolve_uncertainty(inputs, uncertainty_params, shaping_tokens)
+    (inputs, uncertainty) = resolve_uncertainty(inputs, uncertainty_params, shaping_tokens, current_stage)
 
     (model, solvetime) = solve(inputs)
 
@@ -611,10 +614,11 @@ function advance_stage(
     is_new_nuclear::Bool=false
 )
 
+    current_stage = stage_num
     stage_num = "Stage_" * string(stage_num)
     planning_year = string(planning_year)
 
-    resource_params["Start_Capacity"], resource_results, dispatch_results, uncertainty_results, scores = run_stage(stage_num, planning_year, resource_params, shaping_tokens, uncertainty_params, scoring_params,
+    resource_params["Start_Capacity"], resource_results, dispatch_results, uncertainty_results, scores = run_stage(current_stage, stage_num, planning_year, resource_params, shaping_tokens, uncertainty_params, scoring_params,
         input_path, is_new_nuclear)
     social_backlash, resource_params["Build_Cost"], experience_results = update_step(resource_params, shaping_tokens, experience_rate, backlash_risk, backlash_rates, is_new_nuclear)
 

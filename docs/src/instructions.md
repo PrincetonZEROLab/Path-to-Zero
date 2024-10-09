@@ -12,6 +12,9 @@ The objective is to achieve the highest cumulative score at the end of Stage 5. 
 !!! tip "Maximum Score"
     Note that a maximum score of 65 points is possible: 25 points for Reliability, 25 points for Clean Energy, and 15 points for Affordability.
 
+!!! warning "Special rule"
+    If social backlashes occur at the end of Stage 5, the total score is reduced by 2 points per backlash. This only applies to the new resources.
+
 ## Game Stages
 The game proceeds through four Stages, representing a given planning period, where your goal is to build and maintain a sufficient portfolio of resources (generation & storage) to meet expected demand while meeting reliability and clean energy goals. 
 
