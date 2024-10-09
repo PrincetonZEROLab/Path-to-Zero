@@ -295,7 +295,10 @@ function resolve_uncertainty(inputs::Dict, uncertainty_params::Dict, shaping_tok
         # of climate resilience reduces probability by 10%. If outage occurs for a given resource, 
         # the maximum available capacity for that resource is reduced by 15%. 
         # Default values can be over-written by changing function parameters.
-        week = convert(Int32, round(rand(1)[1] * 52))
+        # week = convert(Int32, round(rand(1)[1] * 52))
+        start_disaster_period = 22
+        end_disaster_period = 38
+        week = floor(Int, rand() * (end_disaster_period - start_disaster_period + 1) + start_disaster_period)
         four_weeks = 24*7*4
         timesteps = (24*7*week+1):(24*7*week+four_weeks)
         # If Shaping Token invested in Resilience then outage probability is halved
