@@ -433,7 +433,7 @@
                     <div class="col" :style="b_color_resource_2" :disabled="is_clean_firm_resource_2">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_2}}</h5>
                         <p style="text-align:center;">{{backend_data_info_2}}</p>
-                        
+
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
                             <q-btn-toggle readonly v-model="sbp_resource_2" toggle-color="deep-orange" glossy
@@ -501,7 +501,7 @@
                     <div class=" col" :style="b_color_resource_3" :disabled="is_clean_firm_resource_3">
                         <h5 style="text-align:center;margin-bottom:5px;font-weight: bold;">{{name_resource_3}}</h5>
                         <p style="text-align:center;">{{backend_data_info_3}}</p>
-                        
+
                         <div class="row justify-center">
                             <h6>Backlash Risk: </h6>
                             <q-btn-toggle readonly v-model="sbp_resource_3" toggle-color="deep-orange" glossy
@@ -969,11 +969,11 @@
 
                 <div class="row" style="padding-top: 10px;">
                     <div class="st-col col-12 col-sm st-module">
-                        <st-big-number id="ife32" title="NSE Percent of Demand" :number="NSE_Percent_of_Demand"></st-big-number>
+                        <st-big-number id="ife32" title="NSE Percent of Demand"
+                            :number="NSE_Percent_of_Demand"></st-big-number>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
-                        <st-big-number id="ire51" title="Max NSE GW"
-                            :number="Max_NSE_GW"></st-big-number>
+                        <st-big-number id="ire51" title="Max NSE GW" :number="Max_NSE_GW"></st-big-number>
                     </div>
                     <div class="st-col col-12 col-sm st-module">
                         <st-big-number id="i3b6u" title="Total NSE GWh" :number="Total_NSE_GWh"></st-big-number>

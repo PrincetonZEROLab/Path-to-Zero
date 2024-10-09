@@ -14,6 +14,7 @@ using ElectricityDecarbonizationGame
 @app begin
 
     ### UI setup
+
     # team setup
     @out team_path = ""
     @out team_name_not_set = true
@@ -482,7 +483,7 @@ using ElectricityDecarbonizationGame
         notify(__model__, "Please upload a valid file")
     end
     # load game setup from the file selected
-    @onchange selected_file begin 
+    @onchange selected_file begin
         _game_setup = YAML.load_file(joinpath(team_path, selected_file))
 
         current_stage = 1
@@ -520,7 +521,7 @@ using ElectricityDecarbonizationGame
         _current_stage_shaping_tokens = _game_setup["current_stage_shaping_tokens"]
         _available_build_tokens = _game_setup["available_build_tokens"]
         available_build_tokens = _available_build_tokens[current_stage]
-        
+
         _stages = _game_setup["stages"]
         @assert length(_stages) == 5
 
@@ -1068,7 +1069,7 @@ using ElectricityDecarbonizationGame
                     cap_resource_5_stage_1 = new_cap
                 elseif current_stage == 2
                     cap_resource_5_stage_2 = new_cap
-                elseif current_stage == 3   
+                elseif current_stage == 3
                     cap_resource_5_stage_3 = new_cap
                 elseif current_stage == 4
                     cap_resource_5_stage_4 = new_cap
@@ -1352,7 +1353,6 @@ using ElectricityDecarbonizationGame
         Total_NSE_GWh = nse_results[!, :Total_NSE_GWh][1]
         Reserve_Margin = nse_results[!, :Reserve_Margin][1]
 
-
         ## plotting
         plot_week = 1
         plot_full_year = true
@@ -1368,11 +1368,11 @@ using ElectricityDecarbonizationGame
         rename!(df, "battery_charge" => "Battery Charge")
         rename!(df, "demand_not_served" => "Demand not served")
         # sort columns by cumulative capacity
-        sorted_idx = sortperm([1,1,1,cum_cap_resource_5,1,cum_cap_resource_8,cum_cap_resource_7,cum_cap_resource_2,cum_cap_resource_4,cum_cap_resource_1,cum_cap_resource_3,cum_cap_resource_5,cum_cap_resource_6])
+        sorted_idx = sortperm([1, 1, 1, cum_cap_resource_5, 1, cum_cap_resource_8, cum_cap_resource_7, cum_cap_resource_2, cum_cap_resource_4, cum_cap_resource_1, cum_cap_resource_3, cum_cap_resource_5, cum_cap_resource_6])
         cols = names(df)[sorted_idx]
         select!(df, cols)
         # move battery charge and demand not served to the beginning
-        df = df[!, ["Battery Charge","Demand not served", setdiff(names(df), ["Battery Charge","Demand not served"])...]]
+        df = df[!, ["Battery Charge", "Demand not served", setdiff(names(df), ["Battery Charge", "Demand not served"])...]]
         # select non-zero columns
         df = df[!, [col for col in names(df) if sum(df[!, col]) != 0]]
         plot_df = df
@@ -1414,7 +1414,7 @@ using ElectricityDecarbonizationGame
         end
     end
     @onbutton bt_undo_buy_shaping_token begin
-        if (available_budget_tokens < _current_stage_budget_tokens) && (available_shaping_tokens > 0)
+        if (available_budget_tokens < _current_stage_budget_tokens) && (available_shaping_tokens > 0) && (available_budget_tokens < 10) # 10 is the maximum budget tokens
             available_shaping_tokens -= 1
             available_budget_tokens += 1
         end
@@ -1726,11 +1726,11 @@ using ElectricityDecarbonizationGame
         rename!(df, "storage_charge" => "Battery Charge")
         rename!(df, "nonserved" => "Demand not served")
         # sort columns by cumulative capacity
-        sorted_idx = sortperm([1,1,1,cum_cap_resource_5,1,cum_cap_resource_8,cum_cap_resource_7,cum_cap_resource_2,cum_cap_resource_4,cum_cap_resource_1,cum_cap_resource_3,cum_cap_resource_5,cum_cap_resource_6])
+        sorted_idx = sortperm([1, 1, 1, cum_cap_resource_5, 1, cum_cap_resource_8, cum_cap_resource_7, cum_cap_resource_2, cum_cap_resource_4, cum_cap_resource_1, cum_cap_resource_3, cum_cap_resource_5, cum_cap_resource_6])
         cols = names(df)[sorted_idx]
         select!(df, cols)
         # move battery charge and demand not served to the beginning
-        df = df[!, ["Battery Charge","Demand not served", setdiff(names(df), ["Battery Charge","Demand not served"])...]]
+        df = df[!, ["Battery Charge", "Demand not served", setdiff(names(df), ["Battery Charge", "Demand not served"])...]]
         # select non-zero columns
         df = df[!, [col for col in names(df) if sum(df[!, col]) != 0]]
         plot_stage_results = df
@@ -2083,6 +2083,7 @@ using ElectricityDecarbonizationGame
         # show_pannels = "display: none"
         show_game_over = "display: "
     end
+
 end
 
 @page("/", "app.jl.html")
