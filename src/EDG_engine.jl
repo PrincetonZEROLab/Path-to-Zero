@@ -155,7 +155,7 @@ function run_simulation(
     firm_capacity = sum(resource_results[resource_results.Resource .== firm, :Ending_Capacity_GW] for firm in ["nuclear", "natural_gas", "clean_firm"])[1]
     firm_capacity = isempty(firm_capacity) ? 0.0 : firm_capacity
     vre_capacity = sum(resource_results.Ending_Capacity_GW[resource_results.Resource .== vre] .* variability[:, Symbol(vre)] for vre in ["solar_pv", "distributed_solar", "onshore_wind", "offshore_wind"])
-    reserve_margin = minimum(firm_capacity .+ vre_capacity + dispatch_results.battery - dispatch_results.battery_charge - dispatch_results.demand_gw, init=0)
+    reserve_margin = minimum(firm_capacity .+ vre_capacity + dispatch_results.battery - dispatch_results.battery_charge - dispatch_results.demand_gw)
     nse_results.Reserve_Margin .= round(reserve_margin, digits=1)
 
     # Scoring for round (reliability and clean energy shares)
