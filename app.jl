@@ -59,8 +59,9 @@ using ElectricityDecarbonizationGame
     @out available_shaping_tokens = 2
     @out _current_stage_shaping_tokens = 2
     @out _init_shaping_tokens = 2
-    @out available_build_tokens = 10
+    @in available_build_tokens = 10
     @out _available_build_tokens = [10, 10, 11, 11, 12]
+    @out buy_build_token_counter = 0
 
     # scores variables
     @out reliability_score_stage_1 = 0
@@ -73,7 +74,7 @@ using ElectricityDecarbonizationGame
     @out clean_score_stage_3 = 0
     @out clean_score_stage_4 = 0
     @out clean_score_stage_5 = 0
-    @out affordability_score = 25 # maximum score if all budget tokens are available
+    @out affordability_score = 15 # maximum score if all budget tokens are available
     @out total_score = 0
 
     # buttons to show budget tokens remaining
@@ -82,10 +83,17 @@ using ElectricityDecarbonizationGame
     @out bt_color_3 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
     @out bt_color_4 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
     @out bt_color_5 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+    @out bt_color_6 = "border: 1px solid black;"
+    @out bt_color_7 = "border: 1px solid black;"
+    @out bt_color_8 = "border: 1px solid black;"
+    @out bt_color_9 = "border: 1px solid black;"
+    @out bt_color_10 = "border: 1px solid black;"
 
     # buttons to buy build tokens
     @in bt_buy_build_token = false
     @in bt_undo_buy_build_token = false
+    @in dialog_sell_build_token = false
+    @in bt_sell_build_token = false
 
     ## RESOURCE BLOCKS
     # Border color for each resource block
@@ -789,18 +797,33 @@ using ElectricityDecarbonizationGame
             bt_resource_8 = 0
         end
     end
+    @onbutton restartapp begin
+        println("restarting")
+        selected_file = first_stage_selected_file
+    end
 
     # buy build tokens
     @onbutton bt_buy_build_token begin
         if available_budget_tokens >= 1
             available_build_tokens += 2
             available_budget_tokens -= 1
+            buy_build_token_counter += 1
         end
     end
     @onbutton bt_undo_buy_build_token begin
-        if (available_budget_tokens < _current_stage_budget_tokens)
+        if (buy_build_token_counter > 0) && (available_budget_tokens < 10)  # 10 is the maximum number of budget tokens
             available_build_tokens -= 2
             available_budget_tokens += 1
+            buy_build_token_counter -= 1
+        end
+    end
+
+    # sell build tokens
+    @onbutton bt_sell_build_token begin
+        if (available_build_tokens >= 3) && (available_budget_tokens < 10)  # 10 is the maximum number of budget tokens
+            available_build_tokens -= 3
+            available_budget_tokens += 1
+            _current_stage_budget_tokens = available_budget_tokens
         end
     end
 
@@ -1151,22 +1174,40 @@ using ElectricityDecarbonizationGame
 
     # update budget tokens and affordability score based on available budget tokens
     @onchange available_budget_tokens begin
-        if available_budget_tokens == 5
-            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+        active_color = "border: 1px solid black; background-color: rgb(160, 218, 170);"
+        inactive_color = "border: 1px solid black;"
+        #FIXME: this is ugly but couldn't find a better way for now
+        if available_budget_tokens == 10
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = active_color
+        elseif available_budget_tokens == 9
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = active_color
+            bt_color_10 = inactive_color
+        elseif available_budget_tokens == 8
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = active_color
+            bt_color_9 = bt_color_10 = inactive_color
+        elseif available_budget_tokens == 7
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = active_color
+            bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
+        elseif available_budget_tokens == 6
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = active_color
+            bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
+        elseif available_budget_tokens == 5
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = active_color
+            bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
         elseif available_budget_tokens == 4
-            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_5 = "border: 1px solid black;"
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = active_color
+            bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
         elseif available_budget_tokens == 3
-            bt_color_1 = bt_color_2 = bt_color_3 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_4 = bt_color_5 = "border: 1px solid black;"
+            bt_color_1 = bt_color_2 = bt_color_3 = active_color
+            bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
         elseif available_budget_tokens == 2
-            bt_color_1 = bt_color_2 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
+            bt_color_1 = bt_color_2 = active_color
+            bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
         elseif available_budget_tokens == 1
-            bt_color_1 = "border: 1px solid black; background-color: rgb(160, 218, 170);"
-            bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
+            bt_color_1 = active_color
+            bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
         elseif available_budget_tokens == 0
-            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = "border: 1px solid black;"
+            bt_color_1 = bt_color_2 = bt_color_3 = bt_color_4 = bt_color_5 = bt_color_6 = bt_color_7 = bt_color_8 = bt_color_9 = bt_color_10 = inactive_color
         end
         affordability_score = 3 * available_budget_tokens
     end
@@ -1684,6 +1725,7 @@ using ElectricityDecarbonizationGame
         bt_resource_6 = 0
         bt_resource_7 = 0
         bt_resource_8 = 0
+        buy_build_token_counter = 0
 
         _current_stage_budget_tokens = available_budget_tokens
         _current_stage_shaping_tokens = available_shaping_tokens

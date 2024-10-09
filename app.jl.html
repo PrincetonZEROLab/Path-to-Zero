@@ -241,11 +241,20 @@
                 <h5> Budget tokens remaining</h5>
                 <p> <strong>Metric:</strong> Budget tokens remaining at end of game </p>
                 <div class="col-12">
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_1" glossy />
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_2" glossy />
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_3" glossy />
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_4" glossy />
-                    <q-btn style="height: 50px; width: 50px;" :style="bt_color_5" glossy />
+                    <div class="row justify-center q-gutter-x-sm q-mb-sm">
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_1" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_2" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_3" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_4" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_5" glossy />
+                    </div>
+                    <div class="row justify-center q-gutter-x-sm q-mb-sm">
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_6" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_7" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_8" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_9" glossy />
+                        <q-btn style="height: 50px; width: 50px;" :style="bt_color_10" glossy />
+                    </div>
                 </div>
             </center>
         </div>
@@ -322,7 +331,29 @@
                         :disabled="game_over"></q-btn>
                     <q-btn style="margin-left: 1pt;background-color: rgb(171, 191, 227); color: white" icon="undo"
                         v-on:click="bt_undo_buy_build_token = true" :disabled="game_over"></q-btn>
+                    <q-btn color="primary" style="margin-left: 10px;" label="Sell Build Tokens"
+                        v-on:click="dialog_sell_build_token = true" :disabled="game_over"></q-btn>
                 </div>
+
+                <q-dialog v-model="dialog_sell_build_token" persistent>
+                    <q-card>
+                        <q-card-section class="row items-center">
+                            <q-avatar icon="warning" color="primary" text-color="white" />
+                            <span class="q-ml-sm" style="font-size:small;">
+                                Are you sure you want to sell three build tokens and get an additional<br>
+                                budget token?
+                            </span>
+                            <span class="q-ml-sm" style="font-weight: bold; padding-top: 10pt;">Warning: This operation
+                                cannot be undone.
+                            </span>
+                        </q-card-section>
+                        <q-card-actions align="right">
+                            <q-btn flat label="No, I'm still using build tokens" color="black" v-close-popup />
+                            <q-btn flat label="Yes" color="deep-orange" v-on:click="bt_sell_build_token = true"
+                                v-close-popup />
+                        </q-card-actions>
+                    </q-card>
+                </q-dialog>
 
                 <q-separator horizontal />
 
