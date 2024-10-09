@@ -90,7 +90,7 @@ using PrecompileTools: @compile_workload
             "Reliability" => [99.99, 99.5, 99.0, 98.0, 97.0]
         )
 
-        _experience_rate = 0.5
+        _experience_rate = 0.025
 
         _backlash_risk = DataFrame(
             resource_1="low",

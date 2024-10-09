@@ -505,9 +505,9 @@ function update_step(
     for g in 1:G
         resource = Symbol(resources[g])
         if shaping_tokens["Innovation_Experience"] > 0
-            experience = max(0.01, rand(Normal(experience_rate * 2, 0.05), 1)[1])
+            experience = max(0.01, rand(Normal(experience_rate * 2, experience_rate), 1)[1])
         else
-            experience = max(0.01, rand(Normal(experience_rate, 0.05), 1)[1])
+            experience = max(0.01, rand(Normal(experience_rate, experience_rate/2), 1)[1])
         end
         is_existing = resources[g] == "nuclear" || resources[g] == "natural_gas"
         is_existing_nuclear = resources[g] == "nuclear" && is_existing
