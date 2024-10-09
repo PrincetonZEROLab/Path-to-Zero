@@ -8,7 +8,8 @@ Documenter.makedocs(;
     authors = "",
     sitename = "ElectricityDecarbonizationGame",
     format = Documenter.HTML(
-        canonical = "https://princetonzerolab.github.io/Path-to-Zero/stable/"
+        canonical = "https://princetonzerolab.github.io/Path-to-Zero/stable/",
+        assets = ["assets/epg_style.css"],
     ),
     pages = [
         "Welcome Page" => "index.md",

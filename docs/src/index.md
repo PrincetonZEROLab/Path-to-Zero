@@ -18,6 +18,23 @@ The game **simulates** electricity system operations, allowing players to test o
     The backend is developed in [Julia](http://julialang.org/) and [JuMP](http://jump.dev/), while the frontend is built using the [GenieFramework](https://genieframework.com/).
 
 
+
+```@raw html
+<p class="light-style-only" style="text-align:center;">
+  <img src="assets/julialogo.svg" width="100" />
+  <img style="padding-left: 20px;" src="assets/jumplogo.svg" width="100" /> 
+  <img style="padding-left: 20px;" src="assets/genielogo.svg" width="80" />
+</p>
+```
+    
+```@raw html
+<p class="dark-style-only" style="text-align:center;">
+    <img src="assets/julialogo-dark.svg" width="100" />
+    <img style="padding-left: 20px;" src="assets/jumplogo-dark.svg" width="100" />
+    <img style="padding-left: 20px;" src="assets/genielogo.svg" width="80" />
+</p>
+```
+
 ## Software Manual
 
 ```@contents
@@ -27,12 +44,4 @@ Pages = [
     "instructions.md"
 ]
 Depth = 2
-```
-
-```@raw html
-<p style="text-align:center;">
-  <img src="assets/julialogo.svg" width="100" />
-  <img style="padding-left: 20px;" src="assets/jumplogo.svg" width="100" /> 
-  <img style="padding-left: 20px;" src="assets/genielogo.svg" width="80" />
-</p>
 ```
