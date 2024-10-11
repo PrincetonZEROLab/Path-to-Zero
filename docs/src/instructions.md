@@ -10,7 +10,7 @@ The objective is to achieve the highest cumulative score at the end of Stage 5. 
 3. **Affordability**: at the end of Stage 5, you earn 3 points per Budget token remaining. Budget tokens can be used throughout Stages to purchase additional Build tokens or Shaping tokens, but expending Budget tokens lowers your final score, so spend wisely. 
 
 !!! tip "Maximum Score"
-    Note that a maximum score of 65 points is possible: 25 points for Reliability, 25 points for Clean Energy, and 15 points for Affordability.
+    Note that the maximum score for Reliability is 25 points, and for Clean Energy it is also 25 points. The score for Affordability, however, depends on the number of Budget tokens remaining at the end of Stage 5, with 3 points awarded per Budget token.
 
 !!! warning "Special rule"
     If social backlashes occur at the end of Stage 5, the total score is reduced by 2 points per backlash. This only applies to the new resources.
