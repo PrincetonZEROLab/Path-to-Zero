@@ -514,10 +514,15 @@ function update_step(
         else
             experience = max(0.01, rand(Normal(experience_rate, experience_rate/2), 1)[1])
         end
-        is_existing = resources[g] == "nuclear" || resources[g] == "natural_gas"
-        is_existing_nuclear = resources[g] == "nuclear" && is_existing
         build_tokens = resource_params["Build_Tokens"][1, resource]
-        if !(is_existing || build_tokens == 0) || (is_new_nuclear && is_existing_nuclear && build_tokens > 0)
+        # In EDG, the only resources that can be "existing" are natural gas and nuclear
+        is_natural_gas = resources[g] == "natural_gas"
+        is_nuclear = resources[g] == "nuclear"
+        # Check if a nuclear resource is new or existing
+        is_existing_nuclear = is_nuclear && (is_new_nuclear == false)
+        is_existing = is_natural_gas || is_existing_nuclear
+        # Check if a resource is new and has build tokens
+        if !(is_existing || build_tokens == 0)
             experience_results[1, resource] = round(experience, digits=3)
             resource_params["Build_Cost"][1, resource] =
                 round(resource_params["Build_Cost"][1, resource] / (1 - experience)^resource_params["Build_Tokens"][1, resource])
