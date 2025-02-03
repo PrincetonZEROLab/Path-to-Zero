@@ -12,7 +12,7 @@ Path To Zero is a **multi-stage planning under deep uncertainy strategy game** d
 The game **simulates** electricity system operations, allowing players to test out their **strategies**, build intuition about how power systems operate, and develop a plan to create a portfolio of resources that meets both their **reliability and clean energy goals**, which are two of the three objectives for which they are scored in the game.
 
 !!! tip "Credits"
-    The game was created and designed by [Jesse D. Jenkins](https://mae.princeton.edu/people/faculty/jenkins) and developed by the [Princeton ZERO Lab](https://mae.princeton.edu/people/faculty/jenkins) and the [Princeton RSE Group](https://researchcomputing.princeton.edu/services/research-software-engineering) at Princeton University.
+    The game was created and designed by [Jesse D. Jenkins](https://mae.princeton.edu/people/faculty/jenkins) and developed by the [Princeton ZERO Lab](https://zero.lab.princeton.edu/) and the [Princeton RSE Group](https://researchcomputing.princeton.edu/services/research-software-engineering) at Princeton University.
 
 !!! note "Design"
     The backend is developed in [Julia](http://julialang.org/) and [JuMP](http://jump.dev/), while the frontend is built using the [GenieFramework](https://genieframework.com/).

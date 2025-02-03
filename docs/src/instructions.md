@@ -12,7 +12,7 @@ The objective is to achieve the highest cumulative score at the end of Stage 5. 
 !!! tip "Maximum Score"
     Note that the maximum score for Reliability is 25 points, and for Clean Energy it is also 25 points. The score for Affordability, however, depends on the number of Budget tokens remaining at the end of Stage 5, with 3 points awarded per Budget token.
 
-!!! warning "Special rule"
+!!! warning "Special rule: Social Backlash during last stage"
     If social backlashes occur at the end of Stage 5, the total score is reduced by 2 points per backlash. This only applies to the new resources.
 
 ## Game Stages
@@ -22,8 +22,8 @@ The game proceeds through four Stages, representing a given planning period, whe
 There are four types of uncertainty to consider in your planning:
 
 1. **Demand Shocks**: Demand in each Stage is uncertain and will differ from the expected values by a constant percentage throughout the year. Demand may be either lower or higher than expected.
-2. **Experience Curves**: Expending Build tokens to construct a new resource will drive down the cost of that resource in the next Stage by approximately 5% per token, but the exact pace of cost declines is uncertain. 
-3. **Social Backlash**: Expending Build tokens to construct or maintain a resource risks triggering Social Backlash, which prevents that resource from being built or maintained in the next Stage. Each resource has a different Backlash Risk per Build token. The precise risk of Social Backlash is uncertain, but each resource type has a different relative risk: Low, Medium or High..
+2. **Experience Curves**: Expending Build tokens to construct a new resource will drive down the cost of that resource in the next Stage by approximately 2% per token, but the exact pace of cost declines is uncertain. 
+3. **Social Backlash**: Expending Build tokens to construct or maintain a resource risks triggering Social Backlash, which prevents that resource from being built or maintained in the next Stage. Each resource has a different Backlash Risk per Build token. The precise risk of Social Backlash is uncertain, but each resource type has a different relative risk: Low, Medium or High.
 4. **Climate Disasters**: Each Stage, there is a chance of a climate-related weather disaster (flood, fires, hurricane, etc.). If a disaster occurs, each resource type faces a probability of forced outages knocking offline 50% of installed capacity for four weeks. Disaster risk increases as the Stages progress.
 
 ## Phases
@@ -39,41 +39,50 @@ Each Stage, you have a specified number of **Build tokens** available. Additiona
 
 Each resource has a specified maintenance or construction cost which denotes how many gigawatts (GW) of that resource can be purchased for each Build token.
 
-**Existing resources** (marked with orange boxes in the GUI): in each Stage, you must expend sufficient Build tokens to maintain current capacity of existing resources or capacity for that resource will retire. Each existing resource specifies how many GW can be maintained per Build token expended. Any capacity in excess of the GWs maintained by expending Build tokens will permanently retire (close) and will be unavailable to meet demand during that Stage (e.g. capacity is retired prior to the Simulation phase). Once retired, capacity for that resource is permanently reduced for all subsequent stages. No new capacity can be added for existing resources. The cost of maintaining existing resources does not decline due to Experience Curves.
+#### Existing resources (marked with orange boxes in the GUI)
+In each Stage, you must expend sufficient Build tokens to maintain current capacity of existing resources or capacity for that resource will retire. Each existing resource specifies how many GW can be maintained per Build token expended. Any capacity in excess of the GWs maintained by expending Build tokens will permanently retire (close) and will be unavailable to meet demand during that Stage (e.g. capacity is retired prior to the Simulation phase). Once retired, capacity for that resource is permanently reduced for all subsequent stages. No new capacity can be added for existing resources. The cost of maintaining existing resources does not decline due to Experience Curves.
 
 !!! note "Example"
     You have 60 GW of Existing Fossil at the start of Stage 1. The game setup specifies that 20 GW can be maintained for each Build token. You choose to expend 2 Build tokens to maintain 40 GW of Existing Fossil and let 20 GW of Existing Fossil retire. 40 GW of Existing Fossil will be available to meet demand during the Stage 1 Simulation Phase and you will begin Stage 2 with 40 GW of Existing Fossil capacity. 
 
-!!! warning "Special rule"
+!!! warning "Special rule: Relicensing of existing nuclear power plants"
     Existing nuclear power plants have to be refurbished and relicensed to expend their lifetime during Stage 2, which doubles the number of Build tokens required to maintain their capacity during Stage 2 only. 
 
-**Social Backlash**: Expending Build tokens to maintain existing resources risks triggering Social Backlash. If Social Backlash is triggered for an existing resource at the end of Stage 1-Stage 4, then no Build tokens can be expended to maintain the existing resource in the next Stage. As a result, all existing capacity for that resource will be forced to retire before the Simulation phase in that Stage. The precise risk of Social Backlash is uncertain, but **each resource type has a different relative risk: Low, Medium or High**.
+##### Social Backlash for existing resources
+As described above, expending Build tokens to maintain existing resources risks triggering Social Backlash. If Social Backlash is triggered for an existing resource at the end of Stage 1-Stage 4, then **no Build tokens can be expended** to maintain the existing resource in the next Stage. As a result, all existing capacity for that resource **will be forced to retire** before the Simulation phase in that Stage. The precise risk of Social Backlash is uncertain, but each resource type has a different relative risk: Low, Medium or High.
 
 !!! note "Example"
     After expending 2 Build tokens to maintain 40 GW of Existing Fossil in Stage 1, a Social Backlash is triggered for Existing Fossil resources during the Stage 1 Simulation Phase. During Stage 2, no Build tokens can be expended on Existing Fossil and all 40 GW consequently will retire before the Stage 2 Simulation stage.
 
-**New resources**: Build tokens can also be used to build new resources. Each resource specifies how many GW are built per Build token. Once built in one Stage, capacity from these resources is available to meet demand during the current Stage’s Simulation Phase and in all subsequent Stages. You do not need to expend Build tokens to maintain capacity built in a previous Stage. 
+#### New resources
+Build tokens can also be used to build new resources. Each resource specifies how many GW are built per Build token. Once built in one Stage, capacity from these resources is available to meet demand during the current Stage’s Simulation Phase and in all subsequent Stages. You do not need to expend Build tokens to maintain capacity built in a previous Stage. 
 
-!!! warning "Special rule"
-    **Clean Firm Resource** is unavailable in Stage 1. Build tokens cannot be expended to construct Clean Firm Resource capacity unless a Shaping token is expended to select the Demonstration Program action. If the Demonstration Program action is taken during any Shaping Phase, the Clean Firm Resource becomes available to build in all subsequent Stages. 
+!!! warning "Special rule: Clean Firm Resource"
+    **Clean Firm Resource** is unavailable in Stage 1 and 2. Build tokens cannot be expended to construct Clean Firm Resource capacity unless a Shaping token is expended to select the Demonstration Program action. If the Demonstration Program action is taken during any Shaping Phase, the Clean Firm Resource becomes available to build in all subsequent Stages. 
+
     Note that the Clean Firm Resource represents a generic advanced technology that is fully dispatchable and can meet demand at any point during the year, such as advanced geothermal, advanced nuclear, fusion, Allam cycle gas combustion with carbon capture, or hydrogen combustion.
 
-!!! warning "Special rule"
+!!! warning "Special rule: Battery Energy Storage"
     Battery Energy Storage does not produce energy, but rather charges when energy is abundant and discharges when energy is more valuable. For each GW of Battery Energy Storage built, you can store up to 4 gigawatt-hours (GWh) of energy. In other words, it would take four hours to fully charge a battery and four hours to fully discharge a battery (if charging and discharging at full power capacity). 
-    Battery Energy Storage has an 85% efficiency, so for every 1 GWh of energy consumed by the battery for charging, only 0.85 GWh can be discharged. 
+    Battery Energy Storage has an **85% efficiency**, so for every 1 GWh of energy consumed by the battery for charging, only 0.85 GWh can be discharged. 
 
-**Experience Curves**: Building new resources will drive Experience Curves which reduce the cost of constructing the resource in subsequent stages by approximately 5% per Build token spent, but the exact pace is uncertain and resolved during the Resolution phase. 
-Note: reduced cost of construction is expressed as an increase in GW of new capacity constructed per Build token.
+##### Experience Curves for new resources
+Building new resources will drive Experience Curves which reduce the cost of constructing the resource in subsequent stages by approximately 2% per Build token spent, but the exact pace is uncertain and resolved during the Resolution phase. 
+**Note**: reduced cost of construction is expressed as an increase in GW of new capacity constructed per Build token.
 
-**Social Backlash**: Expending Build tokens to construct new resources also risks triggering Social Backlash. If Social Backlash is triggered for a new resource at the end of Stage 1-Stage 4, then no Build tokens can be expended to construct more of that new resource in the next Stage. Existing capacity for that resource will still be available in the next Stage. The precise risk of Social Backlash is uncertain, but **each resource type has a different relative risk: Low, Medium or High**. 
+##### Social Backlash for new resources
+Expending Build tokens to construct new resources also risks triggering Social Backlash. If Social Backlash is triggered for a new resource at the end of Stage 1-Stage 4, then no Build tokens can be expended to construct more of that new resource in the next Stage. Existing capacity for that resource will still be available in the next Stage. The precise risk of Social Backlash is uncertain, but each resource type has a different relative risk: Low, Medium or High. 
 
 !!! note "Example"
     At the start of Stage 1, the game setup specifies you may construct 10 GW of Onshore Wind per Build token. In Stage 1, you choose to expend 4 Build tokens to construct 40 GW of Onshore Wind, which is used to meet demand during the Stage 1 Simulation Phase. During the Resolution Phase, the cost of Onshore Wind improves by 20% and no Social Backlash is triggered. During Stage 2, you can now build 12 GW per Build token. During Stage 2, you expend 4 more Build tokens to build another 48 GW of Onshore Wind, increasing the total available capacity to 88 GW during the Stage 2 Simulation Phase. During the Resolution Phase, a Social Backlash is triggered for Onshore Wind. As a result, you may not expend any Build tokens to construct additional Onshore Wind capacity during Stage 3. The 88 GW of capacity constructed in Stages 1 and 2 is still available to meet demand during the Stage 3 Simulation Phase.
 
-**Testing your portfolio**: At any point during the Resource Phase, you have access to the **Dispatch Simulator**, which you can use to test a potential resource portfolio. Simply enter the capacity of each resource type and simulate a year of optimized operation to meet forecasted demand for the current Stage. By testing different portfolios, you can build intuition about the profile of annual demand and wind or solar resource variability, what mix of resources is likely to meet expected demand, and estimate what the likely Reliability and Clean Energy scores would be for that portfolio. Note however that the **Dispatch Simulator does not account for any uncertainty**, including Demand Shocks that can cause actual demand to differ from the forecasted demand by a constant percentage throughout the year and the potential for Climate Shocks to reduce available capacity by causing forced outages for each resource. **You will have to use your own intuition to develop a portfolio that is robust to these uncertainties.**
-The model will output an estimate of the reserve margin for the portfolio, which quantifies the excess capacity available to meet demand. Please note that if batteries are relied upon to meet demand, the reserve margin will be zero during the most binding period, even if overall reliability is 100%.
+#### Testing your portfolio
+At any point during the Resource Phase, you have access to the **Dispatch Simulator**, which you can use to test a potential resource portfolio. Simply enter the capacity of each resource type and simulate a year of optimized operation to meet forecasted demand for the current Stage. By testing different portfolios, you can build intuition about the profile of annual demand and wind or solar resource variability, what mix of resources is likely to meet expected demand, and estimate what the likely Reliability and Clean Energy scores would be for that portfolio. Note however that the **Dispatch Simulator does not account for any uncertainty**, including Demand Shocks that can cause actual demand to differ from the forecasted demand by a constant percentage throughout the year and the potential for Climate Shocks to reduce available capacity by causing forced outages for each resource. **You will have to use your own intuition to develop a portfolio that is robust to these uncertainties.**
 
-### Shaping Phase
+!!! note "Reserve Margin"
+    The model will output an estimate of the reserve margin for the portfolio, which quantifies the excess capacity available to meet demand. Please note that if batteries are relied upon to meet demand, the reserve margin will be zero during the most binding period, even if overall reliability is 100%.
+
+### 2. Shaping Phase
 Each Stage, you may expend **Shaping tokens** to take one of four Shaping Actions which help **manage the uncertainty faced during the game**. You begin Stage 1 with 2 Shaping tokens, and one additional Shaping token can be purchased in any Stage by expending a Budget token. Once you allocate a Shaping token to choose a Shaping Action, you cannot change this selection later in the game (so choose carefully). You can only allocate one Shaping token per Shaping Action. You will be asked to confirm your selection of Shaping Actions before your choice is finalized. 
 
 The four Shaping Actions available are:
@@ -83,7 +92,7 @@ The four Shaping Actions available are:
 3. **Benefits Sharing**: Expending a Shaping token on this action reduces by half the probability of Social Backlash as each technology is deployed. Note that this reduction in Social Backlash risk applies to all Resources.
 4. **Climate Resilience**: Expending a Shaping token on this action reduces by half the probability of generator forced outages when a Climate Disaster is experienced. Note that this reduction in forced outage risk applies to all Resources and that this action does not reduce the probability of a Climate Disaster occuring.
 
-### Simulation Phase
+### 3. Simulation Phase
 After completing the Build and Shaping phases, the game will simulate an entire year of operations of your portfolio of resources. 
 
 During the Simulation Phase, a **random Demand Shock** will increase or decrease demand by a constant percentage during each hour. 
@@ -92,12 +101,8 @@ For each Stage, there is also a risk of a **Climate Disaster** occuring. This ri
 
 After resolving the Demand Shock and the effect of any Climate Disaster (should one occur) on the availability of each resource, the game will optimize operations of all resources to minimize the overall cost of meeting demand, including penalties for not serving demand or meeting the targeted clean energy share for the Stage. The results of this **optimal dispatch** simulation will then be used to calculate and report the Reliability and Clean Energy scores for the Stage.
 
-### Resolution Phase
-During this phase, the game calculates the reduction in cost for each resource due to Experience Curves and determines whether Social Backlash is triggered for any resource. 
-
-**Experience Curves**: Building new resources will drive Experience Curves which reduce the cost of constructing the resource in subsequent stages by approximately 5% per Build token spent, but the exact pace is uncertain and resolved during this phase. Note: reduced cost of construction is expressed as an increase in GW of new capacity constructed per Build token. Expending 
-
-**Social Backlash**: Expending Build tokens to construct new resources also risks triggering Social Backlash. If Social Backlash is triggered for a new resource at the end of Stage 1 or Stage 2, then no Build tokens can be expended to construct more of that new resource in the next Stage. Existing capacity for that resource will still be available in the next Stage. The precise risk of Social Backlash is uncertain and resolved during this stage. Each resource type has a different relative risk: Low, Medium or High. 
+### 4. Resolution Phase
+During this phase, the game calculates the reduction in cost for each resource due to **Experience Curves** and determines whether **Social Backlash** is triggered for any resource. 
 
 After calculating the effect of Experience Curves or Social Backlash, the game board is updated and the next Stage commences.
 

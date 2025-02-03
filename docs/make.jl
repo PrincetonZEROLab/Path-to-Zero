@@ -6,7 +6,7 @@ import Documenter
 Documenter.makedocs(;
     modules = [ElectricityDecarbonizationGame],
     authors = "",
-    sitename = "ElectricityDecarbonizationGame",
+    sitename = "Path to Zero",
     format = Documenter.HTML(
         canonical = "https://princetonzerolab.github.io/Path-to-Zero/stable/",
         assets = ["assets/epg_style.css"],
