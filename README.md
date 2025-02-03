@@ -43,10 +43,12 @@ julia -e 'import Pkg; Pkg.activate("."); Pkg.instantiate()'
 ```
 
 4. **Run the game**: To run the game, use the following commands:
+
 On **Linux/MacOS**:
 ```bash
 bash run_game.sh
 ```
+
 On **Windows**:
 ```julia
 julia --project -q -i -e "using Pkg; Pkg.precompile(); using GenieFramework; Genie.loadapp(); up();" 
