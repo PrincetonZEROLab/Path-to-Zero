@@ -1,4 +1,4 @@
-FROM julia:1.10-bookworm
+FROM julia:1.11.3-bookworm
 
 WORKDIR /home/
 
