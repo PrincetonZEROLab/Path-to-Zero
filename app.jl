@@ -11,6 +11,22 @@ using ElectricityDecarbonizationGame
 @genietools
 
 
+const FILE_PATH = joinpath("game_setup")
+mkpath(FILE_PATH)
+# default colors for the plot
+const plot_colors = Dict(
+    "Nuclear" => "#8c564b",
+    "Natural Gas" => "#d62728",
+    "Clean Firm" => "#17becf",
+    "Solar PV (Utility Scale)" => "#EBC334",
+    "Distributed Solar PV" => "#ff7f0e",
+    "Onshore Wind" => "#2ca02c",
+    "Offshore Wind" => "#1f77b4",
+    "Battery Discharge" => "#e377c2",
+    "Battery Charge" => "#9467bd",
+    "Demand not served" => "#000000"
+)
+
 @app begin
 
     ### UI setup
@@ -410,20 +426,6 @@ using ElectricityDecarbonizationGame
     @in Reserve_Margin = 0.0
 
     ## PLOTTING
-    # default colors for the plot
-    const plot_colors = Dict(
-        "Nuclear" => "#8c564b",
-        "Natural Gas" => "#d62728",
-        "Clean Firm" => "#17becf",
-        "Solar PV (Utility Scale)" => "#EBC334",
-        "Distributed Solar PV" => "#ff7f0e",
-        "Onshore Wind" => "#2ca02c",
-        "Offshore Wind" => "#1f77b4",
-        "Battery Discharge" => "#e377c2",
-        "Battery Charge" => "#9467bd",
-        "Demand not served" => "#000000"
-    )
-
     # plotting stage results
     @out plot_stage_results = DataFrame()
     @in plot_stage_full_year = true
@@ -439,8 +441,6 @@ using ElectricityDecarbonizationGame
     )
 
     ### GAME LOGIC
-    const FILE_PATH = joinpath("game_setup")
-    mkpath(FILE_PATH)
     @out upfiles = readdir(FILE_PATH)
     # team name setup
     @onchange team_name_confirmed begin
