@@ -376,7 +376,7 @@ using ElectricityDecarbonizationGame
 
     # uncertainty parameters
     @in up_demand_variance = 0.1
-    @in up_disaster_probability = 0.1
+    @in up_disaster_probability = [0.1, 0.2, 0.3, 0.4, 0.5]
     @in up_outage_probability = 0.66
     @in up_outage_rate = 0.5
 
@@ -658,9 +658,9 @@ using ElectricityDecarbonizationGame
         # Uncertainty parameters
         uncertainty_parameters = _game_setup["uncertainty_parameters"]
         up_demand_variance = uncertainty_parameters["Demand_Variance"]
-        up_disaster_probability = uncertainty_parameters["Disaster_Probability"]
         up_outage_probability = uncertainty_parameters["Outage_Probability"]
         up_outage_rate = uncertainty_parameters["Outage_Rate"]
+        up_disaster_probability = uncertainty_parameters["Disaster_Probability"]
 
         # Experience rate is decline in technology cost for each build point spent on each resource
         experience_rate = _game_setup["experience_rate"]

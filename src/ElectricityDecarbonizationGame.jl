@@ -75,7 +75,7 @@ using PrecompileTools: @compile_workload
 
         _uncertainty_parameters = Dict(
             "Demand_Variance" => 0.00,
-            "Disaster_Probability" => 0.00,
+            "Disaster_Probability" => [0.1, 0.2, 0.3, 0.4, 0.5],
             "Outage_Probability" => 0.66,
             "Outage_Rate" => 0.5
           )

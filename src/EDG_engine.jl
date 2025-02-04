@@ -286,8 +286,7 @@ function resolve_uncertainty(inputs::Dict, uncertainty_params::Dict, shaping_tok
     inputs["demand"] = round.(demand_shock .* inputs["demand"])
 
     # Determine if a climate disaster occurs
-    #TODO: add probability as a vector instead of a scalar*current_stage
-    disaster = rand(Bernoulli(uncertainty_params["Disaster_Probability"]*current_stage), 1)[1]
+    disaster = rand(Bernoulli(uncertainty_params["Disaster_Probability"][current_stage]), 1)[1]
     forced_outages = zeros(Int8, length(inputs["G"])) # Record which resources are on outage in this vector
     if disaster
         # Disaster occurs in a random week. During that week, each resource faces a chance of outage.
@@ -579,6 +578,7 @@ function run_stage(
     @info("ADVANCE STAGE")
     @info("Capacity")
     @info(ending_capacity)
+    @info("Disaster Probability: ", uncertainty_params["Disaster_Probability"][current_stage])
 
     (demand, nse, sample_weight, hours_per_period, P, S, W, T) = load_demand_input(in_path)
     variability = load_variability_input(in_path)
@@ -636,15 +636,11 @@ function advance_stage(
             # Update resource parameters
             resource_params["Build_Cost"].nuclear[1] = ceil(resource_params["Build_Cost"].nuclear[1] / 2)
         end
-        # Update uncertainty parameters
-        uncertainty_params["Disaster_Probability"] = 0.5
     elseif planning_year == "2035"
         if !is_WY_setup
             # Update resource parameters
             resource_params["Build_Cost"].nuclear[1] = resource_params["Build_Cost"].nuclear[1] * 2
         end
-        # Update uncertainty parameters
-        uncertainty_params["Disaster_Probability"] = 0.9
     elseif planning_year == "2040"
     elseif planning_year == "2045"
     elseif planning_year == "2050"
