@@ -103,9 +103,14 @@ resource_blocks:
 # Uncertainty parameters
 uncertainty_parameters: 
   Demand_Variance: 0.05
-  Disaster_Probability: 0.1
   Outage_Probability: 0.66
   Outage_Rate: 0.5
+  Disaster_Probability:
+    - 0.1
+    - 0.2
+    - 0.3
+    - 0.4
+    - 0.5
 
 # Experience rate is decline in technology cost for each build point spent on each resource
 experience_rate: 0.025
