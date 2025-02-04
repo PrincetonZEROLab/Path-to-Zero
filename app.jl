@@ -468,19 +468,11 @@ const plot_colors = Dict(
                 mv(fileuploads["path"], joinpath(team_path, filename), force=true)
             catch e
                 @error "Error processing file: $e"
-                notify(__model__, "Error processing file: $(fileuploads["name"])")
+                @notify("Error processing file: $(fileuploads["name"])")
             end
             fileuploads = Dict{AbstractString,AbstractString}()
         end
         upfiles = readdir(team_path)
-    end
-    @event uploaded begin
-        @info "uploaded"
-        notify(__model__, "File was uploaded")
-    end
-    @event rejected begin
-        @info "rejected"
-        notify(__model__, "Please upload a valid file")
     end
     # load game setup from the file selected
     @onchange selected_file begin
